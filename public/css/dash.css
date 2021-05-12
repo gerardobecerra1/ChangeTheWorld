@@ -1,0 +1,186 @@
+/*CSS*/
+:root {
+  --main-color: #665df5;
+  --color-2: #efb810;
+  --bg-dark: #2b2c2f;
+  --main-a-color-negro: var(--main-color);
+  --negro-a-main-color: var(--bg-dark);
+  --shadow-black-100: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --shadow-black-300: 0 5px 15px rgba(0, 0, 0, 0.3);
+  --black-900: #000000;
+  --black-400: #555555;
+  --black-100: #000000;
+  --black-000: #ffffff;
+  --black-alpha-100: rgba(0, 0, 0, 0.5);
+}
+
+body {
+  /* overflow: hidden; */
+  font-weight: 300;
+  color: var(--main-color);
+}
+
+.silderbar {
+  background-color: var(--main-color);
+  min-height: 100vh;
+}
+
+#slidebar-container {
+  /* min-height: 100vh; */
+}
+
+#slidebar-container .logo {
+  padding: 0.875rem 1.25rem;
+}
+
+#slidebar-container .menu {
+  width: 18rem;
+}
+
+.menu a {
+  color: white;
+}
+
+.menu a:hover {
+  text-decoration: none;
+  color: var(--main-color);
+  background: white;
+}
+
+.activate {
+  color: black;
+  background: white;
+}
+
+#avatar {
+  max-width: 35px;
+}
+
+#content {
+  /* overflow-y: auto; */
+  /* height: 100vh; */
+  /* padding-bottom: 5rem; */
+}
+
+#boton {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.main-color {
+  color: var(--main-color);
+}
+
+.stat {
+  border-right: 1px solid rgba(128, 128, 128, 0.561);
+}
+
+.bg-mix {
+  background: linear-gradient(180deg, #ffffff 50%, #efefef 0);
+}
+
+.bg-grey {
+  background: #efefef !important;
+}
+
+#myChart {
+  max-height: 300px;
+}
+
+
+#MyCourse,
+#contents,
+#Statics,
+#teacherProfile,#CreateCourse ,#AgregarCapitulo{
+  display: none;
+}
+
+section .btn {
+  background-color: #ffffff;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  color: var(--main-color);
+  font-size: 16px;
+  text-transform: capitalize;
+  transition: all 0.5s ease;
+  box-shadow: var(--shadow-black-300);
+  font-weight: 500;
+}
+
+section .btn:focus {
+  box-shadow: var(--shadow-black-300);
+}
+
+section .btn:hover {
+  color: #ffffff;
+  background-color: var(--main-color);
+}
+
+/* select photo */
+
+.select-photo {
+  position: relative;
+}
+
+section img {
+  display: block;
+  max-width: 100%;
+}
+
+section .img-circle {
+  border-radius: 50%;
+}
+
+section .preview {
+  overflow: hidden;
+  width: 260px;
+  height: 260px;
+  border: 1px solid var(--main-color);
+  border-radius: 50%;
+}
+
+section .modal-lg {
+  max-width: 1000px !important;
+}
+
+.modal-header {
+  color: var(--main-color);
+}
+
+.overlay {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  height: 0;
+  transition: .25s ease;
+  width: 100%;
+}
+
+.select-photo:hover .overlay {
+  height: 50%;
+  cursor: pointer;
+}
+
+.text {
+  color: var(--main-color);
+  font-size: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.botones .btn {
+  width: 100%;
+}
+
+.swal2-styled.swal2-confirm {
+  background-color: var(--main-color) !important;
+}
