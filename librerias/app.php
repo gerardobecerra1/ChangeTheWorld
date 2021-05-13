@@ -28,12 +28,28 @@ class App{
             $controller = new $url[0];
             $controller->loadModel($url[0]);
 
-            //si hay un método que se rquiere cargar
-            if (isset($url[1])) {
-                $controller->{$url[1]}();
+            //#numero de elementos del arreglo
+            $nparam = sizeof($url);
+
+            if($nparam > 1){
+                if($nparam > 2){
+                    $param = [];
+                    for($i = 2; $i<$nparam; $i++){
+                        array_push($param,$url[$i]);
+                    }
+                    $controller->{$url[1]}($param);
+                }else{
+                    $controller->{$url[1]}();
+                }
             }else{
                 $controller->render();
             }
+
+            // if(isset($url[1])){
+            //     $controller->{$url[1]}();
+            // }else{
+            //     $controller->render();
+            // }
         } else {
             $controller = new Errores();
         }

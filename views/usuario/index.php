@@ -1,3 +1,9 @@
+<?php
+include_once 'librerias/user_session.php';
+$userSession = new UserSession();
+
+if (isset($_SESSION['username'])) {
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,8 +29,8 @@
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>Landing"><img src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo"
-                    style="width:200px;"></a>
+            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>Landing"><img
+                    src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo" style="width:200px;"></a>
 
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -63,13 +69,13 @@
                     <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
                         aria-labelledby="v-pills-profile-tab">
                         <div class="container">
-                            <form action="">
+                            <form method="POST" enctype="multipart/form-data">
                                 <div class="form-group text-center">
                                     <div class="select-photo w-50 mx-auto">
                                         <form action="" method="post">
                                             <label for="upload_image">
-                                                <img src="<?php echo constant('URL'); ?>public/img/sinFoto.png" id="uploaded_image"
-                                                    class="img-responsive img-circle" />
+                                                <img src="<?php echo constant('URL'); ?>public/img/sinFoto.png"
+                                                    id="uploaded_image" class="img-responsive img-circle" />
                                                 <div class="overlay">
                                                     <div class="text">Click to Change Profile Image</div>
                                                 </div>
@@ -83,23 +89,32 @@
                                         or comment like chats.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputUsername">Username: <strong>Geraxmoxitos</strong></label>
+                                    <label for="inputUsername">Username:
+                                        <strong><?php echo $_SESSION['username']; ?></strong></label>
                                     <input type="text" class="form-control" id="inputUsername"
                                         aria-describedby="usernameHelp" placeholder="Write new username">
                                     <small id="usernameHelp" class="form-text text-muted">This will be seen every time
                                         you post something or comment like chats.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputName">Name: <strong>Luis Gerardo Becerra Jiménez</strong></label>
+                                    <label for="inputName">Name:
+                                        <strong><?php echo $_SESSION['name']; ?></strong></label>
                                     <input type="text" class="form-control" id="inputName" aria-describedby="nameHelp"
                                         placeholder="Write new name">
+                                        <br>
+                                    <label for="inputLastName">Lastname:
+                                        <strong><?php echo $_SESSION['lastname']; ?></strong></label>
+                                    <input type="text" class="form-control" id="inputLastName" aria-describedby="lastNameHelp"
+                                        placeholder="Write new Lastname">
                                     <small id="nameHelp" class="form-text text-muted">This will be used once you finish
                                         the courses for your certificates.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputAbout">About me</label>
-                                    <input type="text" class="form-control" id="inputAbout" aria-describedby="aboutHelp"
-                                        placeholder="Write something about yourself, skills, tastes ...">
+                                    <label for="inputAbout">About me:</label>
+                                    <textarea name="descrip" id="textareaAbout" class="w-100 form-control" aria-describedby="aboutHelp" rows="5"
+                                            placeholder="<?php if (isset($_SESSION['descrip'])) {echo $_SESSION['descrip'];} else {echo 'Write something about yourself, skills, tastes ...';}?>"></textarea>
+                                    <!-- <input type="text" class="form-control" id="inputAbout" aria-describedby="aboutHelp"
+                                        placeholder="<?php if (isset($_SESSION['descrip'])) {echo $_SESSION['descrip'];} else {echo 'Write something about yourself, skills, tastes ...';}?>"> -->
                                     <small id="aboutHelp" class="form-text text-muted">This is just to know more about
                                         you.</small>
                                 </div>
@@ -114,7 +129,8 @@
                         <div class="container">
                             <form action="">
                                 <div class="form-group">
-                                    <label for="inputEmail">Email: <strong>gera@gmail.com</strong></label>
+                                    <label for="inputEmail">Email:
+                                        <strong><?php echo $_SESSION['email']; ?></strong></label>
                                     <input type="email" class="form-control" id="inputEmail"
                                         aria-describedby="emailHelp" placeholder="Enter email">
                                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with
@@ -187,3 +203,8 @@
 </body>
 
 </html>
+<?php
+} else {
+    header('Location:' . constant('URL') . 'Landing');
+}
+?>

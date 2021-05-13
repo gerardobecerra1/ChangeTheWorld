@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS tbl_Categories (
 CREATE TABLE IF NOT EXISTS tbl_Users (
   id_user				INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the user identifier.',
   role_user 			VARCHAR(10)			NOT NULL 			COMMENT'This field represents the user role.',
-  photo 				BLOB 				NULL 				COMMENT'This field represents the user photo.',
+  photo 				MEDIUMBLOB 				NULL 				COMMENT'This field represents the user photo.',
   username 				VARCHAR(255) 		NOT NULL 			COMMENT'This field represents the user name.',
   name_user 			VARCHAR(255) 		NOT NULL 			COMMENT'This field represents the name.',
   last_name 			VARCHAR(255) 		NOT NULL 			COMMENT'This field represents the users last name.',
@@ -34,7 +34,7 @@ id_course 				INT UNSIGNED 		AUTO_INCREMENT 		COMMENT'This field represents the 
 fk_school 				INT UNSIGNED 		NULL 				COMMENT'This field represents the school to which the course is linked.',
 fk_categorie 			INT UNSIGNED 		NOT NULL 			COMMENT'This field represents the category to which the course is linked.',
 fk_user 				INT UNSIGNED 		NOT NULL 			COMMENT'This field represents who created the course.',
-logo 					BLOB 				NOT NULL 			COMMENT'This field represents the course logo.',
+logo 					MEDIUMBLOB 				NOT NULL 			COMMENT'This field represents the course logo.',
 title 					VARCHAR(255) 		NOT NULL UNIQUE 	COMMENT'This field represents the title of the course.',
 average_rating 			DECIMAL(1,1) 		NULL 				COMMENT'This field represents the average rating for the course.',
 short_description 		TEXT 				NOT NULL 			COMMENT'This field represents a short description of the course.',

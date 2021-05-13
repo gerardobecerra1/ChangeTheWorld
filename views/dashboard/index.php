@@ -1,9 +1,8 @@
 <?php
 include_once 'librerias/user_session.php';
-
 $userSession = new UserSession();
 
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,10 +67,10 @@ if (isset($_SESSION['user'])) {
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="<?php echo constant('URL'); ?>public/img/Yo.jpg"
                                     class="img-fluid rounded-circle mr-2 " id="avatar" alt="">
-                                <?php echo $_SESSION['user']; ?>
+                                    <?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">My profile</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">My profile</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>Dashboard/cerrarSesion">log
                                     out</a>
@@ -86,7 +85,7 @@ if (isset($_SESSION['user'])) {
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-9">
-                                    <h1 class="font-weight-bold mb-0 main-color">Welcome Alberto Hernandez</h1>
+                                    <h1 class="font-weight-bold mb-0 main-color">Welcome <?php echo $_SESSION['name'] . ' ' . $_SESSION['lastname']; ?></h1>
                                     <p class="lead text-muted">Check your information</p>
                                 </div>
                                 <div class="col-lg-3 d-flex">
@@ -267,7 +266,7 @@ if (isset($_SESSION['user'])) {
                     <div class="container">
                         <div class="row">
                             <div class="container my-5 mx-5">
-                                <form action="">
+                                <form action="Dashboard/crearCurso" method="POST" enctype="multipart/form-data">
                                     <div class="form-group text-center">
                                         <div class="select-photo w-50 mx-auto">
                                             <form action="" method="post">
@@ -295,7 +294,7 @@ if (isset($_SESSION['user'])) {
                                     </div>
                                     <div class="form-group">
                                         <label for="inputDescriptionS">Short description:</label>
-                                        <textarea name="" id="" class="w-100" style="min-height: 100px;"
+                                        <textarea name="descrip" id="description" class="w-100" style="min-height: 100px;"
                                             placeholder="Write something short about your course"></textarea>
                                         <small id="inputDescriptionSHelp" class="form-text text-muted">Be as brief as
                                             possible but understand what your course is about.</small>
@@ -716,7 +715,10 @@ if (isset($_SESSION['user'])) {
 
 </html>
 <?php
-} else {
+}else if(((string)$_SESSION['rol']) == "Student"){
+    header('Location:' . constant('URL') . 'Principal');
+} 
+else {
     header('Location:' . constant('URL') . 'Landing');
 }
 ?>

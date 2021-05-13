@@ -1,3 +1,13 @@
+<?php
+include_once 'librerias/user_session.php';
+$userSession = new UserSession();
+
+if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Teacher") {
+    header('Location:' . constant('URL') . 'Dashboard');
+} else if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Student") {
+    header('Location:' . constant('URL') . 'Principal');
+} else {
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +19,7 @@
 
     <!-- JQUERY -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="<?php echo constant('URL')?>public/css/login.css" />
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/login.css" />
     <title>CTW | Login</title>
 </head>
 
@@ -20,7 +30,7 @@
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                <form action="<?php echo constant('URL')?>Login/inicioSesion" method="POST" class="sign-in-form">
+                <form action="<?php echo constant('URL') ?>Login/inicioSesion" method="POST" class="sign-in-form">
                     <h2 class="title">Log in</h2>
                     <label for="tipo">Type:</label>
                     <select name="role_login" id="tipo-login" class="selector">
@@ -54,7 +64,7 @@
                     </div>
                 </form>
 
-                <form action="<?php echo constant('URL')?>Login/registrarUsuario" method="POST" class="sign-up-form">
+                <form action="<?php echo constant('URL') ?>Login/registrarUsuario" method="POST" class="sign-up-form">
                     <h2 class="title">Sing in</h2>
                     <label for="tipo">Type:</label>
                     <select name="role" id="sign_type" class="selector">
@@ -118,7 +128,7 @@
                         Sing In
                     </button>
                 </div>
-                <img src="<?php echo constant('URL')?>public/img/Login/logiin.svg" class="image" alt="" />
+                <img src="<?php echo constant('URL') ?>public/img/Login/logiin.svg" class="image" alt="" />
             </div>
             <div class="panel right-panel">
                 <div class="content">
@@ -130,7 +140,7 @@
                         Log in
                     </button>
                 </div>
-                <img src="<?php echo constant('URL')?>public/img/Login/verificar.svg" class="image" alt="" />
+                <img src="<?php echo constant('URL') ?>public/img/Login/verificar.svg" class="image" alt="" />
             </div>
         </div>
     </div>
@@ -142,8 +152,11 @@
     <!-- <script src="sweetalert2.min.js"></script>
     <link rel="stylesheet" href="sweetalert2.min.css"> -->
 
-    <script src="<?php echo constant('URL')?>public/js/login.js"></script>
-    <script src="<?php echo constant('URL')?>public/js/validaciones.js"></script>
+    <script src="<?php echo constant('URL') ?>public/js/login.js"></script>
+    <script src="<?php echo constant('URL') ?>public/js/validaciones.js"></script>
 </body>
 
 </html>
+<?php
+}
+?>

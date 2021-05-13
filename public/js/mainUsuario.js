@@ -28,7 +28,7 @@ $(document).ready(function () {
       confirmButtonText: 'Yes, I´m sure!'
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "Landing.html";
+        window.location.href = "Usuario/cerrarSesion";
       }
     });
   });

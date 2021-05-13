@@ -1,6 +1,6 @@
 <?php
 
-define('URL', 'http://localhost/ChangeTheWorld/');
+define('URL', 'http://localhost/CTW/');
 
 define('HOST', 'localhost');
 define('DB', 'changetheworld');

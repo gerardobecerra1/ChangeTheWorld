@@ -27,7 +27,7 @@ class Login extends Controller
 
         $mensaje = "";
 
-        if ($this->model->insertar(['id' => null, 'photo' => null, 'role' => $role, 'username' => $username, 'name' => $name, 'lastName' => $lastName, 'descrip' => null, 'email' => $email, 'password' => $password, 'registered' => date("Y-m-d"), 'last_date' => date("Y-m-d")])) {
+        if ($this->model->insertar(['role' => $role, 'username' => $username, 'name' => $name, 'lastName' => $lastName, 'email' => $email, 'password' => $password])) {
             $mensaje = "Registro Exitoso";
         } else {
             $mensaje = "El email ya está registrado";
@@ -50,10 +50,10 @@ class Login extends Controller
             $this->view->me = $this->model->setUser($email);
 
             if ($role == "Teacher") {
-                $userSession->setCurrentUser($this->view->me->username);
+                $userSession->setCurrentUser($this->view->me);
                 header('Location:' . constant('URL') . 'Dashboard');
             } else {
-                $userSession->setCurrentUser($this->view->me->username);
+                $userSession->setCurrentUser($this->view->me);
                 header('Location:' . constant('URL') . 'Principal');
             }
         } else {

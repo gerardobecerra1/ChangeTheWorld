@@ -13,6 +13,13 @@ class Dashboard extends Controller
         $this->view->render('dashboard/index');
     }
 
+    function verMisCursos($param = null){
+        var_dump($param);
+    }
+
+    function registrarCurso(){
+    }
+
     public function cerrarSesion()
     {
         $userSession = new UserSession();

@@ -1,9 +1,8 @@
 <?php
 include_once 'librerias/user_session.php';
-
 $userSession = new UserSession();
 
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['username'])) {
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +54,7 @@ if (isset($_SESSION['user'])) {
                                 aria-expanded="false" href="#"><img
                                     src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" alt=""
                                     style="border-radius: 50%; width: 30px;">
-                                <?php echo $_SESSION['user']; ?>
+                                <?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">Account
@@ -246,62 +245,6 @@ foreach ($this->categorias as $row) {
                         </div>
                     </div>
                     <?php }?>
-                    <!-- <div class="categories-item">
-                        <div class="card" style="border: none;">
-                            <div class="card-body">
-                                <div class="botones card-title text-center">
-                                    <a href="PaginaCategorias.html" class="btn">HTML</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="botones card-title text-center">
-                                    <a href="PaginaCategorias.html" class="btn">CSS</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="categories-item">
-                        <div class="card" style="border: none;">
-                            <div class="card-body">
-                                <div class="botones card-title text-center">
-                                    <a href="PaginaCategorias.html" class="btn">JAVASCRIPT</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="botones card-title text-center">
-                                    <a href="PaginaCategorias.html" class="btn">UNREAL</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="categories-item">
-                        <div class="card" style="border: none;">
-                            <div class="card-body">
-                                <div class="botones card-title text-center">
-                                    <a href="PaginaCategorias.html" class="btn">UNITY</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="botones card-title text-center">
-                                    <a href="PaginaCategorias.html" class="btn">DEEPLEARNING</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="categories-item">
-                        <div class="card" style="border: none;">
-                            <div class="card-body">
-                                <div class="botones card-title text-center">
-                                    <a href="PaginaCategorias.html" class="btn">MACHINE LEARNING</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="botones card-title text-center">
-                                    <a href="PaginaCategorias.html" class="btn">C#</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
