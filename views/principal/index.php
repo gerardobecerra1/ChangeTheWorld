@@ -52,7 +52,7 @@ if (isset($_SESSION['username'])) {
                         <div class="btn-group">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" href="#"><img
-                                    src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" alt=""
+                                    src="<?php if(!empty($_SESSION['pType']) && $_SESSION['pType'] != ''){echo 'data:'.$_SESSION['pType'].';base64,'.base64_encode($_SESSION['photo']);}else{echo constant('URL').'public/img/sinFoto.png';} ?>" alt=""
                                     style="border-radius: 50%; width: 30px;">
                                 <?php echo $_SESSION['username']; ?>
                             </a>
@@ -60,7 +60,8 @@ if (isset($_SESSION['username'])) {
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">Account
                                     settings</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Principal/cerrarSesion">Sign off</a>
+                                <a class="dropdown-item"
+                                    href="<?php echo constant('URL'); ?>Principal/cerrarSesion">Sign off</a>
                             </div>
                         </div>
                     </li>
@@ -238,7 +239,7 @@ foreach ($this->categorias as $row) {
                         <div class="card" style="border: none;">
                             <div class="card-body">
                                 <div class="botones card-title text-center">
-                                    <a href="<?php echo constant('URL'); ?>Categorias"
+                                    <a href="<?php echo constant('URL'); ?>Categoria"
                                         class="btn"><?php echo $categoria ?></a>
                                 </div>
                             </div>

@@ -12,9 +12,4 @@ class Landing extends Controller
         $this->view->render('landing/index');
     }
 
-    function saludo()
-    {
-        echo '<p>Ejecutaste el método Saludo</p>';
-    }
-
 }

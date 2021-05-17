@@ -6,6 +6,7 @@ class Dashboard extends Controller
     function __construct()
     {
         parent::__construct();
+        $this->view->misCursos = [];
     }
 
     function render()
@@ -13,8 +14,19 @@ class Dashboard extends Controller
         $this->view->render('dashboard/index');
     }
 
+    function verUsuario($param = null){
+        $emailUsuario = $param[0];
+        $usuario = $this->model->getUsuarioByEmail($emailUsuario);
+
+        $this->view->usuario = $usuario;
+        header('Location:' . constant('URL') . 'Usuario');
+    }
+
     function verMisCursos($param = null){
-        var_dump($param);
+        $idCurso = $param[0];
+        $cursos = $this->model->getById($idCurso);
+
+        $this->view->misCursos = $cursos;
     }
 
     function registrarCurso(){

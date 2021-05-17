@@ -8,7 +8,7 @@ class PrincipalModel extends Model
         parent::__construct();
     }
 
-    public function get()
+    public function getCategories()
     {
         $categorias = [];
 
@@ -23,5 +23,15 @@ class PrincipalModel extends Model
         } catch (PDOException $exc) {
             return [];
         }
+    }
+
+    public function getReco()
+    {
+
+    }
+
+    public function gegetRecenttReco()
+    {
+
     }
 }

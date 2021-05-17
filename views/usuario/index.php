@@ -69,12 +69,12 @@ if (isset($_SESSION['username'])) {
                     <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
                         aria-labelledby="v-pills-profile-tab">
                         <div class="container">
-                            <form method="POST" enctype="multipart/form-data">
+                        <p><?php echo $this->mensaje; ?></p>
+                            <form method="POST" enctype="multipart/form-data" action="Usuario/updatePublic">
                                 <div class="form-group text-center">
                                     <div class="select-photo w-50 mx-auto">
-                                        <form action="" method="post">
                                             <label for="upload_image">
-                                                <img src="<?php echo constant('URL'); ?>public/img/sinFoto.png"
+                                                <img src="<?php if(!empty($_SESSION['pType']) && $_SESSION['pType'] != ''){echo 'data:'.$_SESSION['pType'].';base64,'.base64_encode($_SESSION['photo']);}else{echo constant('URL').'public/img/sinFoto.png';} ?>"
                                                     id="uploaded_image" class="img-responsive img-circle" />
                                                 <div class="overlay">
                                                     <div class="text">Click to Change Profile Image</div>
@@ -82,44 +82,40 @@ if (isset($_SESSION['username'])) {
                                                 <input type="file" name="image" class="image" id="upload_image"
                                                     style="display:none" />
                                             </label>
-                                        </form>
                                     </div>
 
                                     <small class="form-text text-muted">This will be seen every time you post something
                                         or comment like chats.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputUsername">Username:
-                                        <strong><?php echo $_SESSION['username']; ?></strong></label>
-                                    <input type="text" class="form-control" id="inputUsername"
-                                        aria-describedby="usernameHelp" placeholder="Write new username">
+                                    <label for="inputLaschange">Last Change: <strong><?php echo $_SESSION['lastchange']; ?></strong></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputUsername">Username:</label>
+                                    <input type="text" class="form-control" name="username" id="inputUsername"
+                                        aria-describedby="usernameHelp" placeholder="<?php if (!empty($_SESSION['username'])) {echo $_SESSION['username'];} else {echo 'Write new username';}?>">
                                     <small id="usernameHelp" class="form-text text-muted">This will be seen every time
                                         you post something or comment like chats.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputName">Name:
-                                        <strong><?php echo $_SESSION['name']; ?></strong></label>
-                                    <input type="text" class="form-control" id="inputName" aria-describedby="nameHelp"
-                                        placeholder="Write new name">
+                                    <label for="inputName">Name:</label>
+                                    <input type="text" class="form-control" name="name" id="inputName" aria-describedby="nameHelp" placeholder="<?php if (isset($_SESSION['name'])) {echo $_SESSION['name'];} else {echo 'Write new name';}?>">
                                         <br>
-                                    <label for="inputLastName">Lastname:
-                                        <strong><?php echo $_SESSION['lastname']; ?></strong></label>
-                                    <input type="text" class="form-control" id="inputLastName" aria-describedby="lastNameHelp"
-                                        placeholder="Write new Lastname">
+                                    <label for="inputLastName">Lastname:</label>
+                                    <input type="text" class="form-control" name="last" id="inputLastName" aria-describedby="lastNameHelp"
+                                        placeholder="<?php if (!empty($_SESSION['name'])) {echo $_SESSION['lastname'];} else {echo 'Write new Lastname';}?>">
                                     <small id="nameHelp" class="form-text text-muted">This will be used once you finish
                                         the courses for your certificates.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputAbout">About me:</label>
                                     <textarea name="descrip" id="textareaAbout" class="w-100 form-control" aria-describedby="aboutHelp" rows="5"
-                                            placeholder="<?php if (isset($_SESSION['descrip'])) {echo $_SESSION['descrip'];} else {echo 'Write something about yourself, skills, tastes ...';}?>"></textarea>
-                                    <!-- <input type="text" class="form-control" id="inputAbout" aria-describedby="aboutHelp"
-                                        placeholder="<?php if (isset($_SESSION['descrip'])) {echo $_SESSION['descrip'];} else {echo 'Write something about yourself, skills, tastes ...';}?>"> -->
+                                           placeholder="<?php if (!empty($_SESSION['descrip'])) {echo $_SESSION['descrip'];} else {echo 'Write something about yourself, skills, tastes ...';}?>"></textarea>
                                     <small id="aboutHelp" class="form-text text-muted">This is just to know more about
                                         you.</small>
                                 </div>
                                 <div class="botones">
-                                    <button type="button" class="btn btn-profile">Save</button>
+                                    <button type="submit" class="btn btn-profile">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -129,10 +125,9 @@ if (isset($_SESSION['username'])) {
                         <div class="container">
                             <form action="">
                                 <div class="form-group">
-                                    <label for="inputEmail">Email:
-                                        <strong><?php echo $_SESSION['email']; ?></strong></label>
+                                    <label for="inputEmail">Email:</label>
                                     <input type="email" class="form-control" id="inputEmail"
-                                        aria-describedby="emailHelp" placeholder="Enter email">
+                                        aria-describedby="emailHelp" placeholder="<?php if (!empty($_SESSION['email'])) {echo $_SESSION['email'];} else {echo 'Write new email';}?>">
                                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                         anyone else.</small>
                                 </div>

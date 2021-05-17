@@ -25,9 +25,7 @@ class Login extends Controller
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $mensaje = "";
-
-        if ($this->model->insertar(['role' => $role, 'username' => $username, 'name' => $name, 'lastName' => $lastName, 'email' => $email, 'password' => $password])) {
+        if ($this->model->insertar(['role' => $role, 'photo' => null, 'pType' => null, 'username' => $username, 'name' => $name, 'lastName' => $lastName, 'email' => $email, 'password' => $password])) {
             $mensaje = "Registro Exitoso";
         } else {
             $mensaje = "El email ya está registrado";

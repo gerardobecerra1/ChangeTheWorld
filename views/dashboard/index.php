@@ -42,9 +42,6 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                         aria-hidden="true"></i>Create a course</a>
                 <a href="#" id="btn_statistics" class="d-block p-3  font-weight-bold "><i class="fas fa-chart-bar mr-2"
                         aria-hidden="true"></i>Statistics</a>
-                <a href="#" id="btn_profile" class="d-block p-3  font-weight-bold "><i class="fas fa-user mr-2"
-                        aria-hidden="true"></i>Profile</a>
-                <!-- <a href="#" id="" class="d-block p-3  font-weight-bold"><i class="fa fa-cog mr-2" aria-hidden="true"></i>Settings</a> -->
             </div>
         </div>
         <div class="w-100">
@@ -65,12 +62,13 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="<?php echo constant('URL'); ?>public/img/Yo.jpg"
+                                <img src="<?php if(!empty($_SESSION['pType']) && $_SESSION['pType'] != ''){echo 'data:'.$_SESSION['pType'].';base64,'.base64_encode($_SESSION['photo']);}else{echo constant('URL').'public/img/sinFoto.png';} ?>"
+                                
                                     class="img-fluid rounded-circle mr-2 " id="avatar" alt="">
                                     <?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">My profile</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL').'Dashboard/verUsuario/'.$_SESSION['email']; ?>">My profile</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>Dashboard/cerrarSesion">log
                                     out</a>
@@ -313,6 +311,17 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="inputDescriptionL">Long description:</label>
+                                        <textarea name="" id="" class="w-100" style="min-height: 200px;"
+                                            placeholder="Write something short about your course"></textarea>
+                                        <small id="inputDescriptionLHelp" class="form-text text-muted">It includes
+                                            everything that users of this course should know, requirements, about,
+                                            etc.</small>
+                                    </div>
+                                    <div class="botones mb-5">
+                                        <button type="button" class="btn btn-profile">Save</button>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="inputAbout">Course Content:</label>
                                         <div id="accordion">
                                             <div class="card">
@@ -461,17 +470,6 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="inputDescriptionL">Long description:</label>
-                                        <textarea name="" id="" class="w-100" style="min-height: 200px;"
-                                            placeholder="Write something short about your course"></textarea>
-                                        <small id="inputDescriptionLHelp" class="form-text text-muted">It includes
-                                            everything that users of this course should know, requirements, about,
-                                            etc.</small>
-                                    </div>
-                                    <div class="botones">
-                                        <button type="button" class="btn btn-profile">Save</button>
-                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -513,81 +511,6 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                         </div>
                     </div>
                 </section>
-                <!-- Fomrs Inicio -->
-                <section class="forms" id="teacherProfile">
-                    <div class="container">
-                        <div class="row">
-                            <div class="container my-5 mx-5">
-                                <form action="">
-                                    <div class="form-group text-center">
-                                        <div class="select-photo w-50 mx-auto">
-                                            <form action="" method="post">
-                                                <label for="upload_image">
-                                                    <img src="<?php echo constant('URL'); ?>public/img/sinFoto.png"
-                                                        id="uploaded_image" class="img-responsive img-circle" />
-                                                    <div class="overlay">
-                                                        <div class="text">Click to Change Profile Image</div>
-                                                    </div>
-                                                    <input type="file" name="image" class="image" id="upload_image"
-                                                        style="display:none" />
-                                                </label>
-                                            </form>
-                                        </div>
-                                        <small class="form-text text-muted">This will be seen every time you
-                                            post something
-                                            or comment like chats.</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputUsername">Username:
-                                            <strong>Geraxmoxitos</strong></label>
-                                        <input type="text" class="form-control" id="inputUsername"
-                                            aria-describedby="usernameHelp" placeholder="Write new username">
-                                        <small id="usernameHelp" class="form-text text-muted">This will be seen
-                                            every time
-                                            you post something or comment like chats.</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputName">Name: <strong>Luis Gerardo Becerra
-                                                Jiménez</strong></label>
-                                        <input type="text" class="form-control" id="inputName"
-                                            aria-describedby="nameHelp" placeholder="Write new name">
-                                        <small id="nameHelp" class="form-text text-muted">This will be used once
-                                            you finish
-                                            the courses for your certificates.</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputAbout">About me</label>
-                                        <input type="text" class="form-control" id="inputAbout"
-                                            aria-describedby="aboutHelp"
-                                            placeholder="Write something about yourself, skills, tastes ...">
-                                        <small id="aboutHelp" class="form-text text-muted">This is just to know
-                                            more about
-                                            you.</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputEmail">Email: <strong>gera@gmail.com</strong></label>
-                                        <input type="email" class="form-control" id="inputEmail"
-                                            aria-describedby="emailHelp" placeholder="Enter email">
-                                        <small id="emailHelp" class="form-text text-muted">We'll never share
-                                            your email with
-                                            anyone else.</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="InputPassword">Password:</label>
-                                        <input type="password" class="form-control mb-3" id="InputPassword"
-                                            placeholder="Password">
-                                        <input type="password" class="form-control mb-3" id="InputRewritePassword"
-                                            placeholder="Rewrite Password">
-                                    </div>
-                                    <div class="botones">
-                                        <button type="button" class="btn btn-profile">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- Fomrs Final -->
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ class Usuario
     public $id_user;
     public $role_user;
     public $photo;
+    public $pType;
     public $username;
     public $name_user;
     public $last_name;
