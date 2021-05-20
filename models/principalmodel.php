@@ -13,10 +13,12 @@ class PrincipalModel extends Model
         $categorias = [];
 
         try {
-            $query = $this->db->connect()->query('SELECT*FROM tbl_categories');
-
+            $query = $this->db->connect()->prepare('CALL traer_categorias()');
+            $query->execute();
             while ($row = $query->fetch()) {
-                $categoria = $row['name_categorie'];
+                $categoria = new Categoria();
+                $categoria->id_categorie = $row['id_categorie'];
+                $categoria->name_categorie = $row['name_categorie'];
                 array_push($categorias, $categoria);
             }
             return $categorias;

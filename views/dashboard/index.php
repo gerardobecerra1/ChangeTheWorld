@@ -31,7 +31,8 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
     <div class="d-flex">
         <div id="slidebar-container" class="silderbar">
             <div class="logo">
-                <img src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="">
+            <a href="<?php echo constant('URL'); ?>Principal"><img src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt=""></a>
+                
             </div>
             <div class="menu">
                 <a href="#" id="btn_dashboard" class="d-block p-3  font-weight-bold  "><i class="fas fa-table mr-2"
@@ -63,12 +64,11 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="<?php if(!empty($_SESSION['pType']) && $_SESSION['pType'] != ''){echo 'data:'.$_SESSION['pType'].';base64,'.base64_encode($_SESSION['photo']);}else{echo constant('URL').'public/img/sinFoto.png';} ?>"
-                                
                                     class="img-fluid rounded-circle mr-2 " id="avatar" alt="">
-                                    <?php echo $_SESSION['username']; ?>
+                                <?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="<?php echo constant('URL').'Dashboard/verUsuario/'.$_SESSION['email']; ?>">My profile</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL').'Usuario'; ?>">My profile</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>Dashboard/cerrarSesion">log
                                     out</a>
@@ -83,7 +83,8 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-9">
-                                    <h1 class="font-weight-bold mb-0 main-color">Welcome <?php echo $_SESSION['name'] . ' ' . $_SESSION['lastname']; ?></h1>
+                                    <h1 class="font-weight-bold mb-0 main-color">Welcome
+                                        <?php echo $_SESSION['name'] . ' ' . $_SESSION['lastname']; ?></h1>
                                     <p class="lead text-muted">Check your information</p>
                                 </div>
                                 <div class="col-lg-3 d-flex">
@@ -197,20 +198,23 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                 </div>
                             </div>
                         </div>
+                        <div class="ver-ventas mb-3">
+                            <a href="#" id="btn_mycourse_Sales" class="btn main-color ">View sales
+                                <ion-icon class="align-self-center" name="caret-down-outline">
+                                </ion-icon> </a>
+                        </div>
                         <div class="row justify-content-left">
-                            <div class="col-lg-4 mb-3">
+                            <?php foreach ($this->miscursos as $row) {?>
+                            <div class="col-lg-4 mb-3" id="">
                                 <div class="card">
-                                    <img src="<?php echo constant('URL'); ?>public/img/Machine.jpg" class="card-img-top"
-                                        alt="...">
+                                    <img src="<?php if(!empty($row->lType) && $row->lType != ''){echo 'data:'.$row->lType.';base64,'.base64_encode($row->logo);}else{echo constant('URL').'public/img/Machine.jpg';} ?>"
+                                        class="card-img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title">Complete Machine Learning course</h5>
-                                        <p class="card-text">Learn the algorithms of Machine Learning with Python to
-                                            become a Data Science with all the code to use.</p>
+                                        <h5 class="card-title"><?php echo $row->title ?></h5>
+                                        <p class="card-text"><?php echo $row->short_description ?></p>
                                         <div class="botones text-center mt-3 ">
-                                            <a href="#" id="btn_mycourse_Sales" class="btn main-color ">View sales
-                                                <ion-icon class="align-self-center" name="caret-down-outline">
-                                                </ion-icon> </a> <i class="fa fa-sort-desc main-color"
-                                                aria-hidden="true"></i>
+                                            <button id="btn_mycourse_edit" class="btn main-color"><i
+                                                    class="far fa-edit"></i></button>
                                         </div>
                                         <div class="sales my-2">
                                             <div class="row">
@@ -227,35 +231,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 mb-3">
-                                <div class="card">
-                                    <img src="<?php echo constant('URL'); ?>public/img/Machine.jpg" class="card-img-top"
-                                        alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Complete Machine Learning course</h5>
-                                        <p class="card-text">Learn the algorithms of Machine Learning with Python to
-                                            become a Data Science with all the code to use.</p>
-                                        <div class="botones text-center mt-3 ">
-                                            <a href="#" id="btn_mycourse_Sales" class="btn main-color ">View sales
-                                                <ion-icon class="align-self-center" name="caret-down-outline">
-                                                </ion-icon> </a> <i class="fa fa-sort-desc main-color"
-                                                aria-hidden="true"></i>
-                                        </div>
-                                        <div class="sales my-2">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <h6 class="text-muted text-center ">Sales:</h6>
-                                                    <h3 class="font-weight-bold main-color text-center">200</h3>
-                                                </div>
-                                                <div class="col-6">
-                                                    <h6 class="text-muted text-center">Income:</h6>
-                                                    <h3 class="font-weight-bold main-color text-center">$500,000</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php }?>
                         </div>
                     </div>
                 </section>
@@ -264,35 +240,47 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                     <div class="container">
                         <div class="row">
                             <div class="container my-5 mx-5">
-                                <form action="Dashboard/crearCurso" method="POST" enctype="multipart/form-data">
+                                <form action="Dashboard/registrarCurso" method="POST" enctype="multipart/form-data">
                                     <div class="form-group text-center">
                                         <div class="select-photo w-50 mx-auto">
-                                            <form action="" method="post">
-                                                <label for="upload_image">
-                                                    <img src="<?php echo constant('URL'); ?>public/img/sinFoto.png"
-                                                        id="uploaded_image" class="img-responsive img-circle" />
-                                                    <div class="overlay">
-                                                        <div class="text">Click to Change Course Image</div>
-                                                    </div>
-                                                    <input type="file" name="image" class="image" id="upload_image"
-                                                        style="display:none" />
-                                                </label>
-                                            </form>
+                                            <label for="upload_image">
+                                                <img src="<?php echo constant('URL'); ?>public/img/sinFoto.png"
+                                                    id="uploaded_image" class="img-responsive" />
+                                                <div class="overlay">
+                                                    <div class="text">Click to Change Course Image</div>
+                                                </div>
+                                                <input type="file" name="image" class="image" id="upload_image"
+                                                    style="display:none" />
+                                            </label>
                                         </div>
                                         <small class="form-text text-muted">Make sure it is an image in PNG
                                             format</small>
                                     </div>
                                     <div class="form-group">
+                                        <label for="tipo">Type:</label>
+                                        <select name="role_dash" id="tipo-dash" class="selector">
+                                            <?php foreach ($this->categorias as $row) {?>
+                                            <option value="<?php echo $row->id_categorie ?>">
+                                                <?php echo $row->name_categorie ?></option>
+                                            <?php }?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tipo">New categorie:</label>
+                                        <input type="text" id="inputCategoria">
+                                        <button type="button" class="btn" id="btnAgregarCategoria">Agregar</button>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="inputTitle">Example:
                                             <strong>Complete course on Multimedia Database</strong></label>
-                                        <input type="text" class="form-control" id="inputTitle"
+                                        <input type="text" class="form-control" name="inputTitle" id="inputTitle"
                                             aria-describedby="TitleHelp" placeholder="Write new title">
                                         <small id="TitleHelp" class="form-text text-muted">This text will be seen on the
                                             course page.</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputDescriptionS">Short description:</label>
-                                        <textarea name="descrip" id="description" class="w-100" style="min-height: 100px;"
+                                        <textarea name="ShortD" id="ShortD" class="w-100" style="min-height: 100px;"
                                             placeholder="Write something short about your course"></textarea>
                                         <small id="inputDescriptionSHelp" class="form-text text-muted">Be as brief as
                                             possible but understand what your course is about.</small>
@@ -303,7 +291,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">$</span>
                                             </div>
-                                            <input type="text" class="form-control"
+                                            <input id="inputPrice" name="inputPrice" type="text" class="form-control"
                                                 aria-label="Amount (to the nearest dollar)">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">.00</span>
@@ -312,43 +300,44 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                     </div>
                                     <div class="form-group">
                                         <label for="inputDescriptionL">Long description:</label>
-                                        <textarea name="" id="" class="w-100" style="min-height: 200px;"
+                                        <textarea name="longD" id="longD" class="w-100" style="min-height: 200px;"
                                             placeholder="Write something short about your course"></textarea>
                                         <small id="inputDescriptionLHelp" class="form-text text-muted">It includes
                                             everything that users of this course should know, requirements, about,
                                             etc.</small>
                                     </div>
                                     <div class="botones mb-5">
-                                        <button type="button" class="btn btn-profile">Save</button>
+                                        <button type="submit" class="btn btn-profile">Save</button>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="inputAbout">Course Content:</label>
-                                        <div id="accordion">
-                                            <div class="card">
-                                                <div class="card-header" id="headingOne">
-                                                    <h5 class="mb-0">
-                                                        <button class="btn btn-link" data-toggle="collapse"
-                                                            data-target="#collapseOne" aria-expanded="true"
-                                                            aria-controls="collapseOne">
-                                                            Introduction
-                                                        </button>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                                    data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <div class="accordion-body">
-                                                            <a href="#">Example: <i class="fas fa-play-circle"></i>
-                                                                Introduction</a>
-                                                        </div>
-                                                        <button class="btn btn_add_video w-100 mt-2"><i
-                                                                class="fa fa-plus-circle" aria-hidden="true"></i> Add
-                                                            Video</button>
-                                                        <div class="container my-3" id="AgregarCapitulo">
-                                                            <form>
-                                                                <div class="form-group text-center">
-                                                                    <div class="select-photo w-50 mx-auto">
-                                                                        <form action="" method="post">
+                                </form>
+                                <div class="form-group">
+                                    <label for="inputAbout">Course Content:</label>
+                                    <div id="accordion">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" data-toggle="collapse"
+                                                        data-target="#collapseOne" aria-expanded="true"
+                                                        aria-controls="collapseOne">
+                                                        Introduction
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                                data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="accordion-body">
+                                                        <a href="#">Example: <i class="fas fa-play-circle"></i>
+                                                            Introduction</a>
+                                                    </div>
+                                                    <button class="btn btn_add_video w-100 mt-2"><i
+                                                            class="fa fa-plus-circle" aria-hidden="true"></i> Add
+                                                        Video</button>
+                                                    <div class="container my-3" id="AgregarCapitulo">
+                                                        <form>
+                                                            <div class="form-group text-center">
+                                                                <div class="select-photo w-50 mx-auto">
+                                                                    <!-- <form action="" method="post">
                                                                             <label for="upload_image">
                                                                                 <img src="IMG/sinFoto.png"
                                                                                     id="uploaded_image"
@@ -362,115 +351,113 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                                                     class="image" id="upload_image"
                                                                                     style="display:none" />
                                                                             </label>
-                                                                        </form>
-                                                                    </div>
+                                                                        </form> -->
+                                                                </div>
 
-                                                                    <small class="form-text text-muted">Make sure it is
-                                                                        an
-                                                                        image in PNG
-                                                                        format</small>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="inputTitle">Example:
-                                                                        <strong>Complete course on Multimedia
-                                                                            Database</strong></label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="inputTitle" aria-describedby="TitleHelp"
-                                                                        placeholder="Write new title">
-                                                                    <small id="TitleHelp"
-                                                                        class="form-text text-muted">This
-                                                                        text will be seen on the
-                                                                        course page.</small>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="inputDescriptionS">Short
-                                                                        description:</label>
-                                                                    <textarea name="" id="" class="w-100"
-                                                                        style="min-height: 100px;"
-                                                                        placeholder="Write something short about your course"></textarea>
-                                                                    <small id="inputDescriptionSHelp"
-                                                                        class="form-text text-muted">Be as brief as
-                                                                        possible but understand what your course is
-                                                                        about.</small>
-                                                                </div>
-                                                                <div class="botones">
-                                                                    <button type="button"
-                                                                        class="btn btn-profile">Save</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-header" id="headingTwo">
-                                                    <h5 class="mb-0">
-                                                        <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                            data-target="#collapseTwo" aria-expanded="false"
-                                                            aria-controls="collapseTwo">
-                                                            Basic
-                                                        </button>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                                    data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <div class="accordion-body">
-                                                            <a href="#">Example: <i class="fas fa-play-circle"></i>
-                                                                Introduction</a>
-                                                        </div>
-                                                        <button class="btn w-100 mt-2"><i class="fa fa-plus-circle"
-                                                                aria-hidden="true"></i> Add Video</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-header" id="headingThree">
-                                                    <h5 class="mb-0">
-                                                        <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                            data-target="#collapseThree" aria-expanded="false"
-                                                            aria-controls="collapseThree">
-                                                            Medium
-                                                        </button>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                                    data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <div class="accordion-body">
-                                                            <a href="#">Example: <i class="fas fa-play-circle"></i>
-                                                                Introduction</a>
-                                                        </div>
-                                                        <button class="btn w-100 mt-2"><i class="fa fa-plus-circle"
-                                                                aria-hidden="true"></i> Add Video</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-header" id="headingFour">
-                                                    <h5 class="mb-0">
-                                                        <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                            data-target="#collapseFour" aria-expanded="false"
-                                                            aria-controls="collapseFour">
-                                                            Advanced
-                                                        </button>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
-                                                    data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <div class="accordion-body">
-                                                            <a href="#">Example: <i class="fas fa-play-circle"></i>
-                                                                Introduction</a>
-                                                        </div>
-                                                        <button class="btn w-100 mt-2"><i class="fa fa-plus-circle"
-                                                                aria-hidden="true"></i> Add Video</button>
+                                                                <small class="form-text text-muted">Make sure it is
+                                                                    an
+                                                                    image in PNG
+                                                                    format</small>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputTitleVideo">Example:
+                                                                    <strong>Complete course on Multimedia
+                                                                        Database</strong></label>
+                                                                <input type="text" class="form-control"
+                                                                    id="inputTitleVideo" aria-describedby="TitleHelp"
+                                                                    placeholder="Write new title">
+                                                                <small id="TitleHelp" class="form-text text-muted">This
+                                                                    text will be seen on the
+                                                                    course page.</small>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputDescriptionS">Short
+                                                                    description:</label>
+                                                                <textarea name="" id="" class="w-100"
+                                                                    style="min-height: 100px;"
+                                                                    placeholder="Write something short about your course"></textarea>
+                                                                <small id="inputDescriptionSHelp"
+                                                                    class="form-text text-muted">Be as brief as
+                                                                    possible but understand what your course is
+                                                                    about.</small>
+                                                            </div>
+                                                            <div class="botones">
+                                                                <button type="button"
+                                                                    class="btn btn-profile">Save</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingTwo">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                        data-target="#collapseTwo" aria-expanded="false"
+                                                        aria-controls="collapseTwo">
+                                                        Basic
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                                data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="accordion-body">
+                                                        <a href="#">Example: <i class="fas fa-play-circle"></i>
+                                                            Introduction</a>
+                                                    </div>
+                                                    <button class="btn w-100 mt-2"><i class="fa fa-plus-circle"
+                                                            aria-hidden="true"></i> Add Video</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingThree">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                        data-target="#collapseThree" aria-expanded="false"
+                                                        aria-controls="collapseThree">
+                                                        Medium
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                                data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="accordion-body">
+                                                        <a href="#">Example: <i class="fas fa-play-circle"></i>
+                                                            Introduction</a>
+                                                    </div>
+                                                    <button class="btn w-100 mt-2"><i class="fa fa-plus-circle"
+                                                            aria-hidden="true"></i> Add Video</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingFour">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                        data-target="#collapseFour" aria-expanded="false"
+                                                        aria-controls="collapseFour">
+                                                        Advanced
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                                                data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="accordion-body">
+                                                        <a href="#">Example: <i class="fas fa-play-circle"></i>
+                                                            Introduction</a>
+                                                    </div>
+                                                    <button class="btn w-100 mt-2"><i class="fa fa-plus-circle"
+                                                            aria-hidden="true"></i> Add Video</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

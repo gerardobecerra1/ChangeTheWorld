@@ -1,5 +1,7 @@
 <?php
 include_once 'librerias/user_session.php';
+include_once 'models/categoria.php';
+include_once 'models/cursos.php';
 
 class Principal extends Controller
 {
@@ -8,7 +10,7 @@ class Principal extends Controller
         parent::__construct();
         $this->view->recommended = [];
         $this->view->recent = [];
-        $this->view->categorias = [];
+        $this->view->categorias = new Categoria();
     }
 
     public function render()
@@ -21,8 +23,7 @@ class Principal extends Controller
         // $recentAll = $this->model->getRecent();
         // $this->view->categorias = $recentAll;
 
-        $categoriasAll = $this->model->getCategories();
-        $this->view->categorias = $categoriasAll;
+        $this->view->categorias = $this->model->getCategories();
         $this->view->render('principal/index');
     }
 

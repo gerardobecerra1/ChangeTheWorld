@@ -38,3 +38,71 @@ SET
 `date_of_last_change` = CURDATE()
 WHERE `id_user` = id;
 END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_course`(
+IN id_categoria INT,
+IN id_usuario INT,
+IN logo MEDIUMBLOB,
+IN lType VARCHAR(256),
+IN titulo VARCHAR(256),
+IN rating DECIMAL,
+IN shortD VARCHAR(256),
+IN longD TEXT,
+IN numberV INT,
+IN costo DECIMAL
+)
+BEGIN
+INSERT INTO `changetheworld`.`tbl_courses`
+(`id_course`,
+`fk_categorie`,
+`fk_user`,
+`logo`,
+`lType`,
+`title`,
+`average_rating`,
+`short_description`,
+`large_description`,
+`number_videos`,
+`cost`)
+VALUES
+(id_categoria,
+id_usuario,
+logo,
+lType,
+titulo,
+rating,
+shortD,
+longD,
+numberV,
+costo);
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `traer_id_categoria`(
+IN name_categoria VARCHAR(256))
+BEGIN
+SELECT * FROM `tbl_categories` WHERE name_categorie = name_categoria;
+END
+CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_categoria`(IN nombre_categoria VARCHAR(256))
+BEGIN
+INSERT INTO `changetheworld`.`tbl_categories`
+(`name_categorie`)
+VALUES
+(nombre_categoria);
+END
+
+CREATE PROCEDURE `traer_cursos_por_categoria` (IN idCategoria INT)
+BEGIN
+SELECT `tbl_courses`.`id_course`,
+    `tbl_courses`.`fk_categorie`,
+    `tbl_courses`.`fk_user`,
+    `tbl_courses`.`logo`,
+    `tbl_courses`.`lType`,
+    `tbl_courses`.`title`,
+    `tbl_courses`.`average_rating`,
+    `tbl_courses`.`short_description`,
+    `tbl_courses`.`large_description`,
+    `tbl_courses`.`number_videos`,
+    `tbl_courses`.`cost`
+FROM `changetheworld`.`tbl_courses` WHERE fk_categorie = idCategoria;
+END

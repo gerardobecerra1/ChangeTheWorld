@@ -41,7 +41,7 @@ if (isset($_SESSION['username'])) {
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto" id="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" data-scroll-nav="0" href="<?php echo constant('URL'); ?>Landing"><i
+                        <a class="nav-link" data-scroll-nav="0" href="<?php echo constant('URL'); ?>Principal"><i
                                 class="fas fa-home"></i> Home</a>
                     </li>
                     <li class="nav-item">

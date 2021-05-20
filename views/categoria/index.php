@@ -1,3 +1,7 @@
+<?php
+include_once 'librerias/user_session.php';
+$userSession = new UserSession();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,9 +50,8 @@
                         <div class="btn-group">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" href="#"><img
-                                    src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" alt=""
-                                    style="border-radius: 50%; width: 30px;">
-                                Username
+                                    src="<?php if(!empty($_SESSION['pType']) && $_SESSION['pType'] != ''){echo 'data:'.$_SESSION['pType'].';base64,'.base64_encode($_SESSION['photo']);}else{echo constant('URL').'public/img/sinFoto.png';} ?>"
+                                    alt="" style="border-radius: 50%; width: 30px;"><?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">Account
@@ -69,44 +72,24 @@
             <div class="row justify-content-center">
                 <div class="col">
                     <div class="section-title">
-                        <h2>Courses of <span>C#</span></h2>
+                        <h2>Courses of <span><?php echo$this->nameCategoria; ?></span></h2>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center">
+                <?php foreach ($this->cursosCategoria as $row) {?>
                 <div class="card col-lg-4 col-md-6 col-sm-8 px-0 mb-3" style="width: 18rem;">
-                    <img src="<?php echo constant('URL'); ?>public/img/Machine.jpg" class="card-img-top" alt="...">
+                    <img src="<?php if(!empty($row->lType) && $row->lType != ''){echo 'data:'.$row->lType.';base64,'.base64_encode($row->logo);}else{echo constant('URL').'public/img/Machine.jpg';} ?>"
+                        class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Complete Machine Learning course</h5>
-                        <p class="card-text">Learn the algorithms of Machine Learning with Python to become a Data
-                            Science with all the code to use.</p>
+                        <h5 class="card-title"><?php echo $row->title ?></h5>
+                        <p class="card-text"><?php echo $row->short_description ?></p>
                         <div class="botones text-center mt-3">
                             <a href="<?php echo constant('URL'); ?>Curso" class="btn">View course</a>
                         </div>
                     </div>
                 </div>
-                <div class="card col-lg-4 col-md-6 col-sm-8 px-0 mb-3" style="width: 18rem;">
-                    <img src="<?php echo constant('URL'); ?>public/img/Machine.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Complete Machine Learning course</h5>
-                        <p class="card-text">Learn the algorithms of Machine Learning with Python to become a Data
-                            Science with all the code to use.</p>
-                        <div class="botones text-center mt-3">
-                            <a href="<?php echo constant('URL'); ?>Curso" class="btn">View course</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card col-lg-4 col-md-6 col-sm-8 px-0 mb-3" style="width: 18rem;">
-                    <img src="<?php echo constant('URL'); ?>public/img/Machine.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Complete Machine Learning course</h5>
-                        <p class="card-text">Learn the algorithms of Machine Learning with Python to become a Data
-                            Science with all the code to use.</p>
-                        <div class="botones text-center mt-3">
-                            <a href="<?php echo constant('URL'); ?>Curso" class="btn">View course</a>
-                        </div>
-                    </div>
-                </div>
+                <?php }?>
             </div>
         </div>
     </section>

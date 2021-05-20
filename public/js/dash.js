@@ -1,6 +1,41 @@
 $(document).ready(function () {
 
-    $(".btn_add_video").click(function (e) { 
+    $("#btnAgregarCategoria").click(function (e) {
+        const $select = $("#tipo-dash option");
+        let $cate = $('#inputCategoria').val();
+        if ($cate.length > 0) {
+            Swal.fire({
+                title: 'Do you want to add this new category?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Add`,
+                denyButtonText: `Don't add`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#tipo-dash').append($('<option />', {
+                        text: $cate,
+                        value: $select.length + 1,
+                    }));
+                    httpRequest("http://localhost/CTW/Dashboard/AgregarCategoria/"+$cate, function () {
+                        console.log(this.responseText);
+                    });
+                    $('#inputCategoria').val('');
+                    Swal.fire('Successfully added!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not added', '', 'info')
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Empty field!',
+                text: 'You must fill the field',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            })
+        }
+    });
+
+    $(".btn_add_video").click(function (e) {
         $("#AgregarCapitulo").toggle();
     });
 
@@ -134,5 +169,16 @@ $(document).ready(function () {
             };
         });
     });
+
+    function httpRequest(url, callback) {
+        const http = new XMLHttpRequest();
+        http.open("GET", url);
+        http.send();
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                callback.apply(http);
+            }
+        }
+    }
 
 });

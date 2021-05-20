@@ -24,13 +24,11 @@ if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Teacher") {
 </head>
 
 <body>
-    <div class="text-center">
-        <?php echo $this->mensaje; ?>
-    </div>
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                <form action="<?php echo constant('URL') ?>Login/inicioSesion" method="POST" class="sign-in-form">
+            <!-- action="<?php echo constant('URL') ?>Login/inicioSesion" -->
+                <form method="POST" class="sign-in-form">
                     <h2 class="title">Log in</h2>
                     <label for="tipo">Type:</label>
                     <select name="role_login" id="tipo-login" class="selector">
@@ -63,8 +61,8 @@ if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Teacher") {
                         </a>
                     </div>
                 </form>
-
-                <form action="<?php echo constant('URL') ?>Login/registrarUsuario" method="POST" class="sign-up-form">
+                <!-- action="<?php echo constant('URL') ?>Login/registrarUsuario" -->
+                <form method="POST" class="sign-up-form">
                     <h2 class="title">Sing in</h2>
                     <label for="tipo">Type:</label>
                     <select name="role" id="sign_type" class="selector">

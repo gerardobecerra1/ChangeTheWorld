@@ -32,18 +32,19 @@ FOREIGN KEY(fk_user) REFERENCES tbl_Users(id_user))	COMMENT'This table represent
 
 CREATE TABLE IF NOT EXISTS tbl_Courses(
 id_course 				INT UNSIGNED 		AUTO_INCREMENT 		COMMENT'This field represents the identifier of the course.',
-fk_school 				INT UNSIGNED 		NULL 				COMMENT'This field represents the school to which the course is linked.',
+-- fk_school 				INT UNSIGNED 		NULL 				COMMENT'This field represents the school to which the course is linked.',
 fk_categorie 			INT UNSIGNED 		NOT NULL 			COMMENT'This field represents the category to which the course is linked.',
 fk_user 				INT UNSIGNED 		NOT NULL 			COMMENT'This field represents who created the course.',
 logo 					MEDIUMBLOB 				NOT NULL 			COMMENT'This field represents the course logo.',
+lType 				VARCHAR(255) 		NULL 				COMMENT'This field represents the course logo format.',
 title 					VARCHAR(255) 		NOT NULL UNIQUE 	COMMENT'This field represents the title of the course.',
 average_rating 			DECIMAL(1,1) 		NULL 				COMMENT'This field represents the average rating for the course.',
 short_description 		TEXT 				NOT NULL 			COMMENT'This field represents a short description of the course.',
 large_description 		TEXT 				NOT NULL 			COMMENT'This field represents a great description of the course in detail.',
-number_videos			INT 				NULL 				COMMENT'This field represents the number of VIDEOS for the course.',
+number_videos			INT  DEFAULT 0				NULL 				COMMENT'This field represents the number of VIDEOS for the course.',
 cost 					DECIMAL 			NOT NULL 			COMMENT'This field represents how much the course costs.',
 PRIMARY KEY(id_course),
-FOREIGN KEY(fk_school) 		REFERENCES tbl_Schools(id_school),			
+-- FOREIGN KEY(fk_school) 		REFERENCES tbl_Schools(id_school),			
 FOREIGN KEY(fk_categorie) 	REFERENCES tbl_Categories(id_categorie),		
 FOREIGN KEY(fk_user) 		REFERENCES tbl_Users(id_user))	COMMENT'This table represents the data of all the courses created by the master users registered on the website.';
 

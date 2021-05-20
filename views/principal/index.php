@@ -52,9 +52,8 @@ if (isset($_SESSION['username'])) {
                         <div class="btn-group">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" href="#"><img
-                                    src="<?php if(!empty($_SESSION['pType']) && $_SESSION['pType'] != ''){echo 'data:'.$_SESSION['pType'].';base64,'.base64_encode($_SESSION['photo']);}else{echo constant('URL').'public/img/sinFoto.png';} ?>" alt=""
-                                    style="border-radius: 50%; width: 30px;">
-                                <?php echo $_SESSION['username']; ?>
+                                    src="<?php if(!empty($_SESSION['pType']) && $_SESSION['pType'] != ''){echo 'data:'.$_SESSION['pType'].';base64,'.base64_encode($_SESSION['photo']);}else{echo constant('URL').'public/img/sinFoto.png';} ?>"
+                                    alt="" style="border-radius: 50%; width: 30px;"><?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">Account
@@ -231,16 +230,13 @@ if (isset($_SESSION['username'])) {
             </div>
             <div class="row">
                 <div class="owl-carousel categories-carousel">
-                    <?php
-foreach ($this->categorias as $row) {
-        $categoria = $row;
-        ?>
+                    <?php foreach ($this->categorias as $row) {?>
                     <div class="categories-item">
                         <div class="card" style="border: none;">
                             <div class="card-body">
                                 <div class="botones card-title text-center">
-                                    <a href="<?php echo constant('URL'); ?>Categoria"
-                                        class="btn"><?php echo $categoria ?></a>
+                                    <a href="<?php echo constant('URL'); ?>Categoria/cargarCursos/<?php echo $row->name_categorie ?>/<?php echo $row->id_categorie ?>"
+                                        class="btn"><?php echo $row->name_categorie ?></a>
                                 </div>
                             </div>
                         </div>

@@ -8,12 +8,20 @@ class Login extends Controller
     {
         parent::__construct();
         $this->view->me = new Usuario();
-        $this->view->mensaje = "";
     }
 
     public function render()
     {
         $this->view->render('login/index');
+    }
+
+    public function testRegis()
+    {
+        echo $_POST['role'] . ' ' . $_POST['username'] . ' ' . $_POST['name'] . ' ' . $_POST['lastName'] . ' ' . $_POST['email'] . ' ' . $_POST['password'];
+    }
+    public function testIni()
+    {
+        echo $_POST['role_login'] . ' ' . $_POST['email_login'] . ' ' . $_POST['password_login'];
     }
 
     public function registrarUsuario()
@@ -26,39 +34,29 @@ class Login extends Controller
         $password = $_POST['password'];
 
         if ($this->model->insertar(['role' => $role, 'photo' => null, 'pType' => null, 'username' => $username, 'name' => $name, 'lastName' => $lastName, 'email' => $email, 'password' => $password])) {
-            $mensaje = "Registro Exitoso";
+            $mensaje = 1;
         } else {
-            $mensaje = "El email ya está registrado";
+            $mensaje = 0;
         }
 
-        $this->view->mensaje = $mensaje;
-        $this->render();
+        echo $mensaje;
     }
 
     public function inicioSesion()
     {
         $userSession = new UserSession();
-        $mensaje = "";
+        $mensaje = 0;
         $role = $_POST['role_login'];
         $email = $_POST['email_login'];
         $password = $_POST['password_login'];
 
         if ($this->model->userExist(['role_user' => $role, 'email' => $email, 'password_user' => $password])) {
-
             $this->view->me = $this->model->setUser($email);
-
-            if ($role == "Teacher") {
-                $userSession->setCurrentUser($this->view->me);
-                header('Location:' . constant('URL') . 'Dashboard');
-            } else {
-                $userSession->setCurrentUser($this->view->me);
-                header('Location:' . constant('URL') . 'Principal');
-            }
+            $userSession->setCurrentUser($this->view->me);
         } else {
-            $mensaje = "El rol ,contraseña o email no son correctos";
-            $this->view->mensaje = $mensaje;
-            $this->render();
+            $mensaje = -1;
         }
+        echo $mensaje;
     }
 
 }

@@ -19,9 +19,10 @@ class Usuario extends Controller
 
     public function updatePublic()
     {
-        $tipoArchivo = null;
         $userSession = new UserSession();
-        if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
+        
+        $tipoArchivo = null;
+        if (!empty($_FILES['image']['name'])) {
             $tipoArchivo = $_FILES['image']['type'];
             $permitido = array('image/png', 'image/jpg', 'image/jpeg');
             if (!in_array($tipoArchivo, $permitido)) {
@@ -64,7 +65,6 @@ class Usuario extends Controller
         }
 
         if ($this->model->updateUsuario(['id' => $id, 'photo' => $photo, 'pType' => $tipoArchivo, 'username' => $username, 'name' => $name, 'last' => $last, 'descrip' => $descrip])) {
-
             $_SESSION['photo'] = $photo;
             if (isset($tipoArchivo) && $tipoArchivo != '') {
                 $_SESSION['pType'] = $tipoArchivo;
