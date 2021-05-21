@@ -44,7 +44,6 @@ if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Teacher") {
                         <input type="password" placeholder="Password" name="password_login" id="log_password" />
                     </div>
                     <button type="submit" id="btn_login" class="btn solid">Log in</button>
-                    <!-- <input type="button" value="Log in" class="btn solid" id="btn_login" /> -->
                     <p class="social-text">Log in with a social network.</p>
                     <div class="social-media">
                         <a href="#" class="social-icon">
@@ -87,7 +86,7 @@ if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Teacher") {
                     </div>
                     <div class="input-field" id="border_pass">
                         <i class="fas fa-lock"></i>
-                        <input type="text" placeholder="Password" name="password" id="sign_password"
+                        <input type="password" placeholder="Password" name="password" id="sign_password"
                             title="Minimum 8 characters,Mayus, Numbers and  special digit " />
                     </div>
                     <button type="submit" id="btn_signin" class="btn">Sing in</button>

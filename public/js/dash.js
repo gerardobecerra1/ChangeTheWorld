@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    $("#MyCourse").hide();
+    $("#CreateCourse").hide();
+    $("#Statics").hide();
+    $("#addVideos").hide();
+
     $("#btnAgregarCategoria").click(function (e) {
         const $select = $("#tipo-dash option");
         let $cate = $('#inputCategoria').val();
@@ -16,7 +21,7 @@ $(document).ready(function () {
                         text: $cate,
                         value: $select.length + 1,
                     }));
-                    httpRequest("http://localhost/CTW/Dashboard/AgregarCategoria/"+$cate, function () {
+                    httpRequest("http://localhost/CTW/Dashboard/AgregarCategoria/" + $cate, function () {
                         console.log(this.responseText);
                     });
                     $('#inputCategoria').val('');
@@ -35,16 +40,88 @@ $(document).ready(function () {
         }
     });
 
+    $(".curso_crear").submit(function (e) {
+        e.preventDefault();
+
+        if ($("#upload_image").val() != "" && $("#tipo-dash").val() != "" && $("#inputTitle").val() != "" && $("#ShortD").val() != "" && $("#inputPrice").val() != "" && $("#longD").val() != "") {
+            Swal.fire({
+                title: 'Do you want to add this new course?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Add`,
+                denyButtonText: `Don't add`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost/CTW/Dashboard/registrarCurso",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response >= 0) {
+                                $("#uploaded_image").attr("src", "http://localhost/CTW/public/img/sinFoto.png");
+                                $("#upload_image").val('');
+                                $("#tipo-dash").val('');
+                                $("#inputTitle").val('');
+                                $("#ShortD").val('');
+                                $("#inputPrice").val('');
+                                $("#longD").val('');
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Successfully added!',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                })
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'The course could not be saved',
+                                    icon: 'error',
+                                    confirmButtonText: 'Retry'
+                                })
+                            }
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Course are not added', '', 'info')
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Empty Requirements!',
+                text: 'Enter all requeriments',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            })
+        }
+    });
+
+
     $(".btn_add_video").click(function (e) {
         $("#AgregarCapitulo").toggle();
     });
+
+    $(".btn_add_basic").click(function (e) {
+        $("#AgregarCapituloBasico").toggle();
+    });
+
+    $(".btn_add_medium").click(function (e) {
+        $("#AgregarCapituloMedium").toggle();
+    });
+
+    $(".btn_add_advanced").click(function (e) {
+        $("#AgregarCapituloAdvanced").toggle();
+    });
+
 
     $("#btn_dashboard").click(function () {
         $("#DASHBOARD").show();
         $("#MyCourse").hide();
         $("#CreateCourse").hide();
         $("#Statics").hide();
-        $("#teacherProfile").hide();
+        $("#addVideos").hide();
     });
 
     $("#btn_mycourse").click(function () {
@@ -52,7 +129,7 @@ $(document).ready(function () {
         $("#DASHBOARD").hide();
         $("#CreateCourse").hide();
         $("#Statics").hide();
-        $("#teacherProfile").hide();
+        $("#addVideos").hide();
     });
 
     $("#btn_create").click(function () {
@@ -60,7 +137,7 @@ $(document).ready(function () {
         $("#MyCourse").hide();
         $("#DASHBOARD").hide();
         $("#Statics").hide();
-        $("#teacherProfile").hide();
+        $("#addVideos").hide();
     });
 
     $("#btn_statistics").click(function () {
@@ -68,11 +145,11 @@ $(document).ready(function () {
         $("#CreateCourse").hide();
         $("#MyCourse").hide();
         $("#DASHBOARD").hide();
-        $("#teacherProfile").hide();
+        $("#addVideos").hide();
     });
 
-    $("#btn_profile").click(function () {
-        $("#teacherProfile").show();
+    $("#btn_mycourse_videos").click(function () {
+        $("#addVideos").show();
         $("#Statics").hide();
         $("#CreateCourse").hide();
         $("#MyCourse").hide();
@@ -101,21 +178,21 @@ $(document).ready(function () {
     });
 
 
-    $(".btn-logout").click(function () {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Are you sure you want to go out?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, I´m sure!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "/PaginadeInicio/index.html";
-            }
-        });
-    });
+    // $(".btn-logout").click(function () {
+    //     Swal.fire({
+    //         title: 'Are you sure?',
+    //         text: "Are you sure you want to go out?",
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Yes, I´m sure!'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             window.location.href = "/PaginadeInicio/index.html";
+    //         }
+    //     });
+    // });
 
     /* modal */
 

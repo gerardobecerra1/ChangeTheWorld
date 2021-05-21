@@ -37,6 +37,45 @@ class Dashboard extends Controller
 
         echo $mensaje;
     }
+    function registrarCursoTest(){
+        // $photo = null;
+        // $tipoArchivo = null;
+        // if (!empty($_FILES['image']['name'])) {
+        //     $tipoArchivo = $_FILES['image']['type'];
+        //     $permitido = array('image/png', 'image/jpg', 'image/jpeg');
+        //     if (!in_array($tipoArchivo, $permitido)) {
+        //         $mensaje = "Solo se pueden subir imágenes";
+        //     } else {
+        //     $tamanoArchivo = $_FILES['image']['size'];
+        //     $imagenSubida = fopen($_FILES['image']['tmp_name'], 'r');
+        //     $photo = fread($imagenSubida, $tamanoArchivo);
+        //     }
+
+        // } else {
+        //     $photo = null;
+        //     $tipoArchivo = null;
+        // }
+        $photo = $_FILES['image']['name'];
+        $tipoArchivo = $_FILES['image']['type'];
+        $categoria = $_POST['role_dash'];
+        $title = $_POST['inputTitle'];
+        $shortD = $_POST['ShortD'];
+        $price = $_POST['inputPrice'];
+        $longD = $_POST['longD'];
+
+        // echo $categoria.' '.$title.' '.$shortD.' '.$price.' '.$longD;
+        $row = array(
+            'photo' => $photo,
+            'pType' => $tipoArchivo,
+            'categoria' => $categoria,
+            'title' => $title,
+            'shortD' => $shortD,
+            'price' => $price,
+            'longD' => $longD
+        );
+        die(json_encode($row));
+
+    }
 
     function registrarCurso(){
         $photo = null;
@@ -52,9 +91,6 @@ class Dashboard extends Controller
             $photo = fread($imagenSubida, $tamanoArchivo);
             }
 
-        } else {
-            $photo = null;
-            $tipoArchivo = null;
         }
 
         $categoria = $_POST['role_dash'];
@@ -66,9 +102,9 @@ class Dashboard extends Controller
         if ($this->model->insertarCurso(['categoria'=> $categoria,'usuario'=> $_SESSION['id'],
         'logo'=>$photo,'logo_tipo'=> $tipoArchivo, 'titulo'=> $title,'rating'=> 0.0,'shortD'=>$shortD, 
         'longD'=>$longD,'numberV'=>0,'price'=> (float)$price])) {
-            header('Location:' . constant('URL') . 'Dashboard');
+            echo  $mensaje = 0;
         } else {
-            $mensaje = "No se pudo realizar el registro";
+           echo  $mensaje = -1;
         }
     }
 
