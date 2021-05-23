@@ -403,7 +403,7 @@ $(document).ready(function () {
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "http://localhost/CTW/Dashboard/AgregarRecurso",
+                            url: "http://localhost/CTW/dashboard/AgregarRecurso",
                             data: new FormData(this),
                             contentType: false,
                             cache: false,
@@ -419,6 +419,16 @@ $(document).ready(function () {
                             },
                             success: function (response) {
                                 console.log(response);
+                                $(".recursos-agregados").empty()
+                                $.ajax({
+                                    type: "POST",
+                                    url: "http://localhost/CTW/dashboard/mostrarRecursosAjax/" + $("#recursoIdCourse").val(),
+                                    data: null,
+                                    success: function (response) {
+                                        console.log(response);
+                                        $(".recursos-agregados").html(response)
+                                    }
+                                });
                                 $("#selectresource").val('')
                                 Swal.fire({
                                     title: 'Success!',
@@ -671,10 +681,10 @@ function agrergarVideos(e) {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#recursoIdCourse").val() + "/" + 5,
+        url: "http://localhost/CTW//dashboard/mostrarRecursosAjax/" + $("#recursoIdCourse").val(),
         data: null,
         success: function (response) {
-            if(response!= ""){
+            if(response != ""){
                 $(".recursos-agregados").html(response)
             }else{
                 $(".recursos-agregados").html(' <a> No hay recursos</a>')

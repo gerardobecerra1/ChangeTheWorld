@@ -1,6 +1,6 @@
 <?php
-include_once 'librerias/user_session.php';
-$userSession = new UserSession();
+// include_once 'librerias/user_session.php';
+// $userSession = new UserSession();
 
 if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
     ?>
@@ -31,7 +31,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
     <div class="d-flex">
         <div id="slidebar-container" class="silderbar">
             <div class="logo">
-                <a href="<?php echo constant('URL'); ?>Principal"><img
+                <a href="<?php echo constant('URL'); ?>principal"><img
                         src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt=""></a>
 
             </div>
@@ -69,9 +69,9 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                 <?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="<?php echo constant('URL').'Usuario'; ?>">My profile</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL').'usuario'; ?>">My profile</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Dashboard/cerrarSesion">log
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>dashboard/cerrarSesion">log
                                     out</a>
                             </div>
                         </li>
@@ -834,9 +834,9 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
 </html>
 <?php
 }else if(((string)$_SESSION['rol']) == "Student"){
-    header('Location:' . constant('URL') . 'Principal');
+    header('Location:' . constant('URL') . 'principal');
 } 
 else {
-    header('Location:' . constant('URL') . 'Landing');
+    header('Location:' . constant('URL') . 'landing');
 }
 ?>

@@ -30,7 +30,7 @@
                         <p>Gain skills with online courses, certificates and degrees offered by the world's leading
                             universities and companies.</p>
                         <div class="sign-up-btn">
-                            <a href="<?php echo constant('URL'); ?>Login" class="btn btn-1">Sign up</a>
+                            <a href="<?php echo constant('URL'); ?>login" class="btn btn-1">Sign up</a>
                             <button type="button" class="btn btn-1 video-play-btn">
                                 <i class="fas fa-play"></i>
                             </button>

@@ -63,6 +63,7 @@ FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course))	COMMENT'This table rep
 CREATE TABLE IF NOT EXISTS tbl_Resources(
 id_resource		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the video notes.',
 fk_course		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents which course the resource is from.',
+contentName 			VARCHAR(255) 			NULL 			COMMENT'This field represents the name of file.',
 content 			LONGBLOB 			NULL 			COMMENT'This field represents the content of file.',
 contentT 			VARCHAR(255) 			NULL 			COMMENT'This field represents the video type.',
 link 			VARCHAR(255)	 			NULL 				COMMENT'This field represents the content of the link.',

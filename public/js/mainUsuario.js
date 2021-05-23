@@ -1,21 +1,69 @@
 $(document).ready(function () {
-  $(".btn-profile, .btn-password, .btn-logout").click(function () {
-    Swal.fire({
-      title: 'Do you want to save the changes?',
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: `Save`,
-      denyButtonText: `Don't save`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        window.location.href = "Usuario/actualizar";
-        Swal.fire('Saved!', '', 'success')
-      } else if (result.isDenied) {
-        Swal.fire('Changes are not saved', '', 'info')
-      }
-    });
+
+  $(".Usuario_perfil").submit(function (e) {
+    e.preventDefault();
+    if ($("#upload_image").val() != "" || $("#inputUsername").val() != "" || $("#inputName").val() != "" || $("#inputLastName").val() != "" || $("#textareaAbout").val() != "") {
+      Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: `Save`,
+        denyButtonText: `Don't save`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            type: "POST",
+            url: "http://localhost/CTW/usuario/updatePublic",
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function () {
+              Swal.fire({
+                title: 'Please wait',
+                html: 'We are uploading your data',
+                didOpen: () => {
+                  Swal.showLoading()
+                },
+              })
+            },
+            success: function (response) {
+              var jsonData = JSON.parse(response)
+
+              $(".inputLaschange").empty();
+              $("#inputUsername").val('')
+              $("#inputName").val('')
+              $("#inputLastName").val('')
+              $("#textareaAbout").val('')
+
+              $(".inputLaschange").html('Last Change: <strong>' + jsonData.lastchange + '</strong>')
+              $("#inputUsername").attr('placeholder', jsonData.username)
+              $("#inputName").attr('placeholder', jsonData.name)
+              $("#inputLastName").attr('placeholder', jsonData.last)
+              $("#textareaAbout").attr('placeholder', jsonData.descrip)
+
+              Swal.fire({
+                title: 'Success!',
+                text: 'Successfully change!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+              })
+            }
+          });
+        } else if (result.isDenied) {
+          Swal.fire('Changes are not saved', '', 'info')
+        }
+      });
+    } else {
+      Swal.fire({
+        title: 'Empty Requirements!',
+        text: 'Enter all requeriments',
+        icon: 'error',
+        confirmButtonText: 'Retry'
+      })
+    }
   });
+
 
 
   $(".btn-logout").click(function () {
@@ -83,6 +131,7 @@ $(document).ready(function () {
       reader.onloadend = function () {
         $modal.modal('hide');
         $('#uploaded_image').attr('src', reader.result);
+        // $('#reco').attr('value', reader.result);
       };
     });
   });

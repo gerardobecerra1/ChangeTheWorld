@@ -25,7 +25,7 @@ $userSession = new UserSession();
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>Landing"><img
+            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>landing"><img
                     src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo" style="width:200px;"></a>
 
             <!-- Toggler/collapsibe Button -->
@@ -54,10 +54,10 @@ $userSession = new UserSession();
                                     alt="" style="border-radius: 50%; width: 30px;"><?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">Account
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>usuario">Account
                                     settings</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Landing">Sign off</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>landing">Sign off</a>
                             </div>
                         </div>
                     </li>
@@ -72,7 +72,7 @@ $userSession = new UserSession();
             <div class="row justify-content-center">
                 <div class="col">
                     <div class="section-title">
-                        <h2>Courses of <span><?php echo$this->nameCategoria; ?></span></h2>
+                        <h2>Courses of <span><?php echo $this->nameCategoria; ?></span></h2>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@ $userSession = new UserSession();
                         <h5 class="card-title"><?php echo $row->title ?></h5>
                         <p class="card-text"><?php echo $row->short_description ?></p>
                         <div class="botones text-center mt-3">
-                            <a href="<?php echo constant('URL'); ?>Curso" class="btn">View course</a>
+                            <a href="<?php echo constant('URL'); ?>curso" class="btn">View course</a>
                         </div>
                     </div>
                 </div>

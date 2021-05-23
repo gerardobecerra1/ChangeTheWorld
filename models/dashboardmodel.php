@@ -1,6 +1,8 @@
 <?php
 include_once 'models/usuario.php';
 include_once 'models/video.php';
+include_once 'models/recurso.php';
+
 class DashboardModel extends Model
 {
     public function __construct()
@@ -129,8 +131,8 @@ class DashboardModel extends Model
 
     function insertarResource($datos){
         try {
-            $query = $this->db->connect()->prepare('CALL insertar_recursos(:id, :contenido, :tipo, :link, :categoria)');
-            $query->execute(['id'=>$datos['id_curso'],'contenido'=>$datos['content'],'tipo'=>$datos['typeC'],'link'=>$datos['link'],'categoria'=>$datos['categoria']]);
+            $query = $this->db->connect()->prepare('CALL insertar_recursos(:id, :name, :contenido, :tipo, :link, :categoria)');
+            $query->execute(['id'=>$datos['id_curso'],'name'=>$datos['name'],'contenido'=>$datos['content'],'tipo'=>$datos['typeC'],'link'=>$datos['link'],'categoria'=>$datos['categoria']]);
             return true;
         } catch (PDOException $exc) {
             echo $exc;
@@ -159,6 +161,31 @@ class DashboardModel extends Model
                 array_push($videos, $video);
             }
             return $videos;
+        } catch (PDOException $exc) {
+            echo 'error en el procedure';
+        }
+    }
+
+    function traerRecursosPorCurso($id){
+        $recursos = [];
+
+        try {
+            $query = $this->db->connect()->prepare('CALL traer_recursos_por_curso(?)');
+            $query->bindParam(1, $id);
+            $query->execute();
+            while ($row = $query->fetch()) {
+                $recurso = new Recurso();
+                $recurso->id_resource = $row['id_resource'];
+                $recurso->fk_course = $row['fk_course'];
+                $recurso->contentName = $row['contentName'];
+                $recurso->content = $row['content'];
+                $recurso->contentT = $row['contentT'];
+                $recurso->link = $row['link'];
+                $recurso->categorie = $row['categorie'];
+
+                array_push($recursos, $recurso);
+            }
+            return $recursos;
         } catch (PDOException $exc) {
             echo 'error en el procedure';
         }

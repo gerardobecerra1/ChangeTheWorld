@@ -1,5 +1,6 @@
 <?php
 include_once 'librerias/user_session.php';
+
 class Usuario extends Controller
 {
     public function __construct()
@@ -18,9 +19,7 @@ class Usuario extends Controller
     }
 
     public function updatePublic()
-    {
-        $userSession = new UserSession();
-        
+    {   (new UserSession());
         $tipoArchivo = null;
         if (!empty($_FILES['image']['name'])) {
             $tipoArchivo = $_FILES['image']['type'];
@@ -64,6 +63,8 @@ class Usuario extends Controller
             $descrip = $_SESSION['descrip'];
         }
 
+       
+
         if ($this->model->updateUsuario(['id' => $id, 'photo' => $photo, 'pType' => $tipoArchivo, 'username' => $username, 'name' => $name, 'last' => $last, 'descrip' => $descrip])) {
             $_SESSION['photo'] = $photo;
             if (isset($tipoArchivo) && $tipoArchivo != '') {
@@ -74,14 +75,10 @@ class Usuario extends Controller
             $_SESSION['lastname'] = $last;
             $_SESSION['descrip'] = $descrip;
 
-            $mensaje = "Actualización exitosa";
-
-            header('Location:' . constant('URL') . 'Usuario');
+             echo json_encode(array('id' => $id, 'lastchange' => date('Y-m-d'),'pType' => $tipoArchivo, 'username' => $username, 'name' => $name, 'last' => $last, 'descrip' => $descrip));
         } else {
-            $mensaje = "No se pudo realizar la actualización";
+            echo "No se pudo realizar la actualización";
         }
-
-        $this->view->mensaje = $mensaje;
     }
 
     public function cerrarSesion()

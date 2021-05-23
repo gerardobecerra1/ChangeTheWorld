@@ -6,7 +6,7 @@ class Categoria extends Controller
     {
         parent::__construct();
         $this->view->cursosCategoria = new Cursos();
-        $this->view->nameCategoria = nulL;
+        $this->view->nameCategoria = null;
     }
 
     function render()

@@ -1,4 +1,5 @@
 <?php
+
 class Cursos
 {
     public $id_course;

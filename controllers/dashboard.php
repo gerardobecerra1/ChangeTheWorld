@@ -90,6 +90,19 @@ class Dashboard extends Controller
         }
     }
 
+    function mostrarRecursosAjax($param = null){
+        $recursos =  $this->model->traerRecursosPorCurso($param[0]);
+        foreach ($recursos as $row) {
+            if($row->categorie == "Media"){
+                echo '<a><i class="fas fa-photo-video"></i> '.$row->contentName.'</a>';
+            }else if($row->categorie == "File"){
+                echo '<a><i class="fas fa-file-pdf"></i> '.$row->contentName.'</a>';
+            }else{
+                echo '<a><i class="fas fa-link"></i> '.$row->link.'</a>';
+            }
+        }
+    }
+
     function registrarCurso(){
         $photo = null;
         $tipoArchivo = null;
@@ -243,8 +256,10 @@ class Dashboard extends Controller
     function AgregarRecurso(){
         $resource = null;
         $resourceType = null;
+        $resourceName = null;
 
         if (!empty($_FILES['selectresource']['name'])) {
+            $resourceName = $_FILES['selectresource']['name'];
             $resourceType = $_FILES['selectresource']['type'];
             $permitido = array('video/mp4','video/x-matroska','image/png', 'image/jpg', 'image/jpeg','application/pdf');
             if (!in_array($resourceType, $permitido)) {
@@ -262,7 +277,7 @@ class Dashboard extends Controller
 
         echo $id_curso.' '.$categoria.' '.$link.' '.$resourceType.' '.$resource;
 
-        $this->model->insertarResource(['id_curso'=>$id_curso,'content'=>$resource,'typeC'=>$resourceType,'link'=>$link,'categoria'=>$categoria]);
+        $this->model->insertarResource(['id_curso'=>$id_curso,'name'=> $resourceName,'content'=>$resource,'typeC'=>$resourceType,'link'=>$link,'categoria'=>$categoria]);
     }
 
     public function cerrarSesion()

@@ -29,7 +29,7 @@ if (isset($_SESSION['username'])) {
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>Landing"><img
+            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>landing"><img
                     src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo" style="width:200px;"></a>
 
             <!-- Toggler/collapsibe Button -->
@@ -41,7 +41,7 @@ if (isset($_SESSION['username'])) {
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto" id="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" data-scroll-nav="0" href="<?php echo constant('URL'); ?>Principal"><i
+                        <a class="nav-link" data-scroll-nav="0" href="<?php echo constant('URL'); ?>principal"><i
                                 class="fas fa-home"></i> Home</a>
                     </li>
                     <li class="nav-item">
@@ -69,8 +69,8 @@ if (isset($_SESSION['username'])) {
                     <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
                         aria-labelledby="v-pills-profile-tab">
                         <div class="container">
-                        <p><?php echo $this->mensaje; ?></p>
-                            <form method="POST" enctype="multipart/form-data" action="Usuario/updatePublic">
+                        <!-- action="Usuario/updatePublic -->
+                            <form class="Usuario_perfil" method="POST" enctype="multipart/form-data" ">
                                 <div class="form-group text-center">
                                     <div class="select-photo w-50 mx-auto">
                                             <label for="upload_image">
@@ -81,6 +81,7 @@ if (isset($_SESSION['username'])) {
                                                 </div>
                                                 <input type="file" name="image" class="image" id="upload_image"
                                                     style="display:none" />
+                                                    <!-- <input id="reco" type="text"> -->
                                             </label>
                                     </div>
 
@@ -88,7 +89,7 @@ if (isset($_SESSION['username'])) {
                                         or comment like chats.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputLaschange">Last Change: <strong><?php echo $_SESSION['lastchange']; ?></strong></label>
+                                    <label class="inputLaschange" for="inputLaschange">Last Change: <strong><?php echo $_SESSION['lastchange']; ?></strong></label>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputUsername">Username:</label>
@@ -200,6 +201,6 @@ if (isset($_SESSION['username'])) {
 </html>
 <?php
 } else {
-    header('Location:' . constant('URL') . 'Landing');
+    header('Location:' . constant('URL') . 'landing');
 }
 ?>

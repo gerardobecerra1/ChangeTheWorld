@@ -1,8 +1,6 @@
 <?php
 include_once 'librerias/user_session.php';
 $userSession = new UserSession();
-
-if (isset($_SESSION['username'])) {
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +25,7 @@ if (isset($_SESSION['username'])) {
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>Landing"><img
+            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>landing"><img
                     src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo" style="width:200px;"></a>
 
             <!-- Toggler/collapsibe Button -->
@@ -56,11 +54,11 @@ if (isset($_SESSION['username'])) {
                                     alt="" style="border-radius: 50%; width: 30px;"><?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">Account
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>usuario">Account
                                     settings</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item"
-                                    href="<?php echo constant('URL'); ?>Principal/cerrarSesion">Sign off</a>
+                                    href="<?php echo constant('URL'); ?>principal/cerrarSesion">Sign off</a>
                             </div>
                         </div>
                     </li>
@@ -91,7 +89,7 @@ if (isset($_SESSION['username'])) {
                                 <h5 class="card-title"><?php echo $row->title ?></h5>
                                 <p class="card-text"><?php echo $row->short_description ?></p>
                                 <div class="botones text-center">
-                                    <a href="<?php echo constant('URL'); ?>Principal/cargarCursos/<?php echo $row->id_course ?>"
+                                    <a href="<?php echo constant('URL'); ?>curso/cargarCurso/<?php echo $row->id_course ?>"
                                         class="btn">View content</a>
                                 </div>
                             </div>
@@ -125,7 +123,7 @@ if (isset($_SESSION['username'])) {
                                 <h5 class="card-title"><?php echo $row->title ?></h5>
                                 <p class="card-text"><?php echo $row->short_description ?></p>
                                 <div class="botones text-center">
-                                    <a href="<?php echo constant('URL'); ?>Principal/cargarCursos/<?php echo $row->id_course ?>"
+                                    <a href="<?php echo constant('URL'); ?>curso/cargarCursos/<?php echo $row->id_course ?>"
                                         class="btn">View content</a>
                                 </div>
                             </div>
@@ -155,7 +153,7 @@ if (isset($_SESSION['username'])) {
                         <div class="card" style="border: none;">
                             <div class="card-body">
                                 <div class="botones card-title text-center">
-                                    <a href="<?php echo constant('URL'); ?>Categoria/cargarCursos/<?php echo $row->name_categorie ?>/<?php echo $row->id_categorie ?>"
+                                    <a href="<?php echo constant('URL'); ?>categoria/cargarCursos/<?php echo $row->name_categorie ?>/<?php echo $row->id_categorie ?>"
                                         class="btn"><?php echo $row->name_categorie ?></a>
                                 </div>
                             </div>
@@ -237,8 +235,3 @@ if (isset($_SESSION['username'])) {
 </body>
 
 </html>
-<?php
-} else {
-    header('Location:' . constant('URL') . 'Landing');
-}
-?>

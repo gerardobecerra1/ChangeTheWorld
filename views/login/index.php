@@ -3,9 +3,9 @@ include_once 'librerias/user_session.php';
 $userSession = new UserSession();
 
 if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Teacher") {
-    header('Location:' . constant('URL') . 'Dashboard');
+    header('Location:' . constant('URL') . 'dashboard');
 } else if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Student") {
-    header('Location:' . constant('URL') . 'Principal');
+    header('Location:' . constant('URL') . 'principal');
 } else {
     ?>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Teacher") {
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-            <!-- action="<?php echo constant('URL') ?>Login/inicioSesion" -->
+
                 <form method="POST" class="sign-in-form">
                     <h2 class="title">Log in</h2>
                     <label for="tipo">Type:</label>
@@ -60,7 +60,6 @@ if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Teacher") {
                         </a>
                     </div>
                 </form>
-                <!-- action="<?php echo constant('URL') ?>Login/registrarUsuario" -->
                 <form method="POST" class="sign-up-form">
                     <h2 class="title">Sing in</h2>
                     <label for="tipo">Type:</label>
@@ -90,7 +89,7 @@ if (isset($_SESSION['username']) && ((string) $_SESSION['rol']) == "Teacher") {
                             title="Minimum 8 characters,Mayus, Numbers and  special digit " />
                     </div>
                     <button type="submit" id="btn_signin" class="btn">Sing in</button>
-                    <!-- <input type="submit" class="btn" value="Sing in" id="btn_signin" /> -->
+
 
                     <p class="social-text">Sing in with a social network.</p>
                     <div class="social-media">
