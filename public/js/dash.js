@@ -61,6 +61,7 @@ $(document).ready(function () {
                         processData: false,
                         success: function (response) {
                             if (response >= 0) {
+                                $("#Cursosapartado").empty();
                                 $("#uploaded_image").attr("src", "http://localhost/CTW/public/img/sinFoto.png");
                                 $("#upload_image").val('');
                                 $("#tipo-dash").val('');
@@ -74,6 +75,15 @@ $(document).ready(function () {
                                     icon: 'success',
                                     confirmButtonText: 'OK'
                                 })
+                                $.ajax({
+                                    type: "POST",
+                                    url: "http://localhost/CTW/Dashboard/mostrarCursosAjax",
+                                    data: null,
+                                    success: function (response) {
+                                        console.log(response);
+                                        $("#Cursosapartado").html(response);
+                                    }
+                                });
                             } else {
                                 Swal.fire({
                                     title: 'Error!',
@@ -98,6 +108,341 @@ $(document).ready(function () {
         }
     });
 
+    $(".agregar_video_introduction").submit(function (e) {
+        e.preventDefault();
+        if ($("#selectVideoIntro").val() != "" && $("#inputTitleVideoIntro").val() != "" && $("#shortVideoTitle").val() != "") {
+            Swal.fire({
+                title: 'Do you want to add this new video?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Add`,
+                denyButtonText: `Don't add`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost/CTW/Dashboard/AgregarVideoIntro",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        beforeSend: function () {
+                            Swal.fire({
+                                title: 'Please wait',
+                                html: 'We are uploading your video',
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            })
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            if (response >= 0) {
+                                $(".videos-agregados-intro").empty()
+                                $.ajax({
+                                    type: "POST",
+                                    url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#introductionIdCourse").val() + "/" + $("#introductionLevel").val(),
+                                    data: null,
+                                    success: function (response) {
+                                        console.log(response);
+                                        $(".videos-agregados-intro").html(response)
+                                    }
+                                });
+                                $("#selectVideoIntro").val('')
+                                $("#inputTitleVideoIntro").val('')
+                                $("#shortVideoTitle").val('')
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Successfully added!',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                })
+
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'The course could not be saved',
+                                    icon: 'error',
+                                    confirmButtonText: 'Retry'
+                                })
+                            }
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Video are not added', '', 'info')
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Empty Requirements!',
+                text: 'Enter all requeriments',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            })
+        }
+    });
+
+    $(".agregar_video_basic").submit(function (e) {
+        e.preventDefault();
+        if ($("#selectVideoBasic").val() != "" && $("#inputTitleVideoBasic").val() != "" && $("#shortVideoTitleBasic").val() != "") {
+            Swal.fire({
+                title: 'Do you want to add this new video?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Add`,
+                denyButtonText: `Don't add`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost/CTW/Dashboard/AgregarVideoBasic",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        beforeSend: function () {
+                            Swal.fire({
+                                title: 'Please wait',
+                                html: 'We are uploading your video',
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            })
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            if (response >= 0) {
+                                $(".videos-agregados-basic").empty()
+                                $(".videos-agregados-basic").html('<a><i class="fas fa-play-circle"></i> ' + $("#inputTitleVideoBasic").val() + '</a>')
+                                $("#selectVideoBasic").val('')
+                                $("#inputTitleVideoBasic").val('')
+                                $("#shortVideoTitleBasic").val('')
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Successfully added!',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                })
+
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'The course could not be saved',
+                                    icon: 'error',
+                                    confirmButtonText: 'Retry'
+                                })
+                            }
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Video are not added', '', 'info')
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Empty Requirements!',
+                text: 'Enter all requeriments',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            })
+        }
+    });
+
+    $(".agregar_video_medium").submit(function (e) {
+        e.preventDefault();
+        if ($("#selectVideoMedium").val() != "" && $("#inputTitleVideoMedium").val() != "" && $("#shortVideoTitleMedium").val() != "") {
+            Swal.fire({
+                title: 'Do you want to add this new video?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Add`,
+                denyButtonText: `Don't add`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost/CTW/Dashboard/AgregarVideoMedium",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        beforeSend: function () {
+                            Swal.fire({
+                                title: 'Please wait',
+                                html: 'We are uploading your video',
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            })
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            if (response >= 0) {
+                                console.log(response);
+                                $(".videos-agregados-medium").empty()
+                                $(".videos-agregados-medium").html('<a><i class="fas fa-play-circle"></i> ' + $("#inputTitleVideoMedium").val() + '</a>')
+                                $("#selectVideoMedium").val('')
+                                $("#inputTitleVideoMedium").val('')
+                                $("#shortVideoTitleMedium").val('')
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Successfully added!',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                })
+
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'The course could not be saved',
+                                    icon: 'error',
+                                    confirmButtonText: 'Retry'
+                                })
+                            }
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Course are not added', '', 'info')
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Empty Requirements!',
+                text: 'Enter all requeriments',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            })
+        }
+    });
+
+    $(".agregar_video_advanced").submit(function (e) {
+        e.preventDefault();
+        if ($("#selectVideoAdvanced").val() != "" && $("#inputTitleVideoAdvanced").val() != "" && $("#shortVideoTitleAdvanced").val() != "") {
+            Swal.fire({
+                title: 'Do you want to add this new video?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Add`,
+                denyButtonText: `Don't add`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost/CTW/Dashboard/AgregarVideoAdvanced",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        beforeSend: function () {
+                            Swal.fire({
+                                title: 'Please wait',
+                                html: 'We are uploading your video',
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            })
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            if (response >= 0) {
+                                console.log(response);
+                                $(".videos-agregados-advanced").empty()
+                                $(".videos-agregados-advanced").html('<a><i class="fas fa-play-circle"></i> ' + $("#inputTitleVideoAdvanced").val() + '</a>')
+                                $("#selectVideoAdvanced").val('')
+                                $("#inputTitleVideoAdvanced").val('')
+                                $("#shortVideoTitleAdvanced").val('')
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Successfully added!',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                })
+
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'The course could not be saved',
+                                    icon: 'error',
+                                    confirmButtonText: 'Retry'
+                                })
+                            }
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Course are not added', '', 'info')
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Empty Requirements!',
+                text: 'Enter all requeriments',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            })
+        }
+    });
+
+    $(".agregar_recurso").submit(function (e) {
+        e.preventDefault();
+        if ($("#inputLink").val() != "" || $("#selectresource").val() != "") {
+            if($("#inputLink").val() != "" && $("#selectresource").val() != ""){
+                Swal.fire({
+                    title: 'You can only save a link or a resource, not both.!',
+                    text: 'Delete One',
+                    icon: 'error',
+                    confirmButtonText: 'Retry'
+                })
+            }else{
+                Swal.fire({
+                    title: 'Do you want to add this new resource?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: `Add`,
+                    denyButtonText: `Don't add`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost/CTW/Dashboard/AgregarRecurso",
+                            data: new FormData(this),
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            beforeSend: function () {
+                                Swal.fire({
+                                    title: 'Please wait',
+                                    html: 'We are uploading your video',
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                    },
+                                })
+                            },
+                            success: function (response) {
+                                console.log(response);
+                                $("#selectresource").val('')
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Successfully added!',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                })
+                            }
+                        });
+                    } else if (result.isDenied) {
+                        Swal.fire('Resource are not added', '', 'info')
+                    }
+                });
+            }
+        } else {
+            Swal.fire({
+                title: 'Empty Requirements!',
+                text: 'Enter all requeriments',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            })
+        }
+    });
+    
 
     $(".btn_add_video").click(function (e) {
         $("#AgregarCapitulo").toggle();
@@ -115,6 +460,9 @@ $(document).ready(function () {
         $("#AgregarCapituloAdvanced").toggle();
     });
 
+    $(".btn_add_resource").click(function (e) {
+        $("#AgregarRecurso").toggle();
+    });
 
     $("#btn_dashboard").click(function () {
         $("#DASHBOARD").show();
@@ -148,13 +496,14 @@ $(document).ready(function () {
         $("#addVideos").hide();
     });
 
-    $("#btn_mycourse_videos").click(function () {
-        $("#addVideos").show();
-        $("#Statics").hide();
-        $("#CreateCourse").hide();
-        $("#MyCourse").hide();
-        $("#DASHBOARD").hide();
-    });
+    // $(".btn_mycourse_videos").click(function () {
+    //     $(".videosIdCourse").attr("value", $(this).val());
+    //     $("#addVideos").show();
+    //     $("#Statics").hide();
+    //     $("#CreateCourse").hide();
+    //     $("#MyCourse").hide();
+    //     $("#DASHBOARD").hide();
+    // });
 
     $("#btn_mycourse_Sales").click(function () {
         $(".sales").toggle();
@@ -259,3 +608,83 @@ $(document).ready(function () {
     }
 
 });
+
+function agrergarVideos(e) {
+    $(".videosIdCourse").attr("value", $(e).val());
+    $(".videos-agregados-intro").html(' <a>Cargando....</a>')
+    $(".videos-agregados-basic").html(' <a>Cargando....</a>')
+    $(".videos-agregados-medium").html(' <a>Cargando....</a>')
+    $(".videos-agregados-advanced").html(' <a>Cargando....</a>')
+    $(".recursos-agregados").html(' <a>Cargando....</a>')
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#introductionIdCourse").val() + "/" + $("#introductionLevel").val(),
+        data: null,
+        success: function (response) {
+            if(response!= ""){
+                $(".videos-agregados-intro").html(response)
+            }else{
+                $(".videos-agregados-intro").html(' <a> No hay videos</a>')
+            }  
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#basicIdCourse").val() + "/" + $("#basicLevel").val(),
+        data: null,
+        success: function (response) {
+            if(response!= ""){
+                $(".videos-agregados-basic").html(response)
+            }else{
+                $(".videos-agregados-basic").html(' <a> No hay videos</a>')
+            }  
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#mediumIdCourse").val() + "/" + $("#mediumLevel").val(),
+        data: null,
+        success: function (response) {
+            if(response!= ""){
+                $(".videos-agregados-medium").html(response)
+            }else{
+                $(".videos-agregados-medium").html(' <a> No hay videos</a>')
+            }    
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#advancedIdCourse").val() + "/" + $("#advancedLevel").val(),
+        data: null,
+        success: function (response) {
+            if(response!= ""){
+                $(".videos-agregados-advanced").html(response)
+            }else{
+                $(".videos-agregados-advanced").html(' <a> No hay videos</a>')
+            }
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#recursoIdCourse").val() + "/" + 5,
+        data: null,
+        success: function (response) {
+            if(response!= ""){
+                $(".recursos-agregados").html(response)
+            }else{
+                $(".recursos-agregados").html(' <a> No hay recursos</a>')
+            }
+        }
+    });
+
+    $("#addVideos").show();
+    $("#Statics").hide();
+    $("#CreateCourse").hide();
+    $("#MyCourse").hide();
+    $("#DASHBOARD").hide();
+}

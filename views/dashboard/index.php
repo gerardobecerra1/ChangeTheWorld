@@ -205,9 +205,9 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                 <ion-icon class="align-self-center" name="caret-down-outline">
                                 </ion-icon> </a>
                         </div>
-                        <div class="row justify-content-left">
+                        <div class="row justify-content-left" id="Cursosapartado">
                             <?php foreach ($this->miscursos as $row) {?>
-                            <div class="col-lg-4 mb-3" id="misCursos">
+                            <div class="col-lg-4 mb-3">
                                 <div class="card">
                                     <img src="<?php if(!empty($row->lType) && $row->lType != ''){echo 'data:'.$row->lType.';base64,'.base64_encode($row->logo);}else{echo constant('URL').'public/img/Machine.jpg';} ?>"
                                         class="card-img-top" alt="...">
@@ -215,9 +215,11 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                         <h5 class="card-title"><?php echo $row->title ?></h5>
                                         <p class="card-text"><?php echo $row->short_description ?></p>
                                         <div class="botones text-center mt-3 d-flex">
-                                            <button id="btn_mycourse_edit" class="btn main-color ml-1 mr-1"><i
-                                                    class="far fa-edit"></i></button>
-                                            <button id="btn_mycourse_videos" class="btn main-color ml-1 mr-1"><i
+                                            <!-- <button id="btn_mycourse_edit" class="btn main-color ml-1 mr-1"
+                                                value="<?php echo $row->id_course ?>"><i
+                                                    class="far fa-edit"></i></button> -->
+                                            <button class="btn btn_mycourse_videos main-color ml-1 mr-1"
+                                                onclick="agrergarVideos(this)" value="<?php echo $row->id_course ?>"><i
                                                     class="fas fa-film"></i> Add</button>
                                         </div>
                                         <div class="sales my-2">
@@ -242,7 +244,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
 
                 <section class="CreateCourse" id="CreateCourse">
                     <div class="container">
-                    <div class="row justify-content-center">
+                        <div class="row justify-content-center">
                             <div class="col-lg-12  main-color">
                                 <div class="section-title ">
                                     <h1 class="font-weight-bold main-color text-center">Create Course</h1>
@@ -365,7 +367,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
 
                 <section class="addVideos" id="addVideos">
                     <div class="container">
-                    <div class="row justify-content-center">
+                        <div class="row justify-content-center">
                             <div class="col-lg-12 main-color">
                                 <div class="section-title ">
                                     <h1 class="font-weight-bold main-color text-center">Add Videos</h1>
@@ -390,30 +392,34 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                                                 data-parent="#accordion">
                                                 <div class="card-body">
-                                                    <div class="accordion-body">
-                                                        <a href="#">Example: <i class="fas fa-play-circle"></i>
-                                                            Introduction</a>
+                                                    <div class="accordion-body videos-agregados-intro"
+                                                        style="display: grid;">
+                                                        <a>Cargando....</a>
                                                     </div>
                                                     <button class="btn btn_add_video w-100 mt-4"><i
                                                             class="fa fa-plus-circle" aria-hidden="true"></i> Add
                                                         Video</button>
                                                     <div class="container my-3" id="AgregarCapitulo">
-                                                        <form>
+                                                        <form class="agregar_video_introduction" method="POST"
+                                                            enctype="multipart/form-data">
+                                                            <input id="introductionIdCourse"
+                                                                class="videosIdCourse d-none"
+                                                                name="introductionIdCourse" value="" type="text">
+                                                            <input id="introductionLevel" class="d-none"
+                                                                name="introductionLevel" value="0" type="text">
                                                             <div class="form-group mb-3">
-                                                                <label for="inputTitleVideo">Select video:</label>
-                                                                <div class="custom-file">
-                                                                    <input type="file" class="custom-file-input"
-                                                                        id="inputGroupFile01">
-                                                                    <label class="custom-file-label"
-                                                                        for="inputGroupFile01"></label>
-                                                                </div>
+                                                                <label for="inputGroupFile01">Select video:</label>
+                                                                <input type="file" name="selectVideoIntro"
+                                                                    id="selectVideoIntro">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputTitleVideo">Example:
+                                                                <label for="inputTitleVideoIntro">Example:
                                                                     <strong>Complete course on Multimedia
                                                                         Database</strong></label>
                                                                 <input type="text" class="form-control"
-                                                                    id="inputTitleVideo" aria-describedby="TitleHelp"
+                                                                    id="inputTitleVideoIntro"
+                                                                    name="inputTitleVideoIntro"
+                                                                    aria-describedby="TitleHelp"
                                                                     placeholder="Write new title">
                                                                 <small id="TitleHelp" class="form-text text-muted">This
                                                                     text will be seen on the
@@ -422,8 +428,8 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                             <div class="form-group">
                                                                 <label for="inputDescriptionS">Short
                                                                     description:</label>
-                                                                <textarea name="" id="" class="w-100"
-                                                                    style="min-height: 100px;"
+                                                                <textarea name="shortVideoTitle" id="shortVideoTitle"
+                                                                    class="w-100" style="min-height: 100px;"
                                                                     placeholder="Write something short about your course"></textarea>
                                                                 <small id="inputDescriptionSHelp"
                                                                     class="form-text text-muted">Be as
@@ -432,7 +438,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                                     about.</small>
                                                             </div>
                                                             <div class="botones">
-                                                                <button type="button"
+                                                                <button type="submit"
                                                                     class="btn btn-video">Save</button>
                                                             </div>
                                                         </form>
@@ -453,30 +459,32 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                                                 data-parent="#accordion">
                                                 <div class="card-body">
-                                                    <div class="accordion-body">
-                                                        <a href="#">Example: <i class="fas fa-play-circle"></i>
-                                                            Introduction</a>
+                                                    <div class="accordion-body videos-agregados-basic">
+                                                        <a>Cargando....</a>
                                                     </div>
                                                     <button class="btn btn_add_basic w-100 mt-4"><i
                                                             class="fa fa-plus-circle" aria-hidden="true"></i> Add
                                                         Video</button>
                                                     <div class="container my-3" id="AgregarCapituloBasico">
-                                                        <form>
+                                                        <form class="agregar_video_basic" method="POST"
+                                                            enctype="multipart/form-data">
+                                                            <input id="basicIdCourse" class="videosIdCourse d-none"
+                                                                name="basicIdCourse" value="" type="text">
+                                                            <input id="basicLevel" class="d-none" name="basicLevel"
+                                                                value="1" type="text">
                                                             <div class="form-group mb-3">
-                                                                <label for="inputTitleVideo">Select video:</label>
-                                                                <div class="custom-file">
-                                                                    <input type="file" class="custom-file-input"
-                                                                        id="inputGroupFile01">
-                                                                    <label class="custom-file-label"
-                                                                        for="inputGroupFile01"></label>
-                                                                </div>
+                                                                <label for="inputGroupFile02">Select video:</label>
+                                                                <input type="file" name="selectVideoBasic"
+                                                                    id="selectVideoBasic">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputTitleVideo">Example:
+                                                                <label for="inputTitleVideoBasic">Example:
                                                                     <strong>Complete course on Multimedia
                                                                         Database</strong></label>
                                                                 <input type="text" class="form-control"
-                                                                    id="inputTitleVideo" aria-describedby="TitleHelp"
+                                                                    id="inputTitleVideoBasic"
+                                                                    name="inputTitleVideoBasic"
+                                                                    aria-describedby="TitleHelp"
                                                                     placeholder="Write new title">
                                                                 <small id="TitleHelp" class="form-text text-muted">This
                                                                     text will be seen on the
@@ -485,7 +493,8 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                             <div class="form-group">
                                                                 <label for="inputDescriptionS">Short
                                                                     description:</label>
-                                                                <textarea name="" id="" class="w-100"
+                                                                <textarea name="shortVideoTitleBasic"
+                                                                    id="shortVideoTitleBasic" class="w-100"
                                                                     style="min-height: 100px;"
                                                                     placeholder="Write something short about your course"></textarea>
                                                                 <small id="inputDescriptionSHelp"
@@ -495,7 +504,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                                     about.</small>
                                                             </div>
                                                             <div class="botones">
-                                                                <button type="button"
+                                                                <button type="submit"
                                                                     class="btn btn-video">Save</button>
                                                             </div>
                                                         </form>
@@ -516,30 +525,33 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                             <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                                                 data-parent="#accordion">
                                                 <div class="card-body">
-                                                    <div class="accordion-body">
+                                                    <div class="accordion-body videos-agregados-medium">
                                                         <a href="#">Example: <i class="fas fa-play-circle"></i>
                                                             Introduction</a>
                                                     </div>
-                                                    <button class="btn btn_add_medium w-100 mt-4"><i
+                                                    <button class="btn btn_add_resource w-100 mt-4"><i
                                                             class="fa fa-plus-circle" aria-hidden="true"></i> Add
-                                                        Video</button>
+                                                        Resoruce</button>
                                                     <div class="container my-3" id="AgregarCapituloMedium">
-                                                        <form>
+                                                        <form class="agregar_video_medium" method="POST"
+                                                            enctype="multipart/form-data">
+                                                            <input id="mediumIdCourse" class="videosIdCourse d-none"
+                                                                name="mediumIdCourse" value="" type="text">
+                                                            <input id="mediumLevel" class="d-none" name="mediumLevel"
+                                                                value="2" type="text">
                                                             <div class="form-group mb-3">
-                                                                <label for="inputTitleVideo">Select video:</label>
-                                                                <div class="custom-file">
-                                                                    <input type="file" class="custom-file-input"
-                                                                        id="inputGroupFile01">
-                                                                    <label class="custom-file-label"
-                                                                        for="inputGroupFile01"></label>
-                                                                </div>
+                                                                <label for="inputGroupFile03">Select video:</label>
+                                                                <input type="file" name="selectVideoMedium"
+                                                                    id="selectVideoMedium">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputTitleVideo">Example:
+                                                                <label for="inputTitleVideoMedium">Example:
                                                                     <strong>Complete course on Multimedia
                                                                         Database</strong></label>
                                                                 <input type="text" class="form-control"
-                                                                    id="inputTitleVideo" aria-describedby="TitleHelp"
+                                                                    id="inputTitleVideoMedium"
+                                                                    name="inputTitleVideoMedium"
+                                                                    aria-describedby="TitleHelp"
                                                                     placeholder="Write new title">
                                                                 <small id="TitleHelp" class="form-text text-muted">This
                                                                     text will be seen on the
@@ -548,7 +560,8 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                             <div class="form-group">
                                                                 <label for="inputDescriptionS">Short
                                                                     description:</label>
-                                                                <textarea name="" id="" class="w-100"
+                                                                <textarea name="shortVideoTitleMedium"
+                                                                    id="shortVideoTitleMedium" class="w-100"
                                                                     style="min-height: 100px;"
                                                                     placeholder="Write something short about your course"></textarea>
                                                                 <small id="inputDescriptionSHelp"
@@ -558,7 +571,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                                     about.</small>
                                                             </div>
                                                             <div class="botones">
-                                                                <button type="button"
+                                                                <button type="submit"
                                                                     class="btn btn-video">Save</button>
                                                             </div>
                                                         </form>
@@ -579,30 +592,32 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                             <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
                                                 data-parent="#accordion">
                                                 <div class="card-body">
-                                                    <div class="accordion-body">
-                                                        <a href="#">Example: <i class="fas fa-play-circle"></i>
-                                                            Introduction</a>
+                                                    <div class="accordion-body videos-agregados-advanced">
+                                                        <a>Cargando....</a>
                                                     </div>
                                                     <button class="btn btn_add_advanced w-100 mt-4"><i
                                                             class="fa fa-plus-circle" aria-hidden="true"></i> Add
                                                         Video</button>
                                                     <div class="container my-3" id="AgregarCapituloAdvanced">
-                                                        <form>
+                                                        <form class="agregar_video_advanced" method="POST"
+                                                            enctype="multipart/form-data">
+                                                            <input id="advancedIdCourse" class="videosIdCourse d-none"
+                                                                name="advancedIdCourse" value="" type="text">
+                                                            <input id="advancedLevel" class="d-none"
+                                                                name="advancedLevel" value="3" type="text">
                                                             <div class="form-group mb-3">
-                                                                <label for="inputTitleVideo">Select video:</label>
-                                                                <div class="custom-file">
-                                                                    <input type="file" class="custom-file-input"
-                                                                        id="inputGroupFile01">
-                                                                    <label class="custom-file-label"
-                                                                        for="inputGroupFile01"></label>
-                                                                </div>
+                                                                <label for="inputGroupFile04">Select video:</label>
+                                                                <input type="file" name="selectVideoAdvanced"
+                                                                    id="selectVideoAdvanced">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputTitleVideo">Example:
+                                                                <label for="inputTitleVideoAdvanced">Example:
                                                                     <strong>Complete course on Multimedia
                                                                         Database</strong></label>
                                                                 <input type="text" class="form-control"
-                                                                    id="inputTitleVideo" aria-describedby="TitleHelp"
+                                                                    id="inputTitleVideoAdvanced"
+                                                                    name="inputTitleVideoAdvanced"
+                                                                    aria-describedby="TitleHelp"
                                                                     placeholder="Write new title">
                                                                 <small id="TitleHelp" class="form-text text-muted">This
                                                                     text will be seen on the
@@ -611,7 +626,8 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                             <div class="form-group">
                                                                 <label for="inputDescriptionS">Short
                                                                     description:</label>
-                                                                <textarea name="" id="" class="w-100"
+                                                                <textarea name="shortVideoTitleAdvanced"
+                                                                    id="shortVideoTitleAdvanced" class="w-100"
                                                                     style="min-height: 100px;"
                                                                     placeholder="Write something short about your course"></textarea>
                                                                 <small id="inputDescriptionSHelp"
@@ -621,7 +637,61 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                                     about.</small>
                                                             </div>
                                                             <div class="botones">
-                                                                <button type="button"
+                                                                <button type="submit"
+                                                                    class="btn btn-video">Save</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingFive">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" data-toggle="collapse"
+                                                        data-target="#collapseFive" aria-expanded="true"
+                                                        aria-controls="collapseFive">
+                                                        Resources
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseFive" class="collapse" aria-labelledby="headingFive"
+                                                data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="accordion-body recursos-agregados"
+                                                        style="display: grid;">
+                                                        <a>Cargando....</a>
+                                                    </div>
+                                                    <button class="btn btn_add_resource w-100 mt-4"><i
+                                                            class="fa fa-plus-circle" aria-hidden="true"></i> Add
+                                                        Resource</button>
+                                                    <div class="container my-3" id="AgregarRecurso">
+                                                        <form class="agregar_recurso" method="POST"
+                                                            enctype="multipart/form-data">
+                                                            <div class="form-group mt-4">
+                                                                <label for="tipo">Type:</label>
+                                                                <select name="role_resource" id="tipo-resource"
+                                                                    class="selector">
+                                                                    <option value="File">File</option>
+                                                                    <option value="Media">Media</option>
+                                                                    <option value="Link">Link</option>
+                                                                </select>
+                                                            </div>
+                                                            <input id="recursoIdCourse" class="videosIdCourse d-none"
+                                                                name="recursoIdCourse" value="" type="text">
+                                                            <div class="form-group mb-3">
+                                                                <label for="inputGroupFile01">Select resource:</label>
+                                                                <input type="file" name="selectresource"
+                                                                    id="selectresource">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputLink">Paste a link</label>
+                                                                <input type="text" class="form-control" id="inputLink"
+                                                                    name="inputLink" aria-describedby="TitleHelp"
+                                                                    placeholder="Write new title">
+                                                            </div>
+                                                            <div class="botones">
+                                                                <button type="submit"
                                                                     class="btn btn-video">Save</button>
                                                             </div>
                                                         </form>

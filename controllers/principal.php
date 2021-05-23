@@ -8,21 +8,17 @@ class Principal extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->view->recommended = [];
-        $this->view->recent = [];
+        $this->view->calificados = new Cursos();
+        $this->view->vendidos = new Cursos();
+        $this->view->recientes = new Cursos();
         $this->view->categorias = new Categoria();
     }
 
     public function render()
     {
-        // //trae los cursos recomendados
-        // $recommendedAll = $this->model->getReco();
-        // $this->view->recommended = $recommendedAll;
-
-        // //trae los cursos receintes
-        // $recentAll = $this->model->getRecent();
-        // $this->view->categorias = $recentAll;
-
+        $this->view->calificados = $this->model->getMejorCalificados();
+        // $this->view->vendidos = $this->model->getMasVendidos();
+        $this->view->recientes = $this->model->getRecientes();
         $this->view->categorias = $this->model->getCategories();
         $this->view->render('principal/index');
     }

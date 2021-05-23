@@ -1,5 +1,6 @@
 <?php
 include_once 'models/usuario.php';
+include_once 'models/video.php';
 class DashboardModel extends Model
 {
     public function __construct()
@@ -114,4 +115,52 @@ class DashboardModel extends Model
             echo 'error en el procedure';
         }
     } 
+
+    function insertarVideoIntroduction($datos){
+        try {
+            $query = $this->db->connect()->prepare('CALL insertar_videos_introduction(:id, :title, :short, :video, :type, :level)');
+            $query->execute(['id'=>$datos['id_curso'],'title'=>$datos['title'],'short'=>$datos['shortD'],'video'=>$datos['video'],'type'=>$datos['typeV'],'level'=>$datos['level']]);
+            return true;
+        } catch (PDOException $exc) {
+            echo $exc;
+            return false;
+        }
+    }
+
+    function insertarResource($datos){
+        try {
+            $query = $this->db->connect()->prepare('CALL insertar_recursos(:id, :contenido, :tipo, :link, :categoria)');
+            $query->execute(['id'=>$datos['id_curso'],'contenido'=>$datos['content'],'tipo'=>$datos['typeC'],'link'=>$datos['link'],'categoria'=>$datos['categoria']]);
+            return true;
+        } catch (PDOException $exc) {
+            echo $exc;
+            return false;
+        }
+    }
+    
+
+    function traerVideosUsuarioPorNivel($curso,$nivel){
+        $videos = [];
+
+        try {
+            $query = $this->db->connect()->prepare('CALL traer_videos_de_usuario_por_nivel(?,?)');
+            $query->bindParam(1, $curso);
+            $query->bindParam(2, $nivel);
+            $query->execute();
+            while ($row = $query->fetch()) {
+                $video = new Video();
+                $video->id_video = $row['id_video'];
+                $video->fk_course = $row['fk_course'];
+                $video->title = $row['title'];
+                $video->short_description = $row['short_description'];
+                $video->content = $row['content'];
+                $video->contentT = $row['contentT'];
+                $video->level_ = $row['level_'];
+                array_push($videos, $video);
+            }
+            return $videos;
+        } catch (PDOException $exc) {
+            echo 'error en el procedure';
+        }
+    }
 }

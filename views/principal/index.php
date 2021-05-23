@@ -76,68 +76,28 @@ if (isset($_SESSION['username'])) {
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="section-title">
-                        <h2>Recommended For <span>You</span></h2>
+                        <h2>Top <span>Rated</span></h2>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="owl-carousel courses-carousel">
+                    <?php foreach ($this->calificados as $row) {?>
                     <div class="courses-item">
                         <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/algebra.jpg" class="card-img-top"
-                                alt="...">
+                            <img src="<?php if(!empty($row->lType) && $row->lType != ''){echo 'data:'.$row->lType.';base64,'.base64_encode($row->logo);}else{echo constant('URL').'public/img/algebra.jpg';} ?>"
+                                class="card-img-top" alt="...">
                             <div class="card-body ">
-                                <h5 class="card-title">Complete Linear Algebra Course from Zero to Expert</h5>
-                                <p class="card-text">Learn the basics to apply linear algebra to Statistics, Machine
-                                    Learning and Artificial Intelligence</p>
+                                <h5 class="card-title"><?php echo $row->title ?></h5>
+                                <p class="card-text"><?php echo $row->short_description ?></p>
                                 <div class="botones text-center">
-                                    <a href="PaginaCurso.html" class="btn">View content</a>
+                                    <a href="<?php echo constant('URL'); ?>Principal/cargarCursos/<?php echo $row->id_course ?>"
+                                        class="btn">View content</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="courses-item">
-                        <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/Unreal.jpg" class="card-img-top"
-                                alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Master Unreal Engine 4 Game Development with Blueprints</h5>
-                                <p class="card-text">Learn to create AAA Videogames FROM SCRATCH, complete development
-                                    and programming with Blueprints and Unreal</p>
-                                <div class="botones text-center">
-                                    <a href="PaginaCurso.html" class="btn">View content</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="courses-item">
-                        <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/deeplearn.jpeg" class="card-img-top"
-                                alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Deep Learning: Neural Networks in Python from Scratch</h5>
-                                <p class="card-text">Learn how to create deep learning algorithms in Python with machine
-                                    learning and data science experts</p>
-                                <div class="botones text-center">
-                                    <a href="PaginaCurso.html" class="btn">View content</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="courses-item">
-                        <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/blender.jpg" class="card-img-top"
-                                alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Character sculpture with Blender 2.91</h5>
-                                <p class="card-text">Learn everything you need to create 3D characters with Blender's
-                                    sculpture mode tools</p>
-                                <div class="botones text-center">
-                                    <a href="PaginaCurso.html" class="btn">View content</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php }?>
                 </div>
             </div>
         </div>
@@ -150,68 +110,28 @@ if (isset($_SESSION['username'])) {
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="section-title">
-                        <h2>Most <span>recent</span></h2>
+                        <h2>Most <span>Recent</span></h2>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="owl-carousel courses-carousel">
+                    <?php foreach ($this->recientes as $row) {?>
                     <div class="courses-item">
                         <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/algebra.jpg" class="card-img-top"
-                                alt="...">
+                            <img src="<?php if(!empty($row->lType) && $row->lType != ''){echo 'data:'.$row->lType.';base64,'.base64_encode($row->logo);}else{echo constant('URL').'public/img/algebra.jpg';} ?>"
+                                class="card-img-top" alt="...">
                             <div class="card-body ">
-                                <h5 class="card-title">Complete Linear Algebra Course from Zero to Expert</h5>
-                                <p class="card-text">Learn the basics to apply linear algebra to Statistics, Machine
-                                    Learning and Artificial Intelligence</p>
+                                <h5 class="card-title"><?php echo $row->title ?></h5>
+                                <p class="card-text"><?php echo $row->short_description ?></p>
                                 <div class="botones text-center">
-                                    <a href="PaginaCurso.html" class="btn">View content</a>
+                                    <a href="<?php echo constant('URL'); ?>Principal/cargarCursos/<?php echo $row->id_course ?>"
+                                        class="btn">View content</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="courses-item">
-                        <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/Unreal.jpg" class="card-img-top"
-                                alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Master Unreal Engine 4 Game Development with Blueprints</h5>
-                                <p class="card-text">Learn to create AAA Videogames FROM SCRATCH, complete development
-                                    and programming with Blueprints and Unreal</p>
-                                <div class="botones text-center">
-                                    <a href="PaginaCurso.html" class="btn">View content</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="courses-item">
-                        <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/deeplearn.jpeg" class="card-img-top"
-                                alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Deep Learning: Neural Networks in Python from Scratch</h5>
-                                <p class="card-text">Learn how to create deep learning algorithms in Python with machine
-                                    learning and data science experts</p>
-                                <div class="botones text-center">
-                                    <a href="PaginaCurso.html" class="btn">View content</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="courses-item">
-                        <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/blender.jpg" class="card-img-top"
-                                alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Character sculpture with Blender 2.91</h5>
-                                <p class="card-text">Learn everything you need to create 3D characters with Blender's
-                                    sculpture mode tools</p>
-                                <div class="botones text-center">
-                                    <a href="PaginaCurso.html" class="btn">View content</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php }?>
                 </div>
             </div>
         </div>

@@ -38,7 +38,7 @@ fk_user 				INT UNSIGNED 		NOT NULL 			COMMENT'This field represents who created
 logo 					MEDIUMBLOB 				NOT NULL 			COMMENT'This field represents the course logo.',
 lType 				VARCHAR(255) 		NULL 				COMMENT'This field represents the course logo format.',
 title 					VARCHAR(255) 		NOT NULL UNIQUE 	COMMENT'This field represents the title of the course.',
-average_rating 			DECIMAL(1,1) 		NULL 				COMMENT'This field represents the average rating for the course.',
+average_rating 			DECIMAL(5,2)  		NULL 				COMMENT'This field represents the average rating for the course.',
 short_description 		TEXT 				NOT NULL 			COMMENT'This field represents a short description of the course.',
 large_description 		TEXT 				NOT NULL 			COMMENT'This field represents a great description of the course in detail.',
 number_videos			INT  DEFAULT 0				NULL 				COMMENT'This field represents the number of VIDEOS for the course.',
@@ -54,6 +54,7 @@ fk_course 			INT UNSIGNED 		NOT NULL 			COMMENT'This field represents which cour
 title 				VARCHAR(255) 		NOT NULL		 	COMMENT'This field represents the title of the video.',
 short_description 	TEXT 				NOT NULL 			COMMENT'This field represents a short description of the video.',
 content 			LONGBLOB 			NOT NULL 			COMMENT'This field represents the video.',
+contentT 			VARCHAR(255) 			NOT NULL 			COMMENT'This field represents the video type.',
 viewed 				BOOLEAN 			NOT NULL DEFAULT 0 	COMMENT'This field represents whether the video has been viewed or not.',
 level_				int					NOT NULL			COMMENT'This field represents  level of the coruse (basic,expert, etc).',
 PRIMARY KEY(id_video),
@@ -61,13 +62,13 @@ FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course))	COMMENT'This table rep
 
 CREATE TABLE IF NOT EXISTS tbl_Resources(
 id_resource		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the video notes.',
-fk_video		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents which video the note is from.',
-fk_user 		INT UNSIGNED 	  	NULL 				COMMENT'This field represents by whom the note was written.',
-note 			TEXT	 			NULL 				COMMENT'This field represents the content of the note.',
+fk_course		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents which course the resource is from.',
+content 			LONGBLOB 			NULL 			COMMENT'This field represents the content of file.',
+contentT 			VARCHAR(255) 			NULL 			COMMENT'This field represents the video type.',
+link 			VARCHAR(255)	 			NULL 				COMMENT'This field represents the content of the link.',
 categorie		VARCHAR(20)			NOT NULL			COMMENT'This field represents the categorie of the reource (files,media,link).',
 PRIMARY KEY(id_resource),
-FOREIGN KEY(fk_video) REFERENCES tbl_Videos(id_video),
-FOREIGN KEY(fk_user) REFERENCES tbl_Users(id_user)) COMMENT'This table represents all the notes made by users in the video.';
+FOREIGN KEY(fk_course) REFERENCES tbl_courses(id_course)) COMMENT'This table represents all the notes made by users in the video.';
 
 CREATE TABLE IF NOT EXISTS tbl_Comments_Courses(
 id_comment_course		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the course comment.',
@@ -121,7 +122,7 @@ CREATE TABLE IF NOT EXISTS tbl_Ratings(
 id_rating		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the grade identifier in the course.',
 fk_user 		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents who graded the course.',
 fk_course 		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents which course was graded.',
-points			DECIMAL(1,1) 		NOT NULL 			COMMENT'This field represents the rating that the user gave.',
+points			DECIMAL(5,2) 		NOT NULL 			COMMENT'This field represents the rating that the user gave.',
 PRIMARY KEY(id_rating),
 FOREIGN KEY(fk_user) REFERENCES tbl_Users(id_user),
 FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course)) COMMENT'This table represents the grade of each user to the course.';
