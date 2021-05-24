@@ -56,6 +56,7 @@ $userSession = new UserSession();
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>usuario">Account
                                     settings</a>
+                                    <a class="dropdown-item" href="<?php echo constant('URL'); ?>mycourse">My courses</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item"
                                     href="<?php echo constant('URL'); ?>principal/cerrarSesion">Sign off</a>
@@ -89,7 +90,7 @@ $userSession = new UserSession();
                                 <h5 class="card-title"><?php echo $row->title ?></h5>
                                 <p class="card-text"><?php echo $row->short_description ?></p>
                                 <div class="botones text-center">
-                                    <a href="<?php echo constant('URL'); ?>curso/cargarCurso/<?php echo $row->id_course ?>"
+                                    <a href="<?php echo constant('URL'); ?>curso/cargarCursos/<?php echo $row->id_course ?>"
                                         class="btn">View content</a>
                                 </div>
                             </div>

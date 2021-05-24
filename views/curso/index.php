@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- fontawesome icons -->
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/font-awesome.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -20,7 +21,7 @@
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>landing"><img
+            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>principal"><img
                     src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo" style="width:200px;"></a>
             <a class="navbar-brand" id="text-course" href="#"><img
                     src="<?php if(!empty($this->curso->lType) && $this->curso->lType != ''){echo 'data:'.$this->curso->lType.';base64,'.base64_encode($this->curso->logo);}else{echo constant('URL').'public/img/MachineLearn.svg';} ?>"
@@ -55,21 +56,22 @@
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" href="#"><img src="IMG/avatar_opt.jpg" alt=""
                                     style="border-radius: 50%; width: 30px;">
-                                Username
+                                <?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>usuario">Account
                                     settings</a>
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>mycourse">My courses</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>landing">Sign off</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>principal/cerrarSesion">Sign off</a>
                             </div>
                         </div>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto" id="navbar-nav-course">
                     <li class="nav-item">
-                        <a href="#" class="btn btn-2">Buy for $<?php echo $this->curso->cost; ?></a>
+                        <a href="<?php echo constant('URL'); ?>pago/compraCurso/<?php echo $this->curso->id_course; ?>"
+                            class="btn btn-2">Buy for $<?php echo $this->curso->cost; ?></a>
                     </li>
                 </ul>
             </div>
@@ -86,23 +88,24 @@
                         <h1><?php echo $this->curso->title; ?></h1>
                         <p><?php echo $this->curso->short_description; ?></p>
                         <div class="section-rating">
-                            <span><?php echo $this->curso->average_rating; ?></span>
+                            <span>Rating: <?php echo $this->curso->average_rating; ?></span>
                             <!-- <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
                             <i class="far fa-star"></i> -->
+                            <!-- <i class="far fa-star"></i>
                             <i class="far fa-star"></i>
                             <i class="far fa-star"></i>
                             <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <!--                            
+                            <i class="far fa-star"></i> -->
+                            <!--
                            <h3>20.000 Usuarios</h3> -->
                         </div>
 
                         <div class="sign-up-btn">
-                            <a href="#" class="btn btn-1">Buy for $<?php echo $this->curso->cost; ?></a>
+                            <a href="<?php echo constant('URL'); ?>pago/compraCurso/<?php echo $this->curso->id_course; ?>"
+                                class="btn btn-1">Buy for $<?php echo $this->curso->cost; ?></a>
                         </div>
                     </div>
                 </div>
@@ -131,54 +134,110 @@
                 <div class="col-lg">
                     <div id="accordion">
                         <div class="accordion-item">
+
                             <div class="accordion-header" data-toggle="collapse" data-target="#collapse-01">
                                 <h3>Introduction</h3>
-                                <h3>3 videos</h3>
+                                <h3><?php $numVideos = 0; foreach ($this->videosIntro as $row) {$numVideos=$numVideos+1;} echo $numVideos;?>
+                                    videos</h3>
                             </div>
                             <div class="collapse show" id="collapse-01" data-parent="#accordion">
+                                <?php foreach ($this->videosIntro as $row) {?>
                                 <div class="accordion-body">
-                                    <a href="<?php echo constant('URL'); ?>videos"><i class="fas fa-play-circle"></i>
-                                        Introduction</a>
+                                    <a
+                                        href="<?php echo constant('URL'); ?>videos/traerVideo/<?php echo $row->id_video; ?>">
+                                        <?php if($row->viewed) {?>
+                                        <i class="fas fa-lock-open"></i>
+                                        <?php }else{?>
+                                        <i class="fas fa-lock"></i>
+                                        <?php }?>
+                                        <?php echo $row->title; ?>
+                                    </a>
                                 </div>
-                                <div class="accordion-body ">
-                                    <a href="#"><i class="fas fa-play-circle"></i> Course prerequisites</a>
-                                </div>
-                                <div class="accordion-body">
-                                    <a href="#"><i class="fas fa-play-circle"></i> Meet the instructor</a>
-                                </div>
+                                <?php }?>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <div class="accordion-header collapsed" data-toggle="collapse" data-target="#collapse-02">
                                 <h3>Basic</h3>
-                                <h3>1 videos</h3>
+                                <h3><?php $numVideos = 0; foreach ($this->videosBasic as $row) {$numVideos=$numVideos+1;} echo $numVideos;?>
+                                    videos</h3>
                             </div>
                             <div class="collapse" id="collapse-02" data-parent="#accordion">
+                                <?php foreach ($this->videosBasic as $row) {?>
                                 <div class="accordion-body">
-                                    <a href="#"><i class="fas fa-play-circle"></i> Course video title</a>
+                                    <a
+                                        href="<?php echo constant('URL'); ?>videos/traerVideo/<?php echo $row->id_video; ?>">
+                                        <?php if($row->viewed) {?>
+                                        <i class="fas fa-lock-open"></i>
+                                        <?php }else{?>
+                                        <i class="fas fa-lock"></i>
+                                        <?php }?>
+                                        <?php echo $row->title; ?></a>
                                 </div>
                             </div>
+                            <?php }?>
                         </div>
                         <div class="accordion-item">
                             <div class="accordion-header collapsed" data-toggle="collapse" data-target="#collapse-03">
                                 <h3>Medium</h3>
-                                <h3>1 videos</h3>
+                                <h3><?php $numVideos = 0; foreach ($this->videosMedium as $row) {$numVideos=$numVideos+1;} echo $numVideos;?>
+                                    videos</h3>
                             </div>
                             <div class="collapse" id="collapse-03" data-parent="#accordion">
+                                <?php foreach ($this->videosMedium as $row) {?>
                                 <div class="accordion-body">
-                                    <a href="#"><i class="fas fa-play-circle"></i> Course video title</a>
+                                    <a
+                                        href="<?php echo constant('URL'); ?>videos/traerVideo/<?php echo $row->id_video; ?>">
+                                        <?php if($row->viewed) {?>
+                                        <i class="fas fa-lock-open"></i>
+                                        <?php }else{?>
+                                        <i class="fas fa-lock"></i>
+                                        <?php }?>
+                                        <?php echo $row->title; ?></a>
                                 </div>
+                                <?php }?>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <div class="accordion-header collapsed" data-toggle="collapse" data-target="#collapse-04">
                                 <h3>Advanced</h3>
-                                <h3>1 videos</h3>
+                                <h3><?php $numVideos = 0; foreach ($this->videosAdvance as $row) {$numVideos=$numVideos+1;} echo $numVideos;?>
+                                    videos</h3>
                             </div>
                             <div class="collapse" id="collapse-04" data-parent="#accordion">
+                                <?php foreach ($this->videosAdvance as $row) {?>
                                 <div class="accordion-body">
-                                    <a href="#"><i class="fas fa-play-circle"></i> Course video title</a>
+                                    <a
+                                        href="<?php echo constant('URL'); ?>videos/traerVideo/<?php echo $row->id_video; ?>">
+                                        <?php if($row->viewed) {?>
+                                        <i class="fas fa-lock-open"></i>
+                                        <?php }else{?>
+                                        <i class="fas fa-lock"></i>
+                                        <?php }?>
+                                        <?php echo $row->title; ?></a>
                                 </div>
+                            </div>
+                            <?php }?>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header collapsed" data-toggle="collapse" data-target="#collapse-05">
+                                <h3>Resources</h3>
+                                <h3><?php $numReso = 0; foreach ($this->Resources as $row) {$numReso=$numReso+1;} echo $numReso;?>
+                                    resources</h3>
+                            </div>
+                            <div class="collapse" id="collapse-05" data-parent="#accordion">
+                                <?php foreach ($this->Resources as $row) {?>
+                                <div class="accordion-body">
+                                    <?php if($row->categorie == "Media"){?>
+                                    <a href="#"><i class="fas fa-photo-video"></i> <?php echo $row->contentName; ?></a>
+                                    <?php }else if($row->categorie == "File"){?>
+                                    <a href="#"><i class="fas fa-file-pdf"></i> <?php echo $row->contentName; ?></a>
+                                    <?php }else{?>
+                                    <a href="<?php echo $row->link; ?>"><i class="fas fa-link"></i>
+                                        <?php echo $row->link; ?></a>
+                                    <?php }?>
+                                </div>
+                                <?php }?>
                             </div>
                         </div>
                     </div>
@@ -216,20 +275,23 @@
             <div class="row">
                 <div class="col-lg-6 d-flex">
                     <div class="instructor-img">
-                        <img src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" alt="">
+
+                        <img src="<?php if(!empty($this->creadorCurso->pType) && $this->creadorCurso->pType != ''){echo 'data:'.$this->creadorCurso->pType.';base64,'.base64_encode($this->creadorCurso->photo);}else{echo constant('URL').'public/img/avatar_opt.jpg';} ?>"
+                            alt="">
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="instructor-title">
-                        <h1 class="name">Luis Gerardo Becerra Jiménez</h1>
-                        <h3 class="subtitle">CEO of BecerraGames, LMAD, Data Scientist & Game Designer</h3>
+                        <h1 class="name">
+                            <?php echo $this->creadorCurso->name_user.' '.$this->creadorCurso->last_name; ?></h1>
+                        <h3 class="subtitle"><?php echo $this->creadorCurso->description_user; ?></h3>
                     </div>
-                    <ul class="list-unstyled">
+                    <!-- <ul class="list-unstyled">
                         <li><i class="fas fa-star"></i> Instructor Rating: 4.6</li>
                         <li><i class="fas fa-award"></i> 42,832 reviews</li>
                         <li><i class="fas fa-users"></i> 123,456 students</li>
                         <li><i class="fas fa-play-circle"></i> 4 courses</li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </div>
@@ -246,95 +308,33 @@
             </div>
             <div class="row comments-box justify-content-center">
                 <div class="col-lg-10">
-                    <form action="" class="form-comments d-flex justify-content-end flex-wrap">
-                        <textarea name="" id="" placeholder="Write a comment"></textarea>
-                        <a href="#" class="btn btn-comment">comment</a>
+                    <input style="display: none;" type="text" id="nombre" value="<?php echo $_SESSION['name'].' '.$_SESSION['lastname']; ?>">
+                    <?php if($this->completo == 100){?>
+                    <form method="POST" class="form-comments d-flex justify-content-end flex-wrap">
+                        <input style="display: none;" type="text" value="<?php echo $this->curso->id_course; ?>" name="idC" id="idC">
+                        <input style="display: none;" type="text" name="idU" id="idU" value="<?php echo $_SESSION['id']; ?>">
+                        <label class="mr-4" for="rating">Select the rating: </label>
+                        <input type="number" name="rating" id="rating" max="5" min="0">
+                        <textarea class="mt-4" name="comentFinal" id="comentFinal"
+                            placeholder="Write a comment"></textarea>
+                        <button type="submit" name="submitRatingStar" id="submitRatingStar"
+                            class="btn btn-sm">Send</button>
                     </form>
-
+                    <?php }?>
+                    
+                    <?php foreach ($this->comentarios as $row) {?>
                     <div class="media">
                         <img src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" width="74" height="74"
                             alt="">
 
                         <div class="media-body">
-                            <p class="name">Alberto Daniel Henández Villanueva<span>11:30am, hoy</span></p>
+                            <p class="name"><?php echo $row->name.' '.$row->lastname; ?> <span><?php echo $row->comment_date?></span></p>
                             <p class="user-comment">
-                                The course is very good, you learn a lot but you also need to study a
-                                lot. The teacher shows that he knows, sometimes too much! and he also knows how to
-                                transmit
-                                it. Constructively, the requirement is high school math, but that's not enough to take
-                                advantage of this course.
+                            <?php echo $row->_message?>
                             </p>
-                            <div class="buttons text-right">
-                                <a href="#">Answer</a>
-                                <a href="#">Edit</a>
-                                <a href="#">Delete</a>
-                            </div>
-
-                            <div class="media">
-                                <img src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" width="74"
-                                    height="74" alt="">
-
-                                <div class="media-body">
-                                    <p class="name">Luis Gerardo Becerra Jiménez<span>11:42am, hoy</span></p>
-                                    <p class="user-comment">
-                                        Hi Daniel, thank you very much for leaving us your comment.
-                                        He receives my regards.
-                                    </p>
-                                    <div class="buttons text-right">
-                                        <a href="#">Answer</a>
-                                        <a href="#">Edit</a>
-                                        <a href="#">Delete</a>
-                                    </div>
-
-                                </div>
-                            </div>
-
                         </div>
                     </div>
-
-                    <div class="media">
-                        <img src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" width="74" height="74"
-                            alt="">
-
-                        <div class="media-body">
-                            <p class="name">Edgar Donato Calvillo Lumbreras<span>11:42am, hoy</span></p>
-                            <p class="user-comment">
-                                Very good course, very well explained and you have forced me to
-                                remember a lot about the statistics of the race but on the other hand it has forced me
-                                to learn. Thanks. The course contains many explanations, some of them theoretical but
-                                necessary to understand the practical part. Better focused than even in college. Overall
-                                10 out of 10. I recommend this course to anyone who wants to delve into the world of
-                                machine learning and get to know Python in depth.
-                            </p>
-                            <div class="buttons text-right">
-                                <a href="#">Answer</a>
-                                <a href="#">Edit</a>
-                                <a href="#">Delete</a>
-                            </div>
-
-                            <div class="media">
-                                <img src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" width="74"
-                                    height="74" alt="">
-
-                                <div class="media-body">
-                                    <p class="name">Luis Gerardo Becerra Jiménez<span>11:42am, hoy</span></p>
-                                    <p class="user-comment">
-                                        Hi Donato, thank you for sharing your experience with this course. How good that
-                                        you have been able to refresh all that knowledge, greetings.
-                                    </p>
-                                    <div class="buttons text-right">
-                                        <a href="#">Answer</a>
-                                        <a href="#">Edit</a>
-                                        <a href="#">Delete</a>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-
+                    <?php }?>
                 </div>
             </div>
         </div>
@@ -401,8 +401,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <!-- bootstrap js -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- ALERTAS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <!-- ScrollIt js -->
     <script src="<?php echo constant('URL'); ?>public/js/scrollIt.min.js"></script>
+    <!-- jquery Rating js -->
+    <script src="<?php echo constant('URL'); ?>public/js/jquery.rating.pack.js"></script>
     <!-- main js -->
     <script src="<?php echo constant('URL'); ?>public/js/mainCourse.js"></script>
 </body>

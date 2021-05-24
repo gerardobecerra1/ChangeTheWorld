@@ -13,4 +13,5 @@ class Cursos
     public $large_description;
     public $number_videos;
     public $cost;
+    public $porciento;
 }

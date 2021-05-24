@@ -25,7 +25,7 @@ $userSession = new UserSession();
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>landing"><img
+            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>principal"><img
                     src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo" style="width:200px;"></a>
 
             <!-- Toggler/collapsibe Button -->
@@ -56,6 +56,7 @@ $userSession = new UserSession();
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>usuario">Account
                                     settings</a>
+                                    <a class="dropdown-item" href="<?php echo constant('URL'); ?>mycourse">My courses</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>landing">Sign off</a>
                             </div>
@@ -85,7 +86,7 @@ $userSession = new UserSession();
                         <h5 class="card-title"><?php echo $row->title ?></h5>
                         <p class="card-text"><?php echo $row->short_description ?></p>
                         <div class="botones text-center mt-3">
-                            <a href="<?php echo constant('URL'); ?>curso" class="btn">View course</a>
+                            <a href="<?php echo constant('URL'); ?>curso/cargarCursos/<?php echo $row->id_course ?>" class="btn">View course</a>
                         </div>
                     </div>
                 </div>

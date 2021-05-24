@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-    $("#MyCourse").hide();
-    $("#CreateCourse").hide();
-    $("#Statics").hide();
+    $("#MyCourse").show();
+    // $("#CreateCourse").hide();
+    // $("#Statics").hide();
     $("#addVideos").hide();
 
     $("#btnAgregarCategoria").click(function (e) {
@@ -474,13 +474,13 @@ $(document).ready(function () {
         $("#AgregarRecurso").toggle();
     });
 
-    $("#btn_dashboard").click(function () {
-        $("#DASHBOARD").show();
-        $("#MyCourse").hide();
-        $("#CreateCourse").hide();
-        $("#Statics").hide();
-        $("#addVideos").hide();
-    });
+    // $("#btn_dashboard").click(function () {
+    //     $("#DASHBOARD").show();
+    //     $("#MyCourse").hide();
+    //     $("#CreateCourse").hide();
+    //     $("#Statics").hide();
+    //     $("#addVideos").hide();
+    // });
 
     $("#btn_mycourse").click(function () {
         $("#MyCourse").show();
@@ -490,21 +490,21 @@ $(document).ready(function () {
         $("#addVideos").hide();
     });
 
-    $("#btn_create").click(function () {
-        $("#CreateCourse").show();
-        $("#MyCourse").hide();
-        $("#DASHBOARD").hide();
-        $("#Statics").hide();
-        $("#addVideos").hide();
-    });
+    // $("#btn_create").click(function () {
+    //     $("#CreateCourse").show();
+    //     $("#MyCourse").hide();
+    //     $("#DASHBOARD").hide();
+    //     $("#Statics").hide();
+    //     $("#addVideos").hide();
+    // });
 
-    $("#btn_statistics").click(function () {
-        $("#Statics").show();
-        $("#CreateCourse").hide();
-        $("#MyCourse").hide();
-        $("#DASHBOARD").hide();
-        $("#addVideos").hide();
-    });
+    // $("#btn_statistics").click(function () {
+    //     $("#Statics").show();
+    //     $("#CreateCourse").hide();
+    //     $("#MyCourse").hide();
+    //     $("#DASHBOARD").hide();
+    //     $("#addVideos").hide();
+    // });
 
     // $(".btn_mycourse_videos").click(function () {
     //     $(".videosIdCourse").attr("value", $(this).val());
@@ -515,26 +515,26 @@ $(document).ready(function () {
     //     $("#DASHBOARD").hide();
     // });
 
-    $("#btn_mycourse_Sales").click(function () {
-        $(".sales").toggle();
-    });
+    // $("#btn_mycourse_Sales").click(function () {
+    //     $(".sales").toggle();
+    // });
 
-    $(".btn-profile, .btn-password, .btn-logout").click(function () {
-        Swal.fire({
-            title: 'Do you want to save the changes?',
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: `Save`,
-            denyButtonText: `Don't save`,
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-                Swal.fire('Saved!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-        });
-    });
+    // $(".btn-profile, .btn-password, .btn-logout").click(function () {
+    //     Swal.fire({
+    //         title: 'Do you want to save the changes?',
+    //         showDenyButton: true,
+    //         showCancelButton: true,
+    //         confirmButtonText: `Save`,
+    //         denyButtonText: `Don't save`,
+    //     }).then((result) => {
+    //         /* Read more about isConfirmed, isDenied below */
+    //         if (result.isConfirmed) {
+    //             Swal.fire('Saved!', '', 'success')
+    //         } else if (result.isDenied) {
+    //             Swal.fire('Changes are not saved', '', 'info')
+    //         }
+    //     });
+    // });
 
 
     // $(".btn-logout").click(function () {
@@ -555,140 +555,84 @@ $(document).ready(function () {
 
     /* modal */
 
-    var $modal = $('#modal');
+    // var $modal = $('#modal');
 
-    var image = document.getElementById('sample_image');
+    // var image = document.getElementById('sample_image');
 
-    var cropper;
+    // var cropper;
 
-    $('#upload_image').change(function (event) {
-        var files = event.target.files;
+    // $('#upload_image').change(function (event) {
+    //     var files = event.target.files;
 
-        var done = function (url) {
-            image.src = url;
-            $modal.modal('show');
-        };
+    //     var done = function (url) {
+    //         image.src = url;
+    //         $modal.modal('show');
+    //     };
 
-        if (files && files.length > 0) {
-            reader = new FileReader();
-            reader.onload = function (event) {
-                done(reader.result);
-            };
-            reader.readAsDataURL(files[0]);
-        }
-    });
+    //     if (files && files.length > 0) {
+    //         reader = new FileReader();
+    //         reader.onload = function (event) {
+    //             done(reader.result);
+    //         };
+    //         reader.readAsDataURL(files[0]);
+    //     }
+    // });
 
-    $modal.on('shown.bs.modal', function () {
-        cropper = new Cropper(image, {
-            aspectRatio: 1,
-            viewMode: 3,
-            preview: '.preview'
-        });
-    }).on('hidden.bs.modal', function () {
-        cropper.destroy();
-        cropper = null;
-    });
+    // $modal.on('shown.bs.modal', function () {
+    //     cropper = new Cropper(image, {
+    //         aspectRatio: 1,
+    //         viewMode: 3,
+    //         preview: '.preview'
+    //     });
+    // }).on('hidden.bs.modal', function () {
+    //     cropper.destroy();
+    //     cropper = null;
+    // });
 
-    $('#crop').click(function () {
-        canvas = cropper.getCroppedCanvas({
-            width: 400,
-            height: 400
-        });
+    // $('#crop').click(function () {
+    //     canvas = cropper.getCroppedCanvas({
+    //         width: 400,
+    //         height: 400
+    //     });
 
-        canvas.toBlob(function (blob) {
-            url = URL.createObjectURL(blob);
-            var reader = new FileReader();
-            reader.readAsDataURL(blob);
-            reader.onloadend = function () {
-                $modal.modal('hide');
-                $('#uploaded_image').attr('src', reader.result);
-            };
-        });
-    });
+    //     canvas.toBlob(function (blob) {
+    //         url = URL.createObjectURL(blob);
+    //         var reader = new FileReader();
+    //         reader.readAsDataURL(blob);
+    //         reader.onloadend = function () {
+    //             $modal.modal('hide');
+    //             $('#uploaded_image').attr('src', reader.result);
+    //         };
+    //     });
+    // });
 
-    function httpRequest(url, callback) {
-        const http = new XMLHttpRequest();
-        http.open("GET", url);
-        http.send();
-        http.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                callback.apply(http);
-            }
-        }
-    }
+    // function httpRequest(url, callback) {
+    //     const http = new XMLHttpRequest();
+    //     http.open("GET", url);
+    //     http.send();
+    //     http.onreadystatechange = function () {
+    //         if (this.readyState == 4 && this.status == 200) {
+    //             callback.apply(http);
+    //         }
+    //     }
+    // }
 
 });
 
 function agrergarVideos(e) {
     $(".videosIdCourse").attr("value", $(e).val());
     $(".videos-agregados-intro").html(' <a>Cargando....</a>')
-    $(".videos-agregados-basic").html(' <a>Cargando....</a>')
-    $(".videos-agregados-medium").html(' <a>Cargando....</a>')
-    $(".videos-agregados-advanced").html(' <a>Cargando....</a>')
-    $(".recursos-agregados").html(' <a>Cargando....</a>')
 
     $.ajax({
         type: "POST",
-        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#introductionIdCourse").val() + "/" + $("#introductionLevel").val(),
-        data: null,
-        success: function (response) {
-            if(response!= ""){
-                $(".videos-agregados-intro").html(response)
-            }else{
-                $(".videos-agregados-intro").html(' <a> No hay videos</a>')
-            }  
-        }
-    });
-
-    $.ajax({
-        type: "POST",
-        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#basicIdCourse").val() + "/" + $("#basicLevel").val(),
-        data: null,
-        success: function (response) {
-            if(response!= ""){
-                $(".videos-agregados-basic").html(response)
-            }else{
-                $(".videos-agregados-basic").html(' <a> No hay videos</a>')
-            }  
-        }
-    });
-
-    $.ajax({
-        type: "POST",
-        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#mediumIdCourse").val() + "/" + $("#mediumLevel").val(),
-        data: null,
-        success: function (response) {
-            if(response!= ""){
-                $(".videos-agregados-medium").html(response)
-            }else{
-                $(".videos-agregados-medium").html(' <a> No hay videos</a>')
-            }    
-        }
-    });
-
-    $.ajax({
-        type: "POST",
-        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#advancedIdCourse").val() + "/" + $("#advancedLevel").val(),
-        data: null,
-        success: function (response) {
-            if(response!= ""){
-                $(".videos-agregados-advanced").html(response)
-            }else{
-                $(".videos-agregados-advanced").html(' <a> No hay videos</a>')
-            }
-        }
-    });
-
-    $.ajax({
-        type: "POST",
-        url: "http://localhost/CTW//dashboard/mostrarRecursosAjax/" + $("#recursoIdCourse").val(),
+        url: "http://localhost/CTW/chat/traerMensajes/" + $("#introductionIdCourse").val() + "/" + $("#introductionLevel").val(),
         data: null,
         success: function (response) {
             if(response != ""){
-                $(".recursos-agregados").html(response)
+                $(".videos-agregados-intro").html(response)
             }else{
-                $(".recursos-agregados").html(' <a> No hay recursos</a>')
-            }
+                $(".videos-agregados-intro").html(' <a> No hay mensajes</a>')
+            }  
         }
     });
 

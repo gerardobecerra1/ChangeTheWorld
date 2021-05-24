@@ -7,5 +7,6 @@ class Video
     public $short_description;
     public $content;
     public $contentT;
+    public $viewed;
     public $level_;
 }

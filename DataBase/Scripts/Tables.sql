@@ -76,7 +76,7 @@ id_comment_course		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents t
 fk_course 				INT UNSIGNED 		NOT NULL 			COMMENT'This field represents the course comments',
 fk_sender 				INT UNSIGNED 		NOT NULL 			COMMENT'This field represents who made the comment in the course.',
 _message 				TEXT 				NOT NULL 			COMMENT'This field represents the content of the comment in the course.',
-comment_date			DATE 				NOT NULL			COMMENT'This field represents the date of comments',				
+comment_date			DATE 				 NULL			COMMENT'This field represents the date of comments',				
 PRIMARY KEY(id_comment_course),
 FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course),
 FOREIGN KEY(fk_sender) REFERENCES tbl_Users(id_user)) COMMENT'This table represents the feedback data for the course.';
@@ -90,6 +90,14 @@ comment_date			DATE 			NOT NULL			COMMENT'This field represents the date of comm
 PRIMARY KEY(id_comment_video),
 FOREIGN KEY(fk_video) REFERENCES tbl_Videos(id_video),
 FOREIGN KEY(fk_sender) REFERENCES tbl_Users(id_user)) COMMENT'This table represents the data for the video comments.';
+
+CREATE TABLE IF NOT EXISTS tbl_seen (
+id_seen INT UNSIGNED AUTO_INCREMENT,
+fk_user INT UNSIGNED,
+fk_video INT UNSIGNED,
+PRIMARY KEY (id_seen),
+FOREIGN KEY (fk_user) REFERENCES tbl_users(id_user),
+FOREIGN KEY (fk_video) REFERENCES tbl_videos(id_video))
 
 CREATE TABLE IF NOT EXISTS tbl_Comments_comments_course (
 id_comment_coments_course		INT UNSIGNED 			AUTO_INCREMENT		COMMENT'This field represents the identifier of the course comment.',
@@ -130,7 +138,7 @@ FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course)) COMMENT'This table rep
 
 CREATE TABLE IF NOT EXISTS tbl_Sales(
 id_sale     INT				AUTO_INCREMENT    COMMENT'This field represents the identifier of the sale.',
-fk_seller   INT UNSIGNED    NOT NULL          COMMENT'This field represents the seller.',
+fk_buyer   INT UNSIGNED    NOT NULL          COMMENT'This field represents the seller.',
 fk_course   INT UNSIGNED    NOT NULL          COMMENT'This field represents the product that was sold.',
 PRIMARY KEY(id_sale),
 FOREIGN KEY(fk_seller) REFERENCES tbl_Users(id_user),

@@ -77,7 +77,7 @@ $(document).ready(function () {
       confirmButtonText: 'Yes, I´m sure!'
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "Usuario/cerrarSesion";
+        window.location.href = "usuario/cerrarSesion";
       }
     });
   });

@@ -23,7 +23,7 @@
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>Landing"><img src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo"
+            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>principal"><img src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo"
                     style="width:200px;"></a>
             <a class="navbar-brand" id="text-course" href="#">Introduction</a>
 
@@ -47,15 +47,15 @@
                     <li class="nav-item">
                         <div class="btn-group">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" href="#"><img src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" alt=""
+                                aria-expanded="false" href="#"><img src="<?php if(!empty($_SESSION['pType']) && $_SESSION['pType'] != ''){echo 'data:'.$_SESSION['pType'].';base64,'.base64_encode($_SESSION['photo']);}else{echo constant('URL').'public/img/avatar_opt.jpg';} ?>" alt=""
                                     style="border-radius: 50%; width: 30px;">
-                                Username
+                                    <?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">Account settings</a>
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Mycourse">My courses</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>usuario">Account settings</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>mycourse">My courses</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Landing">Sign off</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>landing">Sign off</a>
                             </div>
                         </div>
                     </li>
@@ -72,21 +72,20 @@
                 <div class="col-lg-12">
                     <div class="video">
                         <video id="player" class="viendo" playsinline controls data-poster="/path/to/poster.jpg">
-                            <source src="<?php echo constant('URL'); ?>public/img/Thanos-Bailando-720.mp4" type="video/mp4" />
+                            <source src="<?php echo 'data:'.$this->info->contentT.';base64,'.base64_encode($this->info->content);?>"/>
                         </video>
                     </div>
                 </div>
                 <div class="home-text">
-                    <h1>Introduction</h1>
-                    <p>In this instruction you will see all the topics of the course, how is the instructor and with
-                        what tools we will work.</p>
+                    <h1><?php echo $this->info->title; ?></h1>
+                    <p><?php echo $this->info->short_description; ?></p>
                 </div>
             </div>
     </section>
     <!-- Home Final -->
 
     <!-- Cosas de curso Inicio -->
-    <section class="things pt-3" data-scroll-index="1">
+    <!-- <section class="things pt-3" data-scroll-index="1">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
@@ -107,7 +106,6 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-notes" role="tabpanel"
                         aria-labelledby="nav-notes-tab">
-                        <!-- Notes Inicio -->
                         <section class="questions" id="questions" data-scroll-index="3">
                             <div class="row questions-box justify-content-center">
                                 <div class="col-lg-10">
@@ -115,7 +113,6 @@
                                         <textarea name="" id="" placeholder="Write a note"></textarea>
                                         <a href="#" class="btn btn-question">Send Note</a>
                                     </form>
-
                                     <div class="media">
                                         <img src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" width="74" height="74" alt="">
 
@@ -162,10 +159,8 @@
                                 </div>
                             </div>
                         </section>
-                        <!-- Notes Final -->
                     </div>
                     <div class="tab-pane fade" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab">
-                        <!-- Questions Inicio -->
                         <section class="questions" id="questions" data-scroll-index="3">
                             <div class="row questions-box justify-content-center">
                                 <div class="col-lg-10">
@@ -231,8 +226,6 @@
                                                                 <a href="#" class="btn btn-question">Send question</a>
                                                             </form>
                                                         </div>
-                                                        <!-- <a href="#">Edit</a>
-                                                        <a href="#">Delete</a> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -293,8 +286,6 @@
                                                                 <a href="#" class="btn btn-question">Send question</a>
                                                             </form>
                                                         </div>
-                                                        <!-- <a href="#">Edit</a>
-                                                        <a href="#">Delete</a> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -303,82 +294,12 @@
                                 </div>
                             </div>
                         </section>
-                        <!-- Questions Final -->
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- Cosas de curso Final -->
-
-    <section class="courses section-padding" data-scroll-index="2" id="courses">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="section-title">
-                        <h2>Recommended <span>Courses</span></h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="owl-carousel courses-carousel">
-                    <div class="courses-item">
-                        <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/algebra.jpg" class="card-img-top" alt="...">
-                            <div class="card-body ">
-                                <h5 class="card-title">Complete Linear Algebra Course from Zero to Expert</h5>
-                                <p class="card-text">Learn the basics to apply linear algebra to Statistics, Machine
-                                    Learning and Artificial Intelligence</p>
-                                <div class="botones text-center">
-                                    <a href="<?php echo constant('URL'); ?>Curso" class="btn">View content</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="courses-item">
-                        <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/Unreal.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Master Unreal Engine 4 Game Development with Blueprints</h5>
-                                <p class="card-text">Learn to create AAA Videogames FROM SCRATCH, complete development
-                                    and programming with Blueprints and Unreal</p>
-                                <div class="botones text-center">
-                                    <a href="<?php echo constant('URL'); ?>Curso" class="btn">View content</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="courses-item">
-                        <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/deeplearn.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Deep Learning: Neural Networks in Python from Scratch</h5>
-                                <p class="card-text">Learn how to create deep learning algorithms in Python with machine
-                                    learning and data science experts</p>
-                                <div class="botones text-center">
-                                    <a href="<?php echo constant('URL'); ?>Curso" class="btn">View content</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="courses-item">
-                        <div class="card" style="width: 20rem;">
-                            <img src="<?php echo constant('URL'); ?>public/img/blender.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Character sculpture with Blender 2.91</h5>
-                                <p class="card-text">Learn everything you need to create 3D characters with Blender's
-                                    sculpture mode tools</p>
-                                <div class="botones text-center">
-                                    <a href="<?php echo constant('URL'); ?>Curso" class="btn">View content</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
 
     <!-- Conact Inicio -->
     <footer class="footer" id="footer">

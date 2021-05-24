@@ -21,12 +21,12 @@
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>Landing"><img src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo"
-                    style="width:200px;"></a>
+            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>principal"><img
+                    src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo" style="width:200px;"></a>
 
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon" ><i class="fas fa-bars"></i></span>
+                <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
             </button>
 
             <!-- Navbar links -->
@@ -45,12 +45,14 @@
                     <li class="nav-item dropdown">
                         <div class="btn-group">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" href="#"><img src="<?php echo constant('URL'); ?>public/img/avatar_opt.jpg" alt=""
-                                    style="border-radius: 50%; width: 30px;">
-                                Username
+                                aria-expanded="false" href="#"><img
+                                    src="<?php if(!empty($_SESSION['pType']) && $_SESSION['pType'] != ''){echo 'data:'.$_SESSION['pType'].';base64,'.base64_encode($_SESSION['photo']);}else{echo constant('URL').'public/img/avatar_opt.jpg';} ?>"
+                                    alt="" style="border-radius: 50%; width: 30px;">
+                                <?php echo $_SESSION['username']; ?>
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">Account settings</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">Account
+                                    settings</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>Landing">Sign off</a>
                             </div>
@@ -72,51 +74,38 @@
                 </div>
             </div>
             <div class="row justify-content-center">
+                <?php foreach ($this->misCursos as $row) {?>
                 <div class="card col-lg-4 col-md-6 col-sm-8 px-0 mb-3" style="width: 18rem;">
-                    <img src="IMG/Machine.jpg" class="card-img-top" alt="...">
+                    <img src="<?php if(!empty($row->lType) && $row->lType != ''){echo 'data:'.$row->lType.';base64,'.base64_encode($row->logo);}else{echo constant('URL').'public/img/algebra.jpg';} ?>"
+                        class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Complete Machine Learning course</h5>
-                        <p class="card-text">Learn the algorithms of Machine Learning with Python to become a Data
-                            Science with all the code to use.</p>
+                        <h5 class="card-title"><?php echo $row->title; ?></h5>
+                        <p class="card-text"><?php echo $row->short_description; ?></p>
                         <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100">25%</div>
+                            <?php $temp = (int)$row->porciento;
+                            if($row->porciento >= 100){
+                                $temp = 100;
+                            } ?>
+                            <div class="progress-bar" role="progressbar" style="<?php echo 'width:'.$temp.'%' ?>"
+                                aria-valuenow="<?php echo $temp; ?>" aria-valuemin="0" aria-valuemax="100">
+                                <?php echo $temp.'%'?></div>
                         </div>
                         <div class="botones text-center mt-3">
-                            <a href="PaginaCurso.html" class="btn">View videos</a>
+                            <a href="<?php echo constant('URL'); ?>curso/cargarCursos/<?php echo $row->id_course.'/'.$temp ?>"
+                                class="btn">View videos</a>
+                            <?php if($temp == 100){?>
+                            <input type="text" id="name" style="display: none;"
+                                value="<?php echo $_SESSION['name'].' '.$_SESSION['lastname']; ?>" minlength="4">
+                            <input type="text" id="curso" style="display: none;" value="<?php echo $row->title; ?>">
+                            <button id="submitBtn" class="download btn mt-3" type=""><i class="fas fa-award"></i>
+                                Download Certificate</button>
+                            <iframe src="" id="mypdf" style="display: none;" frameborder="0" width="400px"
+                                height="400px"></iframe>
+                            <?php }?>
                         </div>
                     </div>
                 </div>
-                <div class="card col-lg-4 col-md-6 col-sm-8 px-0 mb-3" style="width: 18rem;">
-                    <img src="IMG/Machine.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Complete Machine Learning course</h5>
-                        <p class="card-text">Learn the algorithms of Machine Learning with Python to become a Data
-                            Science with all the code to use.</p>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100">25%</div>
-                        </div>
-                        <div class="botones text-center mt-3">
-                            <a href="PaginaCurso.html" class="btn">View videos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card col-lg-4 col-md-6 col-sm-8 px-0 mb-3" style="width: 18rem;">
-                    <img src="IMG/Machine.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Complete Machine Learning course</h5>
-                        <p class="card-text">Learn the algorithms of Machine Learning with Python to become a Data
-                            Science with all the code to use.</p>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100">25%</div>
-                        </div>
-                        <div class="botones text-center mt-3">
-                            <a href="PaginaCurso.html" class="btn">View videos</a>
-                        </div>
-                    </div>
-                </div>
+                <?php }?>
             </div>
         </div>
     </section>
@@ -181,6 +170,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <!-- bootstrap js -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://unpkg.com/pdf-lib@1.4.0"></script>
+
+    <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4"></script>
+
+    <script src="<?php echo constant('URL'); ?>public/js/FileSaver.js"></script>
     <!-- ScrollIt js -->
     <script src="<?php echo constant('URL'); ?>public/js/scrollIt.min.js"></script>
     <!-- owl carousel js -->

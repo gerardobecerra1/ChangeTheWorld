@@ -29,7 +29,7 @@ if (isset($_SESSION['username'])) {
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>landing"><img
+            <a class="navbar-brand" id="img-logo" href="<?php echo constant('URL'); ?>principal"><img
                     src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt="Logo" style="width:200px;"></a>
 
             <!-- Toggler/collapsibe Button -->

@@ -120,8 +120,8 @@ class DashboardModel extends Model
 
     function insertarVideoIntroduction($datos){
         try {
-            $query = $this->db->connect()->prepare('CALL insertar_videos_introduction(:id, :title, :short, :video, :type, :level)');
-            $query->execute(['id'=>$datos['id_curso'],'title'=>$datos['title'],'short'=>$datos['shortD'],'video'=>$datos['video'],'type'=>$datos['typeV'],'level'=>$datos['level']]);
+            $query = $this->db->connect()->prepare('CALL insertar_videos_introduction(:id, :title, :short, :video, :type, :free, :level)');
+            $query->execute(['id'=>$datos['id_curso'],'title'=>$datos['title'],'short'=>$datos['shortD'],'video'=>$datos['video'],'type'=>$datos['typeV'],'free'=>$datos['free'],'level'=>$datos['level']]);
             return true;
         } catch (PDOException $exc) {
             echo $exc;
@@ -156,7 +156,7 @@ class DashboardModel extends Model
                 $video->title = $row['title'];
                 $video->short_description = $row['short_description'];
                 $video->content = $row['content'];
-                $video->contentT = $row['contentT'];
+                $video->viewed = $row['viewed'];
                 $video->level_ = $row['level_'];
                 array_push($videos, $video);
             }

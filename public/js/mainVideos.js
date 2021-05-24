@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     $( "#text-course" ).hide();
     $( "#navbar-nav-course" ).hide();
 

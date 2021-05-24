@@ -2,7 +2,7 @@
 // include_once 'librerias/user_session.php';
 // $userSession = new UserSession();
 
-if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
+if ((isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Student")) {
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,17 +33,9 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
             <div class="logo">
                 <a href="<?php echo constant('URL'); ?>principal"><img
                         src="<?php echo constant('URL'); ?>public/img/LogoB.png" alt=""></a>
-
             </div>
             <div class="menu">
-                <a href="#" id="btn_dashboard" class="d-block p-3  font-weight-bold  "><i class="fas fa-table mr-2"
-                        aria-hidden="true"></i>Dashboard</a>
-                <a href="#" id="btn_mycourse" class="d-block p-3  font-weight-bold "><i class="fas fa-certificate mr-2"
-                        aria-hidden="true"></i>My Courses</a>
-                <a href="#" id="btn_create" class="d-block p-3  font-weight-bold "><i class="fas fa-plus-circle mr-2"
-                        aria-hidden="true"></i>Create a course</a>
-                <a href="#" id="btn_statistics" class="d-block p-3  font-weight-bold "><i class="fas fa-chart-bar mr-2"
-                        aria-hidden="true"></i>Statistics</a>
+                <a href="#" id="btn_mycourse" class="d-block p-3  font-weight-bold "><i class="fas fa-comments"></i>Chats</a>
             </div>
         </div>
         <div class="w-100">
@@ -53,12 +45,6 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <form class="form-inline position-relative my-2 d-inline-block">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-search position-absolute " type="submit"><i class="fa fa-search"
-                            aria-hidden="true"></i>
-                    </button>
-                </form>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
@@ -79,150 +65,29 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                 </div>
             </nav>
             <div id="content">
-                <section id="DASHBOARD">
-                    <section class="py-3">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-9">
-                                    <h1 class="font-weight-bold mb-0 main-color">Welcome
-                                        <?php echo $_SESSION['name'] . ' ' . $_SESSION['lastname']; ?></h1>
-                                    <p class="lead text-muted">Check your information</p>
-                                </div>
-                                <div class="col-lg-3 d-flex">
-                                    <button class="btn w-100 align-self-center" id="boton">Download report</button>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="bg-mix">
-                        <div class="container">
-                            <div class="card rounded-0">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-3 stat my-3 d-flex">
-                                            <div class="mx-auto">
-                                                <h6 class="text-muted ">Monthly income</h6>
-                                                <h3 class="font-weight-bold main-color">$500,000</h3>
-                                                <h6 class="text-success"><i class="fa fa-arrow-circle-up"
-                                                        aria-hidden="true"></i>
-                                                    50.50%</h6>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 stat my-3 d-flex">
-                                            <div class="mx-auto">
-                                                <h6 class="text-muted ">Active courses</h6>
-                                                <h3 class="font-weight-bold main-color">10</h3>
-                                                <h6 class="text-success"><i class="fa fa-arrow-circle-up"
-                                                        aria-hidden="true"></i>
-                                                    50.50%</h6>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 stat my-3 d-flex">
-                                            <div class="mx-auto">
-                                                <h6 class="text-muted ">Number of users</h6>
-                                                <h3 class="font-weight-bold main-color">500</h3>
-                                                <h6 class="text-success"> <i class="fa fa-arrow-circle-up"
-                                                        aria-hidden="true"></i>
-                                                    50.50%</h6>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 my-3 d-flex">
-                                            <div class="mx-auto">
-                                                <h6 class="text-muted">New users</h6>
-                                                <h3 class="font-weight-bold main-color">25</h3>
-                                                <h6 class="text-success"><i class="fa fa-arrow-circle-up"
-                                                        aria-hidden="true"></i>
-                                                    50.50%</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="bg-grey">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-8 my-1">
-                                    <div class="card rounded-0 ">
-                                        <div class="card-body" id="grafico">
-                                            <h6 class="font-weight-bold main-color ">Top cursos</h6>
-                                            <canvas id="VentasCursos"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 my-3">
-                                    <div class="card rounded-0">
-                                        <div class="card-header bg-light">
-                                            <h6 class="font-weight-bold main-color ">Recent courses</h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="d-flex border-bottom py-2">
-                                                <div class="d-flex mr-3">
-                                                    <h2 class="mb-0 align-self-center"><i class="fa fa-tag main-color"
-                                                            aria-hidden="true"></i>
-                                                    </h2>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <h6 class="d-inline-block mb-0">$250</h6><span
-                                                        class="bafge badge-success ml-2">10% descuento</span>
-                                                    <small class="d-block text-muted">Course of HTML 5</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="d-flex border-bottom py-2">
-                                                <div class="d-flex mr-3">
-                                                    <H2 class="mb-0 align-self-center"><i class="fa fa-tag main-color"
-                                                            aria-hidden="true"></i>
-                                                    </H2>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <h6 class="d-inline-block mb-0">$250</h6><span
-                                                        class="bafge badge-success ml-2">10% descuento</span>
-                                                    <small class="d-block text-muted">Course of HTML 5</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </section>
-
                 <section class="mycourses" id="MyCourse">
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-12  main-color">
                                 <div class="section-title ">
-                                    <h1 class="font-weight-bold main-color text-center">My Courses</h1>
+                                    <h1 class="font-weight-bold main-color text-center">Chats</h1>
                                 </div>
                             </div>
                         </div>
-                        <div class="ver-ventas mb-3">
-                            <a href="#" id="btn_mycourse_Sales" class="btn main-color ">View sales
-                                <ion-icon class="align-self-center" name="caret-down-outline">
-                                </ion-icon> </a>
-                        </div>
                         <div class="row justify-content-left" id="Cursosapartado">
-                            <?php foreach ($this->miscursos as $row) {?>
+                            <?php foreach ($this->usuarios as $row) {?>
                             <div class="col-lg-4 mb-3">
                                 <div class="card">
-                                    <img src="<?php if(!empty($row->lType) && $row->lType != ''){echo 'data:'.$row->lType.';base64,'.base64_encode($row->logo);}else{echo constant('URL').'public/img/Machine.jpg';} ?>"
+                                    <img src="<?php if(!empty($row->pType) && $row->pType != ''){echo 'data:'.$row->pType.';base64,'.base64_encode($row->photo);}else{echo constant('URL').'public/img/sinFoto.png';} ?>"
                                         class="card-img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title"><?php echo $row->title ?></h5>
-                                        <p class="card-text"><?php echo $row->short_description ?></p>
+                                        <h5 class="card-title"><?php echo $row->username ?></h5>
+                                        <p class="card-text"><?php echo $row->description_user ?></p>
                                         <div class="botones text-center mt-3 d-flex">
-                                            <!-- <button id="btn_mycourse_edit" class="btn main-color ml-1 mr-1"
-                                                value="<?php echo $row->id_course ?>"><i
-                                                    class="far fa-edit"></i></button> -->
                                             <button class="btn btn_mycourse_videos main-color ml-1 mr-1"
-                                                onclick="agrergarVideos(this)" value="<?php echo $row->id_course ?>"><i
-                                                    class="fas fa-film"></i> Add</button>
+                                                onclick="agrergarVideos(this)" value="<?php echo $row->id_user ?>"><i class="fas fa-comments"></i> Message</button>
                                         </div>
-                                        <div class="sales my-2">
+                                        <!-- <div class="sales my-2">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <h6 class="text-muted text-center ">Sales:</h6>
@@ -233,7 +98,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                     <h3 class="font-weight-bold main-color text-center">$500,000</h3>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -241,7 +106,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                         </div>
                     </div>
                 </section>
-
+<!-- 
                 <section class="CreateCourse" id="CreateCourse">
                     <div class="container">
                         <div class="row justify-content-center">
@@ -326,58 +191,21 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                             </div>
                         </div>
                     </div>
-                </section>
-
-                <section class="Statics" id="Statics">
-                    <div class="container">
-                        <div class="row ">
-                            <div class="col-lg-12 my-2">
-                                <h1 class="font-weight-bold main-color ">General statistics</h1>
-                            </div>
-                        </div>
-                        <div class="row my-4">
-                            <div class="col-lg-6 mb-3">
-                                <h4 class="my-3 text-muted">Earnings from all my courses.</h4>
-                                <canvas id="DineroVentas" class="my-3"></canvas>
-                            </div>
-
-                            <div class="col-lg-6 mb-3 text-muted">
-                                <h4 class="my-3">Course sales</h4>
-                                <canvas id="VentasCurso" class="my-3"></canvas>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 my-3  ">
-                                <h6 class="text-muted text-center ">TOTAL COURSES:</h6>
-                                <h1 class="font-weight-bold main-color text-center ">10</h1>
-                            </div>
-
-                            <div class="col-lg-4 my-3  ">
-                                <h6 class="text-muted text-center ">TOTAL STUDENTS:</h6>
-                                <h1 class="font-weight-bold main-color text-center ">100</h1>
-                            </div>
-
-                            <div class="col-lg-4 my-3  ">
-                                <h6 class="text-muted text-center ">TOTAL EARNINGS:</h6>
-                                <h1 class="font-weight-bold main-color text-center ">$200,000.00</h1>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                </section> -->
 
                 <section class="addVideos" id="addVideos">
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-12 main-color">
                                 <div class="section-title ">
-                                    <h1 class="font-weight-bold main-color text-center">Add Videos</h1>
+                                    <h1 class="font-weight-bold main-color text-center">Private Chat</h1>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="container">
                                 <div class="form-group w-100">
-                                    <label for="inputAbout">Course Content:</label>
+                                    <label for="inputAbout">Chat:</label>
                                     <div id="accordion">
                                         <div class="card">
                                             <div class="card-header" id="headingOne">
@@ -385,7 +213,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                     <button class="btn btn-link" data-toggle="collapse"
                                                         data-target="#collapseOne" aria-expanded="true"
                                                         aria-controls="collapseOne">
-                                                        Introduction
+                                                        <i class="fas fa-comments"></i>
                                                     </button>
                                                 </h5>
                                             </div>
@@ -396,9 +224,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                         style="display: grid;">
                                                         <a>Cargando....</a>
                                                     </div>
-                                                    <button class="btn btn_add_video w-100 mt-4"><i
-                                                            class="fa fa-plus-circle" aria-hidden="true"></i> Add
-                                                        Video</button>
+                                                    <button class="btn btn_add_video w-100 mt-4"><i class="fas fa-edit"></i> Write</button>
                                                     <div class="container my-3" id="AgregarCapitulo">
                                                         <form class="agregar_video_introduction" method="POST"
                                                             enctype="multipart/form-data">
@@ -406,8 +232,8 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                                 class="videosIdCourse d-none"
                                                                 name="introductionIdCourse" value="" type="text">
                                                             <input id="introductionLevel" class="d-none"
-                                                                name="introductionLevel" value="0" type="text">
-                                                            <div class="form-group mb-3">
+                                                                name="introductionLevel" value="<?php $_SESSION['id']; ?>" type="text">
+                                                            <!-- <div class="form-group mb-3">
                                                                 <label for="inputGroupFile01">Select video:</label>
                                                                 <input type="file" name="selectVideoIntro"
                                                                     id="selectVideoIntro">
@@ -429,18 +255,12 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                                 <small id="TitleHelp" class="form-text text-muted">This
                                                                     text will be seen on the
                                                                     course page.</small>
-                                                            </div>
+                                                            </div> -->
                                                             <div class="form-group">
-                                                                <label for="inputDescriptionS">Short
-                                                                    description:</label>
+                                                                <label for="inputDescriptionS">Write a message:</label>
                                                                 <textarea name="shortVideoTitle" id="shortVideoTitle"
                                                                     class="w-100" style="min-height: 100px;"
                                                                     placeholder="Write something short about your course"></textarea>
-                                                                <small id="inputDescriptionSHelp"
-                                                                    class="form-text text-muted">Be as
-                                                                    brief as
-                                                                    possible but understand what your course is
-                                                                    about.</small>
                                                             </div>
                                                             <div class="botones">
                                                                 <button type="submit"
@@ -451,7 +271,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card">
+                                        <!-- <div class="card">
                                             <div class="card-header" id="headingTwo">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link collapsed" data-toggle="collapse"
@@ -716,7 +536,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -728,7 +548,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
     </div>
 
     <!-- ModalPhoto Incio -->
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -755,9 +575,9 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- ModalPhoto Final -->
-
+<!-- 
     <script>
         var ctx = document.getElementById('VentasCursos').getContext('2d');
         var chart = new Chart(ctx, {
@@ -833,7 +653,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
             // Configuration options go here
             options: {}
         });
-    </script>
+    </script> -->
 
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -847,12 +667,10 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
     <!-- photo js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.min.js"></script>
     <!-- js -->
-    <script src="<?php echo constant('URL'); ?>public/js/dash.js"></script>
+    <script src="<?php echo constant('URL'); ?>public/js/chats.js"></script>
 
 </html>
 <?php
-}else if(((string)$_SESSION['rol']) == "Student"){
-    header('Location:' . constant('URL') . 'principal');
 } 
 else {
     header('Location:' . constant('URL') . 'landing');

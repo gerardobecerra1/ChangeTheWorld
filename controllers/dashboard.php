@@ -85,8 +85,11 @@ class Dashboard extends Controller
             // $row->content;
             // $row->contentT;
             // $row->level_;
-            
-            echo '<a><i class="fas fa-play-circle"></i> '.$row->title.'</a>';
+            if($row->viewed) {
+                echo '<a><i class="fas fa-play-circle"></i> '.$row->title.' (Free)</a>'; 
+            }else{
+                echo '<a><i class="fas fa-play-circle"></i> '.$row->title.' (Payment)</a>';
+            }
         }
     }
 
@@ -141,7 +144,7 @@ class Dashboard extends Controller
 
         if (!empty($_FILES['selectVideoIntro']['name'])) {
             $videoType = $_FILES['selectVideoIntro']['type'];
-            $permitido = array('video/mp4','video/x-matroska');
+            $permitido = array('video/mp4');
             if (!in_array($videoType, $permitido)) {
                  return $mensaje = "";
             } else {
@@ -150,16 +153,14 @@ class Dashboard extends Controller
             $video = fread($videoSubido, $tamanoArchivo);
             }
         }
-        
 
         $id_curso = $_POST['introductionIdCourse'];
         $title = $_POST['inputTitleVideoIntro'];
         $shortD = $_POST['shortVideoTitle'];
         $level = $_POST['introductionLevel'];
+        $free = $_POST['introductionFree'];
 
-        // echo $id_curso.' '.$title.' '.$shortD.' '.$videoType.' '.$level.' '.$video;
-
-        if($this->model->insertarVideoIntroduction(['id_curso' =>  $id_curso,'title'=> $title,'shortD'=> $shortD,'video'=>$video,'typeV'=> $videoType,'level'=>$level])){
+        if($this->model->insertarVideoIntroduction(['id_curso' =>  $id_curso,'title'=> $title,'shortD'=> $shortD,'video'=>$video,'typeV'=> $videoType,'free'=>$free,'level'=>$level])){
             return 0;
         }else{
             return -1;
@@ -173,7 +174,7 @@ class Dashboard extends Controller
 
         if (!empty($_FILES['selectVideoBasic']['name'])) {
             $videoType = $_FILES['selectVideoBasic']['type'];
-            $permitido = array('video/mp4','video/x-matroska');
+            $permitido = array('video/mp4');
             if (!in_array($videoType, $permitido)) {
                  return $mensaje = "";
             } else {
@@ -187,8 +188,9 @@ class Dashboard extends Controller
         $title = $_POST['inputTitleVideoBasic'];
         $shortD = $_POST['shortVideoTitleBasic'];
         $level = $_POST['basicLevel'];
+        $free = $_POST['basicFree'];
 
-        if($this->model->insertarVideoIntroduction(['id_curso' =>  $id_curso,'title'=> $title,'shortD'=> $shortD,'video'=>$video,'typeV'=> $videoType,'level'=>$level])){
+        if($this->model->insertarVideoIntroduction(['id_curso' =>  $id_curso,'title'=> $title,'shortD'=> $shortD,'video'=>$video,'typeV'=> $videoType,'free'=>$free,'level'=>$level])){
             return 0;
         }else{
             return -1;
@@ -202,7 +204,7 @@ class Dashboard extends Controller
 
         if (!empty($_FILES['selectVideoMedium']['name'])) {
             $videoType = $_FILES['selectVideoMedium']['type'];
-            $permitido = array('video/mp4','video/x-matroska');
+            $permitido = array('video/mp4');
             if (!in_array($videoType, $permitido)) {
                  return $mensaje = "";
             } else {
@@ -216,8 +218,9 @@ class Dashboard extends Controller
         $title = $_POST['inputTitleVideoMedium'];
         $shortD = $_POST['shortVideoTitleMedium'];
         $level = $_POST['mediumLevel'];
+        $free = $_POST['mediumFree'];
 
-        if($this->model->insertarVideoIntroduction(['id_curso' =>  $id_curso,'title'=> $title,'shortD'=> $shortD,'video'=>$video,'typeV'=> $videoType,'level'=>$level])){
+        if($this->model->insertarVideoIntroduction(['id_curso' =>  $id_curso,'title'=> $title,'shortD'=> $shortD,'video'=>$video,'typeV'=> $videoType,'free'=>$free,'level'=>$level])){
             return 0;
         }else{
             return -1;
@@ -231,7 +234,7 @@ class Dashboard extends Controller
 
         if (!empty($_FILES['selectVideoAdvanced']['name'])) {
             $videoType = $_FILES['selectVideoAdvanced']['type'];
-            $permitido = array('video/mp4','video/x-matroska');
+            $permitido = array('video/mp4');
             if (!in_array($videoType, $permitido)) {
                  return $mensaje = "";
             } else {
@@ -245,8 +248,9 @@ class Dashboard extends Controller
         $title = $_POST['inputTitleVideoAdvanced'];
         $shortD = $_POST['shortVideoTitleAdvanced'];
         $level = $_POST['advancedLevel'];
+        $free = $_POST['advancedFree'];
 
-        if($this->model->insertarVideoIntroduction(['id_curso' =>  $id_curso,'title'=> $title,'shortD'=> $shortD,'video'=>$video,'typeV'=> $videoType,'level'=>$level])){
+        if($this->model->insertarVideoIntroduction(['id_curso' =>  $id_curso,'title'=> $title,'shortD'=> $shortD,'video'=>$video,'typeV'=> $videoType,'free'=>$free,'level'=>$level])){
             return 0;
         }else{
             return -1;
@@ -261,7 +265,7 @@ class Dashboard extends Controller
         if (!empty($_FILES['selectresource']['name'])) {
             $resourceName = $_FILES['selectresource']['name'];
             $resourceType = $_FILES['selectresource']['type'];
-            $permitido = array('video/mp4','video/x-matroska','image/png', 'image/jpg', 'image/jpeg','application/pdf');
+            $permitido = array('video/mp4','image/png', 'image/jpg', 'image/jpeg','application/pdf');
             if (!in_array($resourceType, $permitido)) {
                  return $mensaje = "";
             } else {
