@@ -62,6 +62,7 @@
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>usuario">Account
                                     settings</a>
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>mycourse">My courses</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>chat">Chat</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>principal/cerrarSesion">Sign off</a>
                             </div>

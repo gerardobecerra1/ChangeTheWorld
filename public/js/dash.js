@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $("#MyCourse").hide();
+    $("#MyCourse").show();
     $("#CreateCourse").hide();
     $("#Statics").hide();
     $("#addVideos").hide();
@@ -22,7 +22,7 @@ $(document).ready(function () {
                         value: $select.length + 1,
                     }));
                     httpRequest("http://localhost/CTW/Dashboard/AgregarCategoria/" + $cate, function () {
-                        console.log(this.responseText);
+                        // console.log(this.responseText);
                     });
                     $('#inputCategoria').val('');
                     Swal.fire('Successfully added!', '', 'success')
@@ -54,7 +54,7 @@ $(document).ready(function () {
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost/CTW/Dashboard/registrarCurso",
+                        url: "http://localhost/CTW/dashboard/registrarCurso",
                         data: new FormData(this),
                         contentType: false,
                         cache: false,
@@ -77,10 +77,10 @@ $(document).ready(function () {
                                 })
                                 $.ajax({
                                     type: "POST",
-                                    url: "http://localhost/CTW/Dashboard/mostrarCursosAjax",
+                                    url: "http://localhost/CTW/dashboard/mostrarCursosAjax",
                                     data: null,
                                     success: function (response) {
-                                        console.log(response);
+                                        // console.log(response);
                                         $("#Cursosapartado").html(response);
                                     }
                                 });
@@ -121,7 +121,7 @@ $(document).ready(function () {
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost/CTW/Dashboard/AgregarVideoIntro",
+                        url: "http://localhost/CTW/dashboard/AgregarVideoIntro",
                         data: new FormData(this),
                         contentType: false,
                         cache: false,
@@ -136,15 +136,15 @@ $(document).ready(function () {
                             })
                         },
                         success: function (response) {
-                            console.log(response);
+                            // console.log(response);
                             if (response >= 0) {
                                 $(".videos-agregados-intro").empty()
                                 $.ajax({
                                     type: "POST",
-                                    url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#introductionIdCourse").val() + "/" + $("#introductionLevel").val(),
+                                    url: "http://localhost/CTW/dashboard/mostrarVideosAjax/" + $("#introductionIdCourse").val() + "/" + $("#introductionLevel").val(),
                                     data: null,
                                     success: function (response) {
-                                        console.log(response);
+                                        // console.log(response);
                                         $(".videos-agregados-intro").html(response)
                                     }
                                 });
@@ -195,7 +195,7 @@ $(document).ready(function () {
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost/CTW/Dashboard/AgregarVideoBasic",
+                        url: "http://localhost/CTW/dashboard/AgregarVideoBasic",
                         data: new FormData(this),
                         contentType: false,
                         cache: false,
@@ -210,7 +210,7 @@ $(document).ready(function () {
                             })
                         },
                         success: function (response) {
-                            console.log(response);
+                            // console.log(response);
                             if (response >= 0) {
                                 $(".videos-agregados-basic").empty()
                                 $(".videos-agregados-basic").html('<a><i class="fas fa-play-circle"></i> ' + $("#inputTitleVideoBasic").val() + '</a>')
@@ -261,7 +261,7 @@ $(document).ready(function () {
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost/CTW/Dashboard/AgregarVideoMedium",
+                        url: "http://localhost/CTW/dashboard/AgregarVideoMedium",
                         data: new FormData(this),
                         contentType: false,
                         cache: false,
@@ -418,14 +418,14 @@ $(document).ready(function () {
                                 })
                             },
                             success: function (response) {
-                                console.log(response);
+                                // console.log(response);
                                 $(".recursos-agregados").empty()
                                 $.ajax({
                                     type: "POST",
                                     url: "http://localhost/CTW/dashboard/mostrarRecursosAjax/" + $("#recursoIdCourse").val(),
                                     data: null,
                                     success: function (response) {
-                                        console.log(response);
+                                        // console.log(response);
                                         $(".recursos-agregados").html(response)
                                     }
                                 });
@@ -452,7 +452,7 @@ $(document).ready(function () {
             })
         }
     });
-    
+
 
     $(".btn_add_video").click(function (e) {
         $("#AgregarCapitulo").toggle();
@@ -617,6 +617,26 @@ $(document).ready(function () {
         }
     }
 
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/CTW/dashboard/mostrarCursosAjax",
+        data: null,
+        success: function (response) {
+            // console.log(response);
+            $("#Cursosapartado").html(response);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/CTW/dashboard/mostrarTotalTodo/"+ $("#identificaParaTotal").val(),
+        data: null,
+        success: function (response) {
+            // console.log(response);
+            $("#total_todo").html(response);
+        }
+    });
+
 });
 
 function agrergarVideos(e) {
@@ -629,46 +649,46 @@ function agrergarVideos(e) {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#introductionIdCourse").val() + "/" + $("#introductionLevel").val(),
+        url: "http://localhost/CTW/dashboard/mostrarVideosAjax/" + $("#introductionIdCourse").val() + "/" + $("#introductionLevel").val(),
         data: null,
         success: function (response) {
             if(response!= ""){
                 $(".videos-agregados-intro").html(response)
             }else{
                 $(".videos-agregados-intro").html(' <a> No hay videos</a>')
-            }  
+            }
         }
     });
 
     $.ajax({
         type: "POST",
-        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#basicIdCourse").val() + "/" + $("#basicLevel").val(),
+        url: "http://localhost/CTW/dashboard/mostrarVideosAjax/" + $("#basicIdCourse").val() + "/" + $("#basicLevel").val(),
         data: null,
         success: function (response) {
             if(response!= ""){
                 $(".videos-agregados-basic").html(response)
             }else{
                 $(".videos-agregados-basic").html(' <a> No hay videos</a>')
-            }  
+            }
         }
     });
 
     $.ajax({
         type: "POST",
-        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#mediumIdCourse").val() + "/" + $("#mediumLevel").val(),
+        url: "http://localhost/CTW/dashboard/mostrarVideosAjax/" + $("#mediumIdCourse").val() + "/" + $("#mediumLevel").val(),
         data: null,
         success: function (response) {
             if(response!= ""){
                 $(".videos-agregados-medium").html(response)
             }else{
                 $(".videos-agregados-medium").html(' <a> No hay videos</a>')
-            }    
+            }
         }
     });
 
     $.ajax({
         type: "POST",
-        url: "http://localhost/CTW/Dashboard/mostrarVideosAjax/" + $("#advancedIdCourse").val() + "/" + $("#advancedLevel").val(),
+        url: "http://localhost/CTW/dashboard/mostrarVideosAjax/" + $("#advancedIdCourse").val() + "/" + $("#advancedLevel").val(),
         data: null,
         success: function (response) {
             if(response!= ""){
@@ -697,4 +717,5 @@ function agrergarVideos(e) {
     $("#CreateCourse").hide();
     $("#MyCourse").hide();
     $("#DASHBOARD").hide();
+
 }

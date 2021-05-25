@@ -53,6 +53,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>Usuario">Account
                                     settings</a>
+                                    <a class="dropdown-item" href="<?php echo constant('URL'); ?>chat">Chat</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>Landing">Sign off</a>
                             </div>

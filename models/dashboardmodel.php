@@ -190,4 +190,64 @@ class DashboardModel extends Model
             echo 'error en el procedure';
         }
     }
+
+    function ventasPorCurso($id){
+        try {
+            $query = $this->db->connect()->prepare('SELECT ventas_por_curso(?)');
+            $query->bindParam(1, $id);
+            $query->execute();
+            $row = $query->fetch();
+            return  $row[0];
+        } catch (PDOException $th) {
+            echo $th;
+        }
+    }
+
+    function totalVentasPorCurso($id){
+        try {
+            $query = $this->db->connect()->prepare('SELECT total_ventas_por_curso(?)');
+            $query->bindParam(1, $id);
+            $query->execute();
+            $row = $query->fetch();
+            return  $row[0];
+        } catch (PDOException $th) {
+            echo $th;
+        }
+    }
+
+    function traerNumCursosM($id){
+        try {
+            $query = $this->db->connect()->prepare('SELECT numero_cursos_maestro(?)');
+            $query->bindParam(1, $id);
+            $query->execute();
+            $row = $query->fetch();
+            return  $row[0];
+        } catch (PDOException $th) {
+            echo $th;
+        }
+    }
+ 
+    function traerNumEstu($id){
+        try {
+            $query = $this->db->connect()->prepare('SELECT numero_estudiantes_general(?)');
+            $query->bindParam(1, $id);
+            $query->execute();
+            $row = $query->fetch();
+            return  $row[0];
+        } catch (PDOException $th) {
+            echo $th;
+        }
+    }
+
+    function traerVenGen($id){
+        try {
+            $query = $this->db->connect()->prepare('SELECT ventas_general(?)');
+            $query->bindParam(1, $id);
+            $query->execute();
+            $row = $query->fetch();
+            return  $row[0];
+        } catch (PDOException $th) {
+            echo $th;
+        }
+    }
 }

@@ -2,7 +2,7 @@
 // include_once 'librerias/user_session.php';
 // $userSession = new UserSession();
 
-if ((isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Student")) {
+if ((isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Student") || (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher")) {
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -232,7 +232,7 @@ if ((isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Student")) {
                                                                 class="videosIdCourse d-none"
                                                                 name="introductionIdCourse" value="" type="text">
                                                             <input id="introductionLevel" class="d-none"
-                                                                name="introductionLevel" value="<?php $_SESSION['id']; ?>" type="text">
+                                                                name="introductionLevel" value="<?php echo $_SESSION['id']; ?>" type="text">
                                                             <!-- <div class="form-group mb-3">
                                                                 <label for="inputGroupFile01">Select video:</label>
                                                                 <input type="file" name="selectVideoIntro"

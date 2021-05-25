@@ -152,8 +152,8 @@ class CursoModel extends Model
     function insertR($datos){
         try {
             $query = $this->db->connect()->prepare('CALL insert_rating(?,?,?)');
-            $query->bindParam(1, $datos['user']);
-            $query->bindParam(2, $datos['course']);
+            $query->bindParam(1, $datos['course']);
+            $query->bindParam(2, $datos['user']);
             $query->bindParam(3, $datos['rating']);
             $query->execute();
             return true;

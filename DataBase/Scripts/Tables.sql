@@ -21,15 +21,6 @@ CREATE TABLE IF NOT EXISTS tbl_Users (
   date_of_last_change 	DATE 				NOT NULL 			COMMENT'This field represents the last change that was made to the users data.',
   PRIMARY KEY(id_user))	COMMENT'This table represents the data of all registered users on the website.';
 
-CREATE TABLE IF NOT EXISTS tbl_Schools(
- id_school 					INT UNSIGNED 		 AUTO_INCREMENT 		COMMENT'This field represents the identifier of the created school.',
- fk_user 					INT UNSIGNED 		 NOT NULL 				COMMENT'This field represents who created the school.',
- logo 						BLOB 				 NOT NULL 				COMMENT'This field represents the school logo.',
- name_school 				VARCHAR(255) 		 NOT NULL UNIQUE 		COMMENT'This field represents the name of the school.',
- 
-PRIMARY KEY(id_school),
-FOREIGN KEY(fk_user) REFERENCES tbl_Users(id_user))	COMMENT'This table represents the data of all the schools created by the registered teacher users on the website.';
-
 CREATE TABLE IF NOT EXISTS tbl_Courses(
 id_course 				INT UNSIGNED 		AUTO_INCREMENT 		COMMENT'This field represents the identifier of the course.',
 -- fk_school 				INT UNSIGNED 		NULL 				COMMENT'This field represents the school to which the course is linked.',
@@ -48,17 +39,52 @@ PRIMARY KEY(id_course),
 FOREIGN KEY(fk_categorie) 	REFERENCES tbl_Categories(id_categorie),		
 FOREIGN KEY(fk_user) 		REFERENCES tbl_Users(id_user))	COMMENT'This table represents the data of all the courses created by the master users registered on the website.';
 
-CREATE TABLE IF NOT EXISTS tbl_Videos(
-id_video 			INT UNSIGNED  		AUTO_INCREMENT 		COMMENT'This field represents the identifier of the video.',
-fk_course 			INT UNSIGNED 		NOT NULL 			COMMENT'This field represents which course it belongs to.',
-title 				VARCHAR(255) 		NOT NULL		 	COMMENT'This field represents the title of the video.',
-short_description 	TEXT 				NOT NULL 			COMMENT'This field represents a short description of the video.',
-content 			LONGBLOB 			NOT NULL 			COMMENT'This field represents the video.',
-contentT 			VARCHAR(255) 			NOT NULL 			COMMENT'This field represents the video type.',
-viewed 				BOOLEAN 			NOT NULL DEFAULT 0 	COMMENT'This field represents whether the video has been viewed or not.',
-level_				int					NOT NULL			COMMENT'This field represents  level of the coruse (basic,expert, etc).',
-PRIMARY KEY(id_video),
-FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course))	COMMENT'This table represents all the videos of the courses on the website.';
+
+CREATE TABLE IF NOT EXISTS tbl_seen (
+id_seen INT UNSIGNED AUTO_INCREMENT,
+fk_user INT UNSIGNED,
+fk_video INT UNSIGNED,
+PRIMARY KEY (id_seen),
+FOREIGN KEY (fk_user) REFERENCES tbl_users(id_user),
+FOREIGN KEY (fk_video) REFERENCES tbl_videos(id_video))
+
+CREATE TABLE IF NOT EXISTS tbl_Messages(
+id_message		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the message.',
+fk_sender 		INT UNSIGNED		NOT NULL			COMMENT'This field represents who sent the message.',
+fk_addressee 	INT UNSIGNED		NOT NULL			COMMENT'This field represents who receives the message.',
+_message 		TEXT 				NOT NULL			COMMENT'This field represents the content of the message.',
+date_message 	DATETIME 			NOT NULL			COMMENT'This field represents the day the message was sent.',
+PRIMARY KEY(id_message),
+FOREIGN KEY(fk_sender) REFERENCES tbl_Users(id_user),
+FOREIGN KEY(fk_addressee) REFERENCES tbl_Users(id_user))  COMMENT'This table represents the messages made by users in private';
+
+
+CREATE TABLE IF NOT EXISTS tbl_Purchases(
+id_purchase		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the sale.',
+fk_buyer 		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents the buyer.',
+fk_course 		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents the product that was purchased.',
+PRIMARY KEY(id_purchase),
+FOREIGN KEY(fk_buyer) REFERENCES tbl_Users(id_user),
+FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course)) COMMENT'This table represents the purchases of each user.';
+
+CREATE TABLE IF NOT EXISTS tbl_Comments_Courses(
+id_comment_course		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the course comment.',
+fk_course 				INT UNSIGNED 		NOT NULL 			COMMENT'This field represents the course comments',
+fk_sender 				INT UNSIGNED 		NOT NULL 			COMMENT'This field represents who made the comment in the course.',
+_message 				TEXT 				NOT NULL 			COMMENT'This field represents the content of the comment in the course.',
+comment_date			DATE 				 NULL			COMMENT'This field represents the date of comments',				
+PRIMARY KEY(id_comment_course),
+FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course),
+FOREIGN KEY(fk_sender) REFERENCES tbl_Users(id_user)) COMMENT'This table represents the feedback data for the course.';
+
+CREATE TABLE IF NOT EXISTS tbl_Ratings(
+id_rating		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the grade identifier in the course.',
+fk_user 		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents who graded the course.',
+fk_course 		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents which course was graded.',
+points			DECIMAL(5,2) 		NOT NULL 			COMMENT'This field represents the rating that the user gave.',
+PRIMARY KEY(id_rating),
+FOREIGN KEY(fk_user) REFERENCES tbl_Users(id_user),
+FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course)) COMMENT'This table represents the grade of each user to the course.';
 
 CREATE TABLE IF NOT EXISTS tbl_Resources(
 id_resource		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the video notes.',
@@ -71,83 +97,14 @@ categorie		VARCHAR(20)			NOT NULL			COMMENT'This field represents the categorie 
 PRIMARY KEY(id_resource),
 FOREIGN KEY(fk_course) REFERENCES tbl_courses(id_course)) COMMENT'This table represents all the notes made by users in the video.';
 
-CREATE TABLE IF NOT EXISTS tbl_Comments_Courses(
-id_comment_course		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the course comment.',
-fk_course 				INT UNSIGNED 		NOT NULL 			COMMENT'This field represents the course comments',
-fk_sender 				INT UNSIGNED 		NOT NULL 			COMMENT'This field represents who made the comment in the course.',
-_message 				TEXT 				NOT NULL 			COMMENT'This field represents the content of the comment in the course.',
-comment_date			DATE 				 NULL			COMMENT'This field represents the date of comments',				
-PRIMARY KEY(id_comment_course),
-FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course),
-FOREIGN KEY(fk_sender) REFERENCES tbl_Users(id_user)) COMMENT'This table represents the feedback data for the course.';
-
-CREATE TABLE IF NOT EXISTS tbl_Comments_videos(
-id_comment_video		INT UNSIGNED	AUTO_INCREMENT		COMMENT'This field represents the identifier of the video comment.',
-fk_video 				INT UNSIGNED 	NOT NULL 			COMMENT'This field represents the video comments',
-fk_sender 				INT UNSIGNED 	NOT NULL 			COMMENT'This field represents who made the comment in the course.',
-_message 				TEXT 			NOT NULL 			COMMENT'This field represents the content of the comment in the course.',
-comment_date			DATE 			NOT NULL			COMMENT'This field represents the date of comments',				
-PRIMARY KEY(id_comment_video),
-FOREIGN KEY(fk_video) REFERENCES tbl_Videos(id_video),
-FOREIGN KEY(fk_sender) REFERENCES tbl_Users(id_user)) COMMENT'This table represents the data for the video comments.';
-
-CREATE TABLE IF NOT EXISTS tbl_seen (
-id_seen INT UNSIGNED AUTO_INCREMENT,
-fk_user INT UNSIGNED,
-fk_video INT UNSIGNED,
-PRIMARY KEY (id_seen),
-FOREIGN KEY (fk_user) REFERENCES tbl_users(id_user),
-FOREIGN KEY (fk_video) REFERENCES tbl_videos(id_video))
-
-CREATE TABLE IF NOT EXISTS tbl_Comments_comments_course (
-id_comment_coments_course		INT UNSIGNED 			AUTO_INCREMENT		COMMENT'This field represents the identifier of the course comment.',
-fk_comment 						INT UNSIGNED 			NOT NULL 			COMMENT'This field represents the parent comments.',
-fk_sender 					 	INT UNSIGNED 			NOT NULL 			COMMENT'This field represents who made the comment in the comments.',
-_message 					    TEXT 					NOT NULL 			COMMENT'This field represents the content of the comment .',
-comment_date				    DATE 					NOT NULL			COMMENT'This field represents the date of comments',				
-PRIMARY KEY(id_comment_coments_course),
-FOREIGN KEY(fk_comment) REFERENCES tbl_Comments_Courses(id_comment_course)) COMMENT'This table represents the data from comments to comments for the course.';
-
-CREATE TABLE IF NOT EXISTS tbl_Comments_comments_video (
-id_comment_coments_video		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the course comment.',
-fk_comment 					    INT UNSIGNED 		NOT NULL 			COMMENT'This field represents the parent comments.',
-fk_sender 					    INT UNSIGNED 		NOT NULL 			COMMENT'This field represents who made the comment in the comments.',
-_message 					    TEXT 				NOT NULL 			COMMENT'This field represents the content of the comment .',
-comment_date				    DATE 				NOT NULL			COMMENT'This field represents the date of comments',				
-PRIMARY KEY(id_comment_coments_video),
-FOREIGN KEY(fk_comment) REFERENCES tbl_Comments_videos(id_comment_video)) COMMENT'This table represents the data from comments to video comments.';
-
-CREATE TABLE IF NOT EXISTS tbl_Messages(
-id_message		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the message.',
-fk_sender 		INT UNSIGNED		NOT NULL			COMMENT'This field represents who sent the message.',
-fk_addressee 	INT UNSIGNED		NOT NULL			COMMENT'This field represents who receives the message.',
-_message 		TEXT 				NOT NULL			COMMENT'This field represents the content of the message.',
-date_message 	DATETIME 			NOT NULL			COMMENT'This field represents the day the message was sent.',
-PRIMARY KEY(id_message),
-FOREIGN KEY(fk_sender) REFERENCES tbl_Users(id_user),
-FOREIGN KEY(fk_addressee) REFERENCES tbl_Users(id_user))  COMMENT'This table represents the messages made by users in private';
-
-CREATE TABLE IF NOT EXISTS tbl_Ratings(
-id_rating		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the grade identifier in the course.',
-fk_user 		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents who graded the course.',
-fk_course 		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents which course was graded.',
-points			DECIMAL(5,2) 		NOT NULL 			COMMENT'This field represents the rating that the user gave.',
-PRIMARY KEY(id_rating),
-FOREIGN KEY(fk_user) REFERENCES tbl_Users(id_user),
-FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course)) COMMENT'This table represents the grade of each user to the course.';
-
-CREATE TABLE IF NOT EXISTS tbl_Sales(
-id_sale     INT				AUTO_INCREMENT    COMMENT'This field represents the identifier of the sale.',
-fk_buyer   INT UNSIGNED    NOT NULL          COMMENT'This field represents the seller.',
-fk_course   INT UNSIGNED    NOT NULL          COMMENT'This field represents the product that was sold.',
-PRIMARY KEY(id_sale),
-FOREIGN KEY(fk_seller) REFERENCES tbl_Users(id_user),
-FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course)) COMMENT'This table represents the sales of each user.';
-
-CREATE TABLE IF NOT EXISTS tbl_Purchases(
-id_purchase		INT UNSIGNED		AUTO_INCREMENT		COMMENT'This field represents the identifier of the sale.',
-fk_buyer 		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents the buyer.',
-fk_course 		INT UNSIGNED 		NOT NULL 			COMMENT'This field represents the product that was purchased.',
-PRIMARY KEY(id_purchase),
-FOREIGN KEY(fk_buyer) REFERENCES tbl_Users(id_user),
-FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course)) COMMENT'This table represents the purchases of each user.';
+CREATE TABLE IF NOT EXISTS tbl_Videos(
+id_video 			INT UNSIGNED  		AUTO_INCREMENT 		COMMENT'This field represents the identifier of the video.',
+fk_course 			INT UNSIGNED 		NOT NULL 			COMMENT'This field represents which course it belongs to.',
+title 				VARCHAR(255) 		NOT NULL		 	COMMENT'This field represents the title of the video.',
+short_description 	TEXT 				NOT NULL 			COMMENT'This field represents a short description of the video.',
+content 			LONGBLOB 			NOT NULL 			COMMENT'This field represents the video.',
+contentT 			VARCHAR(255) 			NOT NULL 			COMMENT'This field represents the video type.',
+viewed 				BOOLEAN 			NOT NULL DEFAULT 0 	COMMENT'This field represents whether the video has been viewed or not.',
+level_				int					NOT NULL			COMMENT'This field represents  level of the coruse (basic,expert, etc).',
+PRIMARY KEY(id_video),
+FOREIGN KEY(fk_course) REFERENCES tbl_Courses(id_course))	COMMENT'This table represents all the videos of the courses on the website.';

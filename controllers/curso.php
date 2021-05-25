@@ -52,7 +52,7 @@ class Curso extends Controller
         if($this->model->insertarCFinal(['course'=>$idC,'user'=>$idU,'coment'=>$comment,'dia'=>date('Y-m-d')])){
            if($this->model->insertR(['course'=>$idC,'user'=>$idU,'rating'=>$rating])){
             $this->model->promedioR($idC);
-               echo 0;
+            echo 0;
            }
         }else{
             echo -1;

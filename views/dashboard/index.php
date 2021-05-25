@@ -36,8 +36,8 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
 
             </div>
             <div class="menu">
-                <a href="#" id="btn_dashboard" class="d-block p-3  font-weight-bold  "><i class="fas fa-table mr-2"
-                        aria-hidden="true"></i>Dashboard</a>
+                <!-- <a href="#" id="btn_dashboard" class="d-block p-3  font-weight-bold  "><i class="fas fa-table mr-2"
+                        aria-hidden="true"></i>Dashboard</a> -->
                 <a href="#" id="btn_mycourse" class="d-block p-3  font-weight-bold "><i class="fas fa-certificate mr-2"
                         aria-hidden="true"></i>My Courses</a>
                 <a href="#" id="btn_create" class="d-block p-3  font-weight-bold "><i class="fas fa-plus-circle mr-2"
@@ -70,6 +70,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="<?php echo constant('URL').'usuario'; ?>">My profile</a>
+                                <a class="dropdown-item" href="<?php echo constant('URL'); ?>chat">Chat</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo constant('URL'); ?>dashboard/cerrarSesion">log
                                     out</a>
@@ -79,7 +80,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                 </div>
             </nav>
             <div id="content">
-                <section id="DASHBOARD">
+                <!-- <section id="DASHBOARD">
                     <section class="py-3">
                         <div class="container">
                             <div class="row">
@@ -189,7 +190,7 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                             </div>
                         </div>
                     </section>
-                </section>
+                </section> -->
 
                 <section class="mycourses" id="MyCourse">
                     <div class="container">
@@ -331,9 +332,11 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                 <section class="Statics" id="Statics">
                     <div class="container">
                         <div class="row ">
-                            <div class="col-lg-12 my-2">
-                                <h1 class="font-weight-bold main-color ">General statistics</h1>
-                            </div>
+                        <div class="col-lg-9">
+                                    <h1 class="font-weight-bold mb-0 main-color">Welcome
+                                        <?php echo $_SESSION['name'] . ' ' . $_SESSION['lastname']; ?></h1>
+                                    <p class="lead text-muted">Check your information</p>
+                                </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-lg-6 mb-3">
@@ -346,17 +349,16 @@ if (isset($_SESSION['username']) && ((string)$_SESSION['rol']) == "Teacher") {
                                 <canvas id="VentasCurso" class="my-3"></canvas>
                             </div>
                         </div>
-                        <div class="row">
+                        <input style="display: none;" type="text" value="<?php echo $_SESSION['id'];?>" id="identificaParaTotal">
+                        <div class="row" id="total_todo">
                             <div class="col-lg-4 my-3  ">
                                 <h6 class="text-muted text-center ">TOTAL COURSES:</h6>
                                 <h1 class="font-weight-bold main-color text-center ">10</h1>
                             </div>
-
                             <div class="col-lg-4 my-3  ">
                                 <h6 class="text-muted text-center ">TOTAL STUDENTS:</h6>
                                 <h1 class="font-weight-bold main-color text-center ">100</h1>
                             </div>
-
                             <div class="col-lg-4 my-3  ">
                                 <h6 class="text-muted text-center ">TOTAL EARNINGS:</h6>
                                 <h1 class="font-weight-bold main-color text-center ">$200,000.00</h1>

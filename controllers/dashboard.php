@@ -44,7 +44,8 @@ class Dashboard extends Controller
        foreach ($cursos as $row) {
         // <button id="btn_mycourse_edit" class="btn main-color ml-1 mr-1" value="'.$row->id_course.'."><i
         // class="far fa-edit"></i></button>
-        
+        $ventasCurso = $this->model->ventasPorCurso($row->id_course);
+        $totalVentasCurso = $this->model->totalVentasPorCurso($row->id_course);
         echo '<div class="col-lg-4 mb-3">
                 <div class="card">
                     <img src="'.'data:'.$row->lType.';base64,'.base64_encode($row->logo).'"
@@ -60,11 +61,11 @@ class Dashboard extends Controller
                             <div class="row">
                                 <div class="col-6">
                                     <h6 class="text-muted text-center ">Sales:</h6>
-                                    <h3 class="font-weight-bold main-color text-center">200</h3>
+                                    <h3 class="font-weight-bold main-color text-center">'.$ventasCurso.'</h3>
                                 </div>
                                 <div class="col-6">
                                     <h6 class="text-muted text-center">Income:</h6>
-                                    <h3 class="font-weight-bold main-color text-center">$500,000</h3>
+                                    <h3 class="font-weight-bold main-color text-center">$'.$totalVentasCurso.'</h3>
                                 </div>
                             </div>
                         </div>
@@ -73,6 +74,25 @@ class Dashboard extends Controller
             </div> ';
        }
       
+    }
+
+    function mostrarTotalTodo($param = null){
+        $numC = $this->model->traerNumCursosM($param[0]);
+        $numE = $this->model->traerNumEstu($param[0]);
+        $generalV = $this->model->traerVenGen($param[0]);
+        
+        echo '<div class="col-lg-4 my-3  ">
+        <h6 class="text-muted text-center ">TOTAL COURSES:</h6>
+        <h1 class="font-weight-bold main-color text-center ">'.$numC.'</h1>
+    </div>
+    <div class="col-lg-4 my-3  ">
+        <h6 class="text-muted text-center ">TOTAL STUDENTS:</h6>
+        <h1 class="font-weight-bold main-color text-center ">'.$numE.'</h1>
+    </div>
+    <div class="col-lg-4 my-3  ">
+        <h6 class="text-muted text-center ">TOTAL EARNINGS:</h6>
+        <h1 class="font-weight-bold main-color text-center ">$'.$generalV.'</h1>
+    </div>';
     }
 
     function mostrarVideosAjax($param = null){
@@ -189,6 +209,8 @@ class Dashboard extends Controller
         $shortD = $_POST['shortVideoTitleBasic'];
         $level = $_POST['basicLevel'];
         $free = $_POST['basicFree'];
+
+        // echo $id_curso.' '.$title.' '.$shortD.' '.$level.' '.$free.' '.$videoType;
 
         if($this->model->insertarVideoIntroduction(['id_curso' =>  $id_curso,'title'=> $title,'shortD'=> $shortD,'video'=>$video,'typeV'=> $videoType,'free'=>$free,'level'=>$level])){
             return 0;
